@@ -1,0 +1,56 @@
+1. Dominio del problema
+La nescessità di questo problema nasce dall'esigenza di riunire sotto un'unico portale le diverse figure che compaiono durante il commercio marittimo, in modo da ridurre lo sforzo, di tempo e conseguenzialmente quello economico, necessario a eseguire le varie fasi che portano alla registrazione di un contratto di viaggio.
+Le figure principali del nostro problema sono tre:
+- Il Cliente: colui che ha la necessità di spostare merci da un porto di sorgente ad un porto di destinazione con determinati vincoli 
+[Es. numero di container che si devono trasportare, tempo necessario per portare a termine il trasporto].
+- Il Broker: colui che esercita l'attività di mediazione tra clienti e Armatori allo scopo di definire contratti di trasporto.
+- L' Armatore: colui che mette a disposizione, dietro giusto compenso, le proprie imbarcazioni per il trasporto di merci.
+Lo sviluppo del software Ship Management deve adempiere all'esigenza di creare un aggreagatore di clienti e armatori che può essere utilizzato per le compagnie di broker per rendere veloce e immediata la rierca dei clienti e/o degli armatori necessari alla stipula di un contratto di viaggio.
+
+2. Scenari
+- 1
+Nome: Nuovo Armatore
+Attori: Armatore Lucas, Broker Giuseppe
+Flusso degli Eventi: L'armatore Lucas deve gestire una nave in suo possesso ma, durante gli ultimi mesi, fatica a trova un buon contratto che gli permette di affrontare un viaggio e di poter guadagnare. Decide così di inscriversi al portale Ship Management per aumentare la probabilità di trovare un possibile cliente. Lucas quindi accede al sito Ship Managment e inizia a compilare il form con tutte le informazioni personali relative alla sua anagrafica: Nome, Cognome, data di nascita, Cod. Fiscale. Inizia poi a caricare i dati relativi all'imbarcazione che gestisce: Nome, numero IMO, pescaggio, lunghezza, larghezza, numero di container che può trasportare. Rimane quindi in attesa di notifiche di possibili mediazioni che non tardano ad arrivare, infatti il Broker Giuseppe gli propone un viaggio economicamente conveniente che Lucas non esita ad accettare. Ricevuto l'acconto provvede a mobilitare la nave ed aggiornare lo stato della mediazione. Una volta portato a termine il suo lavoro viene saldato il suo conto e la mediazione termina.
+
+- 2
+Nome: Nuovo Broker
+Attore: Broker Steve, Armatore Bart, Clienete Ben
+Flusso degli Eventi: La compagnia di Amratori "Tal dei Tali" all'interno della quale lavora il Broker Steve ha la necessità di aumentare il suo fatturato, e per fare ciò ha bisogno di aumentare il numero di contratti mensili stipulati. Il cliente Ben deve trasportare un carico e si rivolge a Steve che pur avendo un bacino di armatori a cui affidare la commessa, nessuno di questi ha a disosizione un'imbarcazione che permette di affrontare tale viaggio. Per far fronte a questa limitazione, Steve decide di iscriversi alla piattaforma Ship Management. Giunto sul sito inizia a compilare il form di registrazione con i dati necessari: nome, cognome, mail, compagnia di appartenenza, data di nascita, codice fiscale, numero di telefono. Una volta effettuata la registrazione, ha acesso a tutti i dati dei clienti e degli armatori registrati alla piattaforma. Effettuando un'accurata ricerca, trova l'armatore Bart che rispecchia in parte i requisiti che sta cercando. Entrando nella pagina dell'armatore Bart trova le informazioni utili per poterlo conttatare. Dopo aver terminato la contrattazione Steve crea una mediazione sulla piattaforma che vede coinvolti Bart e Ben.
+
+- 3
+Nome: Nuovo Cliente
+Attori: Cliente Giulio, Broker Armando
+Flusso degli eventi: Giulio lavora alla Wood Corporation e gestisce il trasporto della legna. Giulio ha un nuovo carico che deve essere spedito dal porto di Salerno al porto di Cagliari, generalmente spedisce le proprie merci affidandosi al trasporto marittimo, ma stavolta non sa a chi affidare il trasporto. Effettuando una ricerca online trova Ship Management e decide di registrarsi, per trovare un preventivo adatto al suo trasporto, compilando il form di registrazione inserendo nome, cognome, email, password, numero di telefono. Una volta completata la registrazione crea la sua richiesta così che un broker possa trovare l’imbarcazione di un armatore adatta alle sue esigenze. Dopo un paio di giorni viene contattato dal broker Armando che gli fa sapere di aver trovato un armatore disposto a soddisfare la sua richiesta. Giulio accetta la proposta ed attende con ansia la definizione del contratto di trasporto.
+
+3. Requisiti funzionali
+•Possibilità di iscrizione: Clienti, Armatori e Broker.
+
+•La piattaforma dovrà contenere quattro “aree”:
+- area accessibile a tutti gli utenti (home page in cui si descrivono i servizi offerti)
+- area personale dei Clienti (in cui saranno presenti le informazioni personali, lo storico delle mediazioni terminate, l'insieme delle richieste effettuate, con la possibilità di modificarle e la possibilità di aggiungere nuove richieste)
+- area personale degli Armatori (in cui saranno presenti le informazioni personali, le imbarcazioni caricate e le mediazioni ricevute che potranno essere rifiutate o confermate).
+-area personale dei Broker (in cui saranno presenti i dati personali, le richieste ricevute dai Clienti e le informazioni delle imbarcazioni più adatte alle richieste ricevute *[IA]*)
+
+•Quando un cliente effettua una richiesta, essa può essere presa in carico da un Broker che deve trovare e contattare l'Armatore più adatto al tipo di richiesta.
+
+•Si vuole tener traccia delle mediazioni evase e del loro avanzamento.
+
+4. Requisiti non funzionali
+• Ship Management deve permettere l'accesso da parte di più utenti contemporaneamente al sistema permettendo a tutti di trovare i contenuti sempre aggiornati.
+• L'architettura software deve essere estendibile a nuovi scenari.
+• Tutti i codici che vengono scritti non devono essere legati ad una piattaforma specifica.
+• Il dominio dell'applicazione deve essere modellato attraverso il modello UML. Il sistema implementato deve essere derivato dal modello UML sviluppato durante la fase di analisi.
+• Ogni utente dello Ship Managment deve avere accesso ad un computer ed una connessione ad Internet.
+
+5. Ambiente di destinazione
+L'ambiente di svilluppo è realizzato mediante l'architetutra three tier e per la parte backend verrà utilizzato un linguaggio di programmazione multipiattaforma per far si che l'installazione del software possa avvenire su qualsiasi tipo di dispositivo. La parte frontend sarà fruibile, da tutti gli utenti, mediante qualsiasi Browser in grado di connettersi ad Internet indipendentemente dal tipo di risoluzione.
+
+6. Deliverable e scadenze
+Il cliente si aspetta una dimostrazione funzionante del progetto entro il 15 Gennaio, presso l'università degli studi di Salerno tramite interazione sul campo oppure tramite interazione da remoto attraverso l'utilizzo di Internet. Il tutto deve essere corredato dalla documentazione composta di:
+- Analisi dei requisiti
+- Sistem Design
+- Object Design
+- Piano di Testing
+- Specifiche dei casi di Test
+- Report dell'esecuzione dei Test
