@@ -1,37 +1,27 @@
 package model.CompagniaBroker;
 
+import lombok.*;
+import lombok.experimental.NonFinal;
+import model.Util.InvalidParameterException;
+
+
+@Value
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NonFinal
 public class CompagniaBroker {
-    private final String codFiscale;
-    private final String nome;
-    private final String telefono;
-    private final String sedeLegale;
-    private final String sitoWeb;
+    String codFiscale;
+    String nome;
+    String telefono;
+    String sedeLegale;
+    String sitoWeb;
 
-    public CompagniaBroker(String codFiscale, String nome, String telefono, String sedeLegale, String sitoWeb) {
-        this.codFiscale = codFiscale;
-        this.nome = nome;
-        this.telefono = telefono;
-        this.sedeLegale = sedeLegale;
-        this.sitoWeb = sitoWeb;
-    }
-
-    public String getCodFiscale() {
-        return codFiscale;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public String getSedeLegale() {
-        return sedeLegale;
-    }
-
-    public String getSitoWeb() {
-        return sitoWeb;
+    public static class CompagniaBrokerBuilder {
+        public CompagniaBrokerBuilder codFiscale(String codFiscale) throws InvalidParameterException {
+            if (codFiscale.length() < 10)
+                throw new InvalidParameterException();
+            this.codFiscale = codFiscale;
+            return this;
+        }
     }
 }

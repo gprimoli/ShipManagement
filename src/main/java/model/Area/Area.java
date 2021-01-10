@@ -1,23 +1,24 @@
 package model.Area;
 
-import model.CompagniaBroker.CompagniaBroker;
+import lombok.*;
+import lombok.experimental.NonFinal;
+import model.Util.InvalidParameterException;
 
-import java.sql.Date;
 
+@Value
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NonFinal
 public class Area {
-    private final String codice;
-    private final String nome;
+    int id;
+    String nome;
 
-    public Area(String codice, String nome) {
-        this.codice = codice;
-        this.nome = nome;
-    }
-
-    public String getCodice() {
-        return codice;
-    }
-
-    public String getNome() {
-        return nome;
+    public static class AreaBuilder {
+        public AreaBuilder id(int id) throws InvalidParameterException {
+            if (id < 0)
+                throw new InvalidParameterException();
+            this.id = id;
+            return this;
+        }
     }
 }

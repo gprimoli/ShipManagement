@@ -1,50 +1,38 @@
 package model.Mediazione;
-
 import java.sql.Blob;
-import model.Imbarcazione.Imbarcazione;
-import model.Richiesta.Richiesta;
+import lombok.*;
+import lombok.experimental.NonFinal;
+import model.Util.InvalidParameterException;
 
-import java.util.LinkedList;
 
+@Value
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NonFinal
 public class Mediazione {
-    private final int id;
-    private final String nome;
-    private final String stato;
-    private final Blob contratto;
+     int id;
+     String nome;
+     String stato;
+     @NonFinal
+     Blob contratto;
+     String codFiscaleUtente;
+     @NonFinal
+     boolean caricato;
 
-    private LinkedList<Richiesta> richieste;
-    private LinkedList<Imbarcazione>  imbarcazioni;
+     public Blob getDocumento() {
+          if (caricato && contratto == null) {
+               caricato = true;
+               contratto = MediazioneDAO.doRetriveDocumento(id);
+          }
+          return contratto;
+     }
 
-    public Mediazione(int id, String nome, String stato, Blob contratto, LinkedList<Richiesta> richieste, LinkedList<Imbarcazione> imbarcazioni) {
-        this.id = id;
-        this.nome = nome;
-        this.stato = stato;
-        this.contratto = contratto;
-        this.richieste = richieste;
-        this.imbarcazioni = imbarcazioni;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public String getStato() {
-        return stato;
-    }
-
-    public Blob getContratto() {
-        return contratto;
-    }
-
-    public LinkedList<Richiesta> getRichieste() {
-        return richieste;
-    }
-
-    public LinkedList<Imbarcazione> getImbarcazioni() {
-        return imbarcazioni;
-    }
+     public static class MediazioneBuilder {
+          public MediazioneBuilder id(int id) throws InvalidParameterException {
+               if(id < 0)
+                    throw new InvalidParameterException();
+               this.id = id;
+               return this;
+          }
+     }
 }

@@ -1,66 +1,45 @@
 package model.Richiesta;
 
-import model.Porto.Porto;
-
 import java.sql.Blob;
 import java.sql.Date;
 
+import lombok.*;
+import lombok.experimental.NonFinal;
+import model.Util.InvalidParameterException;
+
+@Value
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NonFinal
 public class Richiesta {
-    private final int id;
-    private final String tipoCarico;
-    private final float quantita;
-    private final Date dataPartenza;
-    private final Date dataArrivo;
-    private final String stato;
-    private final Blob documento;
-    private final Porto portoPartenza;
-    private final Porto portoArrivo;
-
-    public Richiesta(int id, String tipoCarico, float quantita, Date dataPartenza, Date dataArrivo, String stato, Blob documento, Porto portoPartenza, Porto portoArrivo) {
-        this.id = id;
-        this.tipoCarico = tipoCarico;
-        this.quantita = quantita;
-        this.dataPartenza = dataPartenza;
-        this.dataArrivo = dataArrivo;
-        this.stato = stato;
-        this.documento = documento;
-        this.portoPartenza = portoPartenza;
-        this.portoArrivo = portoArrivo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getTipoCarico() {
-        return tipoCarico;
-    }
-
-    public float getQuantita() {
-        return quantita;
-    }
-
-    public Date getDataPartenza() {
-        return dataPartenza;
-    }
-
-    public Date getDataArrivo() {
-        return dataArrivo;
-    }
-
-    public String getStato() {
-        return stato;
-    }
+    int id;
+    String codFiscaleUtente;
+    String tipoCarico;
+    float quantita;
+    Date dataPartenza;
+    String portoPartenza;
+    Date dataArrivo;
+    String portoArrivo;
+    String stato;
+    @NonFinal
+    Blob documento;
+    @NonFinal
+    boolean caricato;
 
     public Blob getDocumento() {
+        if (caricato && documento == null) {
+            caricato = true;
+            documento = RichiestaDAO.doRetriveDocumento(id);
+        }
         return documento;
     }
 
-    public Porto getPortoPartenza() {
-        return portoPartenza;
-    }
-
-    public Porto getPortoArrivo() {
-        return portoArrivo;
+    public static class RichiestaBuilder {
+        public RichiestaBuilder id(int id) throws InvalidParameterException {
+            if (id < 0)
+                throw new InvalidParameterException();
+            this.id = id;
+            return this;
+        }
     }
 }

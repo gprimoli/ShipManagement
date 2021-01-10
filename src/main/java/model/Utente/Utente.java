@@ -1,67 +1,45 @@
 package model.Utente;
 
-import model.Notifica.Notifica;
-
 import java.sql.Date;
-import java.util.LinkedList;
 
-public abstract class Utente {
-    private final String codFiscale;
-    private final String nome;
-    private final String cognome;
-    private final Date dataNascita;
-    private final String luogoNascita;
-    private final String email;
-    private final String telefono;
-    private final boolean attivato;
+import lombok.*;
+import lombok.experimental.NonFinal;
+import model.Util.InvalidParameterException;
 
-    private final LinkedList<Notifica> notifiche;
+@Value
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NonFinal
+public class Utente {
+    String codFiscale;
+    String nome;
+    String cognome;
+    Date dataNascita;
+    String luogoNascita;
+    String email;
+    String telefono;
+    Ruolo ruolo;
+    boolean attivato;
 
-    public Utente(String codFiscale, String nome, String cognome, Date dataNascita, String luogoNascita, String email, String telefono, boolean attivato, LinkedList<Notifica> notifiche) {
-        this.codFiscale = codFiscale;
-        this.nome = nome;
-        this.cognome = cognome;
-        this.dataNascita = dataNascita;
-        this.luogoNascita = luogoNascita;
-        this.email = email;
-        this.telefono = telefono;
-        this.attivato = attivato;
-        this.notifiche = notifiche;
+    public boolean isArmatore() {
+        return ruolo == Ruolo.Armatore;
     }
 
-    public String getCodFiscale() {
-        return codFiscale;
+    public boolean isCliente() {
+        return ruolo == Ruolo.Cliente;
     }
 
-    public String getNome() {
-        return nome;
+    public boolean isBroker() {
+        return ruolo == Ruolo.Broker;
     }
 
-    public String getCognome() {
-        return cognome;
-    }
-
-    public Date getDataNascita() {
-        return dataNascita;
-    }
-
-    public String getLuogoNascita() {
-        return luogoNascita;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public boolean isAttivato() {
-        return attivato;
-    }
-
-    public LinkedList<Notifica> getNotifiche() {
-        return notifiche;
+    public static class UtenteBuilder {
+        //Controlli costruttore
+        public UtenteBuilder codFiscale(String codFiscale) throws InvalidParameterException {
+            if (codFiscale.length() < 5)
+                throw new InvalidParameterException();
+            this.codFiscale = codFiscale;
+            return this;
+        }
     }
 }

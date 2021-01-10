@@ -1,27 +1,24 @@
 package model.Porto;
+import lombok.*;
+import lombok.experimental.NonFinal;
+import model.Util.InvalidParameterException;
 
-import model.Area.Area;
 
+@Value
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NonFinal
 public class Porto {
-    private final String localcode;
-    private final String nome;
-    private final Area area;
+     String localcode;
+     String nome;
+     int idArea;
 
-    public Porto(String localcode, String nome, Area area) {
-        this.localcode = localcode;
-        this.nome = nome;
-        this.area = area;
-    }
-
-    public String getLocalcode() {
-        return localcode;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public Area getArea() {
-        return area;
-    }
+     public static class PortoBuilder {
+          public PortoBuilder localcode(String localcode) throws InvalidParameterException {
+               if(localcode.length() < 10)
+                    throw new InvalidParameterException();
+               this.localcode = localcode;
+               return this;
+          }
+     }
 }
