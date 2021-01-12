@@ -16,7 +16,7 @@ import java.util.LinkedList;
 public class AreaDAO {
 
     public static void doSave(Area a) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO area(nome) VALUES (?);");
             p.setString(1, a.getNome());
             p.execute();
@@ -28,7 +28,7 @@ public class AreaDAO {
     }
 
     public static void doUpdate(Area a) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE area SET nome = ? WHERE id = ?");
             p.setString(1, a.getNome());
             p.setInt(2, a.getId());
@@ -41,7 +41,7 @@ public class AreaDAO {
     }
 
     public static void doDelete(Area a) {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM area WHERE id = ?");
             p.setInt(1, a.getId());
             p.execute();
@@ -52,7 +52,7 @@ public class AreaDAO {
 
     public Area doRetriveById(int id) throws NoEntryException {
         Area area = null;
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from area where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
@@ -75,7 +75,7 @@ public class AreaDAO {
 
     public LinkedList<Area> doRetriveAll() throws NoEntryException {
         LinkedList<Area> aree = new LinkedList<>();
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from area;");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {

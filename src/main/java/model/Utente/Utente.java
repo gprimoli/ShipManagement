@@ -8,7 +8,7 @@ import model.Util.InvalidParameterException;
 
 @Value
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+//@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NonFinal
 public class Utente {
     String codFiscale;
@@ -18,19 +18,19 @@ public class Utente {
     String luogoNascita;
     String email;
     String telefono;
-    Ruolo ruolo;
+    String ruolo;
     boolean attivato;
 
     public boolean isArmatore() {
-        return ruolo == Ruolo.Armatore;
+        return ruolo.compareTo("armatore") == 0;
     }
 
     public boolean isCliente() {
-        return ruolo == Ruolo.Cliente;
+        return ruolo.compareTo("cliente") == 0;
     }
 
     public boolean isBroker() {
-        return ruolo == Ruolo.Broker;
+        return ruolo.compareTo("broker") == 0;
     }
 
     public static class UtenteBuilder {

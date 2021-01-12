@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class MediazioneDAO {
 
     public static void doSave(Mediazione m) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO mediazione(nome, stato, contratto, cod_fiscale_utente) VALUES (?,?,?,?);");
             p.setString(1, m.getNome());
             p.setString(2, m.getStato());
@@ -27,7 +27,7 @@ public class MediazioneDAO {
     }
 
     public static void doUpdate(Mediazione m) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE mediazione SET nome = ?, stato = ?, contratto = ?, cod_fiscale_utente = ? WHERE id = ?");
             p.setString(1, m.getNome());
             p.setString(2, m.getStato());
@@ -43,7 +43,7 @@ public class MediazioneDAO {
     }
 
     public static void doDelete(Mediazione m) {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM mediazione WHERE id = ?");
             p.setInt(1, m.getId());
             p.execute();
@@ -54,7 +54,7 @@ public class MediazioneDAO {
 
     public Mediazione doRetriveById(int id) throws NoEntryException {
         Mediazione mediazione = null;
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select *, contratto IS NOT NULL as caricato from mediazione where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
@@ -80,7 +80,7 @@ public class MediazioneDAO {
 
     public LinkedList<Mediazione> doRetriveAll() throws NoEntryException {
         LinkedList<Mediazione> mediazioni = new LinkedList<>();
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select *, contratto IS NOT NULL as caricato from mediazione;");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
@@ -110,7 +110,7 @@ public class MediazioneDAO {
 
     public static Blob doRetriveDocumento(int id) {
         Blob d;
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT contratto FROM mediazione where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();

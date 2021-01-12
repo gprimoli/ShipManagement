@@ -11,7 +11,7 @@ CREATE TABLE utente (
     luogo_nascita 			varchar(50) NOT NULL,
     email 					varchar(255) unique,
     telefono 				varchar(15) unique,
-    attivato 				boolean default false,
+    attivato 				varchar(30),
     ruolo					enum('cliente', 'armatore', 'broker') NOT NULL,
 							PRIMARY KEY (cod_fiscale),
                             FULLTEXT(nome,cognome)

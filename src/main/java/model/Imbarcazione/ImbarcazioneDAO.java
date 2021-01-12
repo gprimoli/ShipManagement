@@ -13,7 +13,7 @@ import java.util.LinkedList;
 public class ImbarcazioneDAO {
 
     public static void doSave(Imbarcazione i) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO imbarcazione(cod_fiscale_utente, imo, nome, tipologia, anno_costruzione, bandiera, quantita_max, lunghezza_fuori_tutto, ampiezza, altezza, posizione, disponibile, documento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);");
             p.setString(1, i.getCodFiscaleUtente());
             p.setString(2, i.getImo());
@@ -37,7 +37,7 @@ public class ImbarcazioneDAO {
     }
 
     public static void doUpdate(Imbarcazione i) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET cod_fiscale_utente = ?, nome = ?, tipologia = ?, anno_costruzione = ?, bandiera = ?, quantita_max = ?, lunghezza_fuori_tutto = ?, ampiezza = ?, altezza = ?, posizione = ?, disponibile = ?, documento = ? WHERE imo = ?");
             p.setString(1, i.getCodFiscaleUtente());
             p.setString(2, i.getNome());
@@ -61,7 +61,7 @@ public class ImbarcazioneDAO {
     }
 
     public static void doDelete(Imbarcazione i) {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM imbarcazione WHERE imo = ?");
             p.setString(1, i.getImo());
             p.execute();
@@ -72,7 +72,7 @@ public class ImbarcazioneDAO {
 
     public Imbarcazione doRetriveById(String imo) throws NoEntryException {
         Imbarcazione imbarcazione = null;
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where imo = ?;");
             p.setString(1, imo);
             @Cleanup ResultSet r = p.executeQuery();
@@ -106,7 +106,7 @@ public class ImbarcazioneDAO {
 
     public LinkedList<Imbarcazione> doRetriveAll() throws NoEntryException {
         LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select *, contratto IS NOT NULL as caricato from mediazione;");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
@@ -144,7 +144,7 @@ public class ImbarcazioneDAO {
 
     public static Blob doRetriveDocumento(String imo) {
         Blob d;
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM imbarcazione where imo = ?;");
             p.setString(1, imo);
             @Cleanup ResultSet r = p.executeQuery();

@@ -15,7 +15,7 @@ import java.util.LinkedList;
 public class NotificaDAO {
 
     public static void doSave(Notifica n) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO notifica(oggetto, corpo) VALUES (?,?);");
             p.setString(1, n.getOggetto());
             p.setString(2, n.getCorpo());
@@ -28,7 +28,7 @@ public class NotificaDAO {
     }
 
     public static void doUpdate(Notifica n) throws DuplicateException {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE notifica SET oggetto = ?, corpo = ? WHERE id = ?");
             p.setString(1, n.getOggetto());
             p.setString(2, n.getCorpo());
@@ -42,7 +42,7 @@ public class NotificaDAO {
     }
 
     public static void doDelete(Notifica n) {
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM notifica WHERE id = ?");
             p.setInt(1, n.getId());
             p.execute();
@@ -53,7 +53,7 @@ public class NotificaDAO {
 
     public Notifica doRetriveById(int id) throws NoEntryException {
         Notifica notifica = null;
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from notifica where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
@@ -77,7 +77,7 @@ public class NotificaDAO {
 
     public LinkedList<Notifica> doRetriveAll() throws NoEntryException {
         LinkedList<Notifica> notifiche = new LinkedList<>();
-        try (@Cleanup Connection c = DB.getConnection()) {
+        try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from notifica");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
