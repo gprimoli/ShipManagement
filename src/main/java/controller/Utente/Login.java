@@ -10,8 +10,6 @@ import javax.servlet.http.*;
 import java.io.*;
 
 @WebServlet(
-        name = "Login",
-        description = "Questa servlet si occupa del Login di un utente",
         urlPatterns = "/login"
 )
 public class Login extends HttpServlet {

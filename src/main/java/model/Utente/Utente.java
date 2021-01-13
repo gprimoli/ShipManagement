@@ -41,5 +41,19 @@ public class Utente {
             this.codFiscale = codFiscale;
             return this;
         }
+
+        public UtenteBuilder clone(Utente u) throws InvalidParameterException {
+            this.codFiscale = u.getCodFiscale();
+            this.nome = u.getNome();
+            this.cognome = u.getCognome();
+            this.dataNascita = u.getDataNascita();
+            this.luogoNascita = u.getLuogoNascita();
+            this.email = u.getEmail();
+            this.telefono = u.getTelefono();
+            this.ruolo = u.getRuolo();
+            this.attivato = u.isAttivato();
+            return this;
+        }
+
     }
 }

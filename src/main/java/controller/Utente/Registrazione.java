@@ -7,24 +7,19 @@ import model.Utente.UtenteDAO;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 import model.Util.Mail;
-import org.apache.commons.lang3.RandomStringUtils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 @WebServlet(
-        name = "Registrazione",
-        description = "Questa servlet si occupa della registrazione di un utente",
         urlPatterns = "/registrazione"
 )
 @MultipartConfig
@@ -64,8 +59,9 @@ public class Registrazione extends HttpServlet {
 
             Mail m = new Mail();
             String path = getServletContext().getContextPath();
-            String link = "Link attivazione account: http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email="+ u.getEmail();
-//          m.sendMail(u.getEmail(), "Benvenuto in ShipManagment", link);
+            String link = "Link attivazione account: <a href='http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email="+ u.getEmail() + "'>Attiva account</a>";
+            System.out.println(link);
+//            m.sendMail(u.getEmail(), "Benvenuto in ShipManagment " + u.getNome(), link);
 
             if (u.isBroker()) {
                 String codFiscaleCompagnia = req.getParameter("codFiscaleCompagnia");

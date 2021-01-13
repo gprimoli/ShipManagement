@@ -10,8 +10,8 @@ public class Mail {
     private final String password;
 
     public Mail() {
-        username = "40978c57061517";
-        password = "7ae4b29cbd5365";
+        username = "7c5f77e6acb72a";
+        password = "45002caf4c07b0";
     }
 
     public void sendMail(String destinatario, String oggetto, String testo){

@@ -51,14 +51,36 @@ public class UtenteDAO {
         }
     }
 
-    public static void doDelete(Utente u) {
+    public static void doDelete(Utente u) throws MediazioniInCorsoException {
         try (Connection c = DB.getConnection()) {
-            @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM utente WHERE cod_fiscale = ?");
+            if (!checkMediazioni(u.getCodFiscale()))
+                throw new MediazioniInCorsoException();
+            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET attivato = '-1' WHERE cod_fiscale = ?");
             p.setString(1, u.getCodFiscale());
             p.execute();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new RuntimeException(e);
         }
+    }
+
+    private static boolean checkMediazioni(String codFiscale) {
+        boolean stato = false;
+        try (Connection c = DB.getConnection()) {
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT m.stato = 'Terminta' as stato from (SELECT * FROM utente as utente where utente.cod_fiscale = ?) as u JOIN (SELECT * from richiesta where richiesta.cod_fiscale_utente = ?) as r JOIN (SELECT * from imbarcazione where imbarcazione.cod_fiscale_utente = ?) as i JOIN mediazione as m JOIN mediazione_imbarcazione as mi JOIN mediazione_richiesta as mr WHERE m.id = mi.id_mediazione AND i.imo = mi.imo_imbarcazione AND r.id = mr.id_richiesta AND m.id = mr.id_mediazione AND m.cod_fiscale_utente = u.cod_fiscale;");
+            p.setString(1, codFiscale);
+            p.setString(2, codFiscale);
+            p.setString(3, codFiscale);
+            @Cleanup ResultSet r = p.executeQuery();
+            if(r.getFetchSize() == 0)
+                stato = true;
+            while (r.next())
+                stato = r.getBoolean("stato");
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                stato = true;
+        }
+        return stato;
     }
 
     public static Utente doRetriveByCodFiscale(String codFiscale) throws NoEntryException {
@@ -76,7 +98,7 @@ public class UtenteDAO {
                     .luogoNascita(r.getString("luogo_nascita"))
                     .email(r.getString("email"))
                     .telefono(r.getString("telefono"))
-                    .attivato(r.getString("attivato").compareTo("") == 0)
+                    .attivato(r.getString("attivato").compareTo("0") == 0)
                     .ruolo(r.getString("ruolo"))
                     .build();
         } catch (SQLException e) {
@@ -105,7 +127,7 @@ public class UtenteDAO {
                                 .luogoNascita(r.getString("luogo_nascita"))
                                 .email(r.getString("email"))
                                 .telefono(r.getString("telefono"))
-                                .attivato(r.getString("attivato").compareTo("") == 0)
+                                .attivato(r.getString("attivato").compareTo("0") == 0)
                                 .ruolo(r.getString("ruolo"))
                                 .build()
                 );
@@ -124,28 +146,39 @@ public class UtenteDAO {
 
     //fine base
 
-    public static void doChangePassword(Utente u, String newPassword) throws DuplicateException {
+    public static void doChangePassword(Utente u, String newPassword) {
         try (Connection c = DB.getConnection()) {
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET password = UNHEX(SHA1(?)) WHERE cod_fiscale = ?");
             p.setString(1, newPassword);
             p.setString(2, u.getCodFiscale());
             p.execute();
         } catch (SQLException e) {
-            if (e.getSQLState().compareTo("23000") == 0)
-                throw new DuplicateException();
             throw new RuntimeException(e);
         }
     }
 
-    public static void doActivate(String email, String validation) throws NoEntryException {
+    public static String doRecuperaPassword(String email) {
         try (Connection c = DB.getConnection()) {
-            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET attivato = NULL WHERE email = ? AND attivato = ?");
+            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET password = UNHEX(SHA1(?)) WHERE email = ?");
+            String tmp = RandomStringUtils.random(20, true, true);
+
+            p.setString(1, tmp);
+            p.setString(2, email);
+            p.execute();
+
+            return tmp;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doActivate(String email, String validation) {
+        try (Connection c = DB.getConnection()) {
+            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET attivato = '0' WHERE email = ? AND attivato = ?");
             p.setString(1, email);
             p.setString(2, validation);
             p.execute();
         } catch (SQLException e) {
-            if (e.getSQLState().compareTo("S1000") == 0)
-                throw new NoEntryException();
             throw new RuntimeException(e);
         }
     }
@@ -166,7 +199,7 @@ public class UtenteDAO {
                     .luogoNascita(r.getString("luogo_nascita"))
                     .email(r.getString("email"))
                     .telefono(r.getString("telefono"))
-                    .attivato(r.getString("attivato").compareTo("") == 0)
+                    .attivato(r.getString("attivato").compareTo("0") == 0)
                     .ruolo(r.getString("ruolo"))
                     .build();
         } catch (SQLException e) {
@@ -196,7 +229,7 @@ public class UtenteDAO {
                                 .luogoNascita(r.getString("luogo_nascita"))
                                 .email(r.getString("email"))
                                 .telefono(r.getString("telefono"))
-                                .attivato(r.getString("attivato").compareTo("") == 0)
+                                .attivato(r.getString("attivato").compareTo("0") == 0)
                                 .ruolo(r.getString("ruolo"))
                                 .build()
                 );

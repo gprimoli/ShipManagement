@@ -7,8 +7,6 @@ import java.io.IOException;
 
 
 @WebServlet(
-        name = "Logout",
-        description = "Questa servlet si occupa del logout dell'utente",
         urlPatterns = "/logout"
 )
 
