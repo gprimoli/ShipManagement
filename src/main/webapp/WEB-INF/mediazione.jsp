@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="small mb-1" for="inputContratto">Contratto</label>
-                                    <input name="nome" class="form-control py-4" id="inputContratto"
+                                    <input name="documento" class="form-control py-4" id="inputContratto"
                                            type="file"
                                             <c:if test="${sessionScope.utente.ruolo.compareTo('broker') != 0}">
                                                 disabled
@@ -212,7 +212,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confermaEliminazione">Conferma Operazione</h5>
+                        <h5 class="modal-title">Conferma Operazione</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -235,7 +235,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confermaRimuoviRichiestaDallaMediazione">Conferma Operazione</h5>
+                        <h5 class="modal-title">Conferma Operazione</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -259,7 +259,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="confermaRimuoviImbarcazioneDallaMediazione">Conferma Operazione</h5>
+                        <h5 class="modal-title">Conferma Operazione</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>

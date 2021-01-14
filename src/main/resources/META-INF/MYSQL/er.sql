@@ -123,3 +123,10 @@ CREATE TABLE mediazione_imbarcazione
     imo_imbarcazione varchar(30) REFERENCES imbarcazione (imo) on UPDATE CASCADE on DELETE CASCADE,
     PRIMARY KEY (id_mediazione, imo_imbarcazione)
 );
+
+CREATE TABLE firma
+(
+    id_mediazione    bigint REFERENCES mediazione (id) on UPDATE CASCADE on DELETE CASCADE,
+    cod_fiscale_utente varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE, /*utente = broker*/
+    PRIMARY KEY (id_mediazione, cod_fiscale_utente)
+);
