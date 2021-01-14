@@ -261,7 +261,7 @@
                         <p>Sicuro di voler continuare?</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">chiudi</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
                         <form action="disattivaaccount" method="post">
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>

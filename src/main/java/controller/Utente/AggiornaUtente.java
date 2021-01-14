@@ -28,8 +28,10 @@ public class AggiornaUtente extends HttpServlet {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
 
-        if(u == null)
+        if(u == null){
             resp.sendRedirect("index.jsp");
+            return;
+        }
 
         String email = req.getParameter("email");
         String nome = req.getParameter("nome");

@@ -21,8 +21,10 @@ public class AggiornaCompagnia extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
-        if(u == null)
+        if(u == null){
             resp.sendRedirect("index.jsp");
+            return;
+        }
 
         String codFiscaleCompagnia = req.getParameter("codFiscaleCompagnia");
         String nomeCompagnia = req.getParameter("nomeCompagnia");

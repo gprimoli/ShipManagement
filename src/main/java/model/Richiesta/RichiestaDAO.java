@@ -125,7 +125,6 @@ public class RichiestaDAO {
         return richieste;
     }
 
-
     //fine base
 
     public static Blob doRetriveDocumento(int id) {

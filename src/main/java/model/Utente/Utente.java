@@ -54,6 +54,5 @@ public class Utente {
             this.attivato = u.isAttivato();
             return this;
         }
-
     }
 }

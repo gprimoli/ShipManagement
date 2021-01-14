@@ -1,6 +1,8 @@
 package model.Mediazione;
 
 import lombok.Cleanup;
+import model.Imbarcazione.Imbarcazione;
+import model.Richiesta.Richiesta;
 import model.Utente.Utente;
 import model.Util.DB;
 import model.Util.DuplicateException;
@@ -51,6 +53,15 @@ public class MediazioneDAO {
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM mediazione WHERE id = ?");
             p.setInt(1, m.getId());
             p.execute();
+
+            p = c.prepareStatement("DELETE FROM mediazione_imbarcazione as mi WHERE mi.id_mediazione = ?");
+            p.setInt(1, m.getId());
+            p.execute();
+
+            p = c.prepareStatement("DELETE FROM mediazione_richiesta as mr WHERE mr.id_mediazione = ?");
+            p.setInt(1, m.getId());
+            p.execute();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -166,4 +177,74 @@ public class MediazioneDAO {
         return mediazioni;
     }
 
+    public static LinkedList<Richiesta> doRetriveRichiesteFrom(Mediazione m) throws NoEntryException {
+        LinkedList<Richiesta> richieste = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("Select r.id, r.cod_fiscale_utente, r.tipo_carico, r.quantita, r.data_arrivo, r.porto_arrivo, r.data_partenza, r.porto_partenza, r.stato, r.documento IS NOT NULL as caricato from  mediazione as m JOIN mediazione_richiesta as mr on m.id = ? AND m.id = mr.id_mediazione JOIN richiesta as r on mr.id_richiesta = r.id");
+            p.setInt(1, m.getId());
+            @Cleanup ResultSet r = p.executeQuery();
+            while (r.next()) {
+                richieste.add(
+                        Richiesta.builder()
+                                .id(r.getInt("id"))
+                                .codFiscaleUtente(r.getString("cod_fiscale_utente"))
+                                .tipoCarico(r.getString("tipo_carico"))
+                                .quantita(r.getFloat("quantita"))
+                                .dataPartenza(r.getDate("data_partenza"))
+                                .portoPartenza(r.getString("porto_partenza"))
+                                .dataArrivo(r.getDate("data_arrivo"))
+                                .portoArrivo(r.getString("porto_arrivo"))
+                                .stato(r.getString("stato"))
+                                .caricato(r.getBoolean("caricato"))
+                                .build()
+                );
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new NoEntryException();
+            throw new RuntimeException(e);
+        } catch (InvalidParameterException e) {
+            System.out.println("database compromesso");
+            e.printStackTrace();
+        }
+        return richieste;
+    }
+
+    public static LinkedList<Imbarcazione> doRetriveImbarcazioniFrom(Mediazione m) throws NoEntryException {
+        LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT i.cod_fiscale_utente, i.imo, i.nome, i.tipologia, i.anno_costruzione, i.bandiera, i.quantita_max, i.lunghezza_fuori_tutto, i.altezza, i.ampiezza, i.posizione, i.disponibile, i.documento IS NOT NULL as caricato FROM mediazione as m JOIN mediazione_imbarcazione as mi ON m.id = ? AND m.id = mi.id_mediazione JOIN imbarcazione as i on mi.imo_imbarcazione = i.imo;");
+            p.setInt(1, m.getId());
+            @Cleanup ResultSet r = p.executeQuery();
+            while (r.next()) {
+                imbarcazioni.add(
+                        Imbarcazione.builder()
+                                .codFiscaleUtente(r.getString("cod_fiscale_utente"))
+                                .imo(r.getString("imo"))
+                                .nome(r.getString("nome"))
+                                .tipologia(r.getString("tipologia"))
+                                .annoCostruzione(r.getInt("anno_costruzione"))
+                                .bandiera(r.getString("bandiera"))
+                                .qauntitaMax(r.getFloat("quantita_max"))
+                                .lughezza(r.getFloat("lunghezza_fuori_tutto"))
+                                .ampiezza(r.getFloat("ampiezza"))
+                                .altezza(r.getFloat("altezza"))
+                                .posizione(r.getInt("posizione"))
+                                .disponibile(r.getBoolean("disponibile"))
+                                .caricato(r.getBoolean("caricato"))
+                                .build()
+                );
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new NoEntryException();
+            throw new RuntimeException(e);
+        } catch (InvalidParameterException e) {
+            System.out.println("database compromesso");
+            e.printStackTrace();
+        }
+        return imbarcazioni;
+    }
 }
