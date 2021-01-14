@@ -1,5 +1,6 @@
 package controller.Utente;
 
+import model.CompagniaBroker.CompagniaBrokerDAO;
 import model.Utente.Utente;
 import model.Utente.UtenteDAO;
 import model.Util.DuplicateException;
@@ -53,12 +54,13 @@ public class AggiornaUtente extends HttpServlet {
             req.setAttribute("tipoNotifica", "success");
 
         } catch (InvalidParameterException | ParseException e) {
-            req.setAttribute("notifica", "Parametri inviati non validi non validi!");
+            req.setAttribute("notifica", "Parametri inviati non validi!");
             req.setAttribute("tipoNotifica", "danger");
         } catch (DuplicateException e) {
             req.setAttribute("notifica", "È già presente il numero di telefono o questa mail nel database");
             req.setAttribute("tipoNotifica", "danger");
         }
+        req.setAttribute("compagniaBroker", CompagniaBrokerDAO.doRetriveBy(u));
         req.getRequestDispatcher("profilo.jsp").forward(req, resp);
     }
 }

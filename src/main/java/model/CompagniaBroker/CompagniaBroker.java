@@ -18,7 +18,7 @@ public class CompagniaBroker {
 
     public static class CompagniaBrokerBuilder {
         public CompagniaBrokerBuilder codFiscale(String codFiscale) throws InvalidParameterException {
-            if (codFiscale.length() < 10)
+            if (codFiscale.length() < 1)
                 throw new InvalidParameterException();
             this.codFiscale = codFiscale;
             return this;

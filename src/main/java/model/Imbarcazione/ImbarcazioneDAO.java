@@ -1,7 +1,7 @@
 package model.Imbarcazione;
 
 import lombok.Cleanup;
-import model.Mediazione.Mediazione;
+import model.Utente.Utente;
 import model.Util.DB;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
@@ -13,7 +13,8 @@ import java.util.LinkedList;
 public class ImbarcazioneDAO {
 
     public static void doSave(Imbarcazione i) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO imbarcazione(cod_fiscale_utente, imo, nome, tipologia, anno_costruzione, bandiera, quantita_max, lunghezza_fuori_tutto, ampiezza, altezza, posizione, disponibile, documento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);");
             p.setString(1, i.getCodFiscaleUtente());
             p.setString(2, i.getImo());
@@ -37,7 +38,8 @@ public class ImbarcazioneDAO {
     }
 
     public static void doUpdate(Imbarcazione i) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET cod_fiscale_utente = ?, nome = ?, tipologia = ?, anno_costruzione = ?, bandiera = ?, quantita_max = ?, lunghezza_fuori_tutto = ?, ampiezza = ?, altezza = ?, posizione = ?, disponibile = ?, documento = ? WHERE imo = ?");
             p.setString(1, i.getCodFiscaleUtente());
             p.setString(2, i.getNome());
@@ -61,7 +63,8 @@ public class ImbarcazioneDAO {
     }
 
     public static void doDelete(Imbarcazione i) {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM imbarcazione WHERE imo = ?");
             p.setString(1, i.getImo());
             p.execute();
@@ -70,14 +73,15 @@ public class ImbarcazioneDAO {
         }
     }
 
-    public Imbarcazione doRetriveById(String imo) throws NoEntryException {
+    public static Imbarcazione doRetriveById(String imo) throws NoEntryException {
         Imbarcazione imbarcazione = null;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where imo = ?;");
             p.setString(1, imo);
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
-                imbarcazione = new Imbarcazione.ImbarcazioneBuilder()
+                imbarcazione = Imbarcazione.builder()
                         .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                         .imo(r.getString("imo"))
                         .nome(r.getString("nome"))
@@ -104,14 +108,15 @@ public class ImbarcazioneDAO {
         return imbarcazione;
     }
 
-    public LinkedList<Imbarcazione> doRetriveAll() throws NoEntryException {
+    public static LinkedList<Imbarcazione> doRetriveAll() throws NoEntryException {
         LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
-        try (Connection c = DB.getConnection()) {
-            @Cleanup PreparedStatement p = c.prepareStatement("Select *, contratto IS NOT NULL as caricato from mediazione;");
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione;");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 imbarcazioni.add(
-                        new Imbarcazione.ImbarcazioneBuilder()
+                        Imbarcazione.builder()
                                 .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                                 .imo(r.getString("imo"))
                                 .nome(r.getString("nome"))
@@ -144,7 +149,8 @@ public class ImbarcazioneDAO {
 
     public static Blob doRetriveDocumento(String imo) {
         Blob d;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM imbarcazione where imo = ?;");
             p.setString(1, imo);
             @Cleanup ResultSet r = p.executeQuery();
@@ -155,4 +161,43 @@ public class ImbarcazioneDAO {
         }
         return d;
     }
+
+    public static LinkedList<Imbarcazione> doRetriveBy(Utente u) throws NoEntryException {
+        LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where cod_fiscale_utente = ?;");
+            p.setString(1, u.getCodFiscale());
+            @Cleanup ResultSet r = p.executeQuery();
+            while (r.next()) {
+                imbarcazioni.add(
+                        Imbarcazione.builder()
+                                .codFiscaleUtente(r.getString("cod_fiscale_utente"))
+                                .imo(r.getString("imo"))
+                                .nome(r.getString("nome"))
+                                .tipologia(r.getString("tipologia"))
+                                .annoCostruzione(r.getInt("anno_costruzione"))
+                                .bandiera(r.getString("bandiera"))
+                                .qauntitaMax(r.getFloat("quantita_max"))
+                                .lughezza(r.getFloat("lunghezza_fuori_tutto"))
+                                .ampiezza(r.getFloat("ampiezza"))
+                                .altezza(r.getFloat("altezza"))
+                                .posizione(r.getInt("posizione"))
+                                .disponibile(r.getBoolean("disponibile"))
+                                .caricato(r.getBoolean("caricato"))
+                                .build()
+                );
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new NoEntryException();
+            throw new RuntimeException(e);
+        } catch (InvalidParameterException e) {
+            System.out.println("database compromesso");
+            e.printStackTrace();
+        }
+        return imbarcazioni;
+    }
+
+
 }

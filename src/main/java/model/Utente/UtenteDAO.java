@@ -1,6 +1,8 @@
 package model.Utente;
 
 import lombok.Cleanup;
+import model.Mediazione.Mediazione;
+import model.Mediazione.MediazioneDAO;
 import model.Util.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -9,7 +11,8 @@ import java.util.LinkedList;
 
 public class UtenteDAO {
     public static String doSave(Utente u, String password) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO utente(cod_fiscale, password, nome, cognome, data_nascita, luogo_nascita, email, telefono, ruolo, attivato) VALUES (?,UNHEX(SHA1(?)),?,?,?,?,?,?,?,?);");
             String tmp = RandomStringUtils.random(30, true, true);
 
@@ -34,7 +37,8 @@ public class UtenteDAO {
     }
 
     public static void doUpdate(Utente u) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET nome = ?, cognome = ?, data_nascita = ?, luogo_nascita = ?, email = ?, telefono = ? WHERE cod_fiscale = ?");
             p.setString(1, u.getNome());
             p.setString(2, u.getCognome());
@@ -52,8 +56,16 @@ public class UtenteDAO {
     }
 
     public static void doDelete(Utente u) throws MediazioniInCorsoException {
-        try (Connection c = DB.getConnection()) {
-            if (!checkMediazioni(u.getCodFiscale()))
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            LinkedList<Mediazione> mlist = MediazioneDAO.doRetriveBy(u);
+            boolean tmp = true;
+            for (Mediazione m : mlist)
+                if(m.getStato().compareTo("In Corso") == 0 || m.getStato().compareTo("Richiesta Modifica") == 0 || m.getStato().compareTo("Richiesta Terminazione") == 0 || m.getStato().compareTo("In Attesa di Firma") == 0) {
+                    tmp = false;
+                    break;
+                }
+            if(!tmp)
                 throw new MediazioniInCorsoException();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET attivato = '-1' WHERE cod_fiscale = ?");
             p.setString(1, u.getCodFiscale());
@@ -61,36 +73,20 @@ public class UtenteDAO {
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("S1000") == 0)
                 throw new RuntimeException(e);
+        } catch (NoEntryException e) {
+            throw new RuntimeException(e);
         }
-    }
-
-    private static boolean checkMediazioni(String codFiscale) {
-        boolean stato = false;
-        try (Connection c = DB.getConnection()) {
-            @Cleanup PreparedStatement p = c.prepareStatement("SELECT m.stato = 'Terminta' as stato from (SELECT * FROM utente as utente where utente.cod_fiscale = ?) as u JOIN (SELECT * from richiesta where richiesta.cod_fiscale_utente = ?) as r JOIN (SELECT * from imbarcazione where imbarcazione.cod_fiscale_utente = ?) as i JOIN mediazione as m JOIN mediazione_imbarcazione as mi JOIN mediazione_richiesta as mr WHERE m.id = mi.id_mediazione AND i.imo = mi.imo_imbarcazione AND r.id = mr.id_richiesta AND m.id = mr.id_mediazione AND m.cod_fiscale_utente = u.cod_fiscale;");
-            p.setString(1, codFiscale);
-            p.setString(2, codFiscale);
-            p.setString(3, codFiscale);
-            @Cleanup ResultSet r = p.executeQuery();
-            if(r.getFetchSize() == 0)
-                stato = true;
-            while (r.next())
-                stato = r.getBoolean("stato");
-        } catch (SQLException e) {
-            if (e.getSQLState().compareTo("S1000") == 0)
-                stato = true;
-        }
-        return stato;
     }
 
     public static Utente doRetriveByCodFiscale(String codFiscale) throws NoEntryException {
         Utente u = null;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT * FROM utente WHERE cod_fiscale = ?;");
             p.setString(1, codFiscale);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
-            u = new Utente.UtenteBuilder()
+            u = Utente.builder()
                     .codFiscale(r.getString("cod_fiscale"))
                     .nome(r.getString("nome"))
                     .cognome(r.getString("cognome"))
@@ -114,12 +110,13 @@ public class UtenteDAO {
 
     public static LinkedList<Utente> doRetriveAll() throws NoEntryException {
         LinkedList<Utente> utenti = new LinkedList<>();
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from utente");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 utenti.add(
-                        new Utente.UtenteBuilder()
+                        Utente.builder()
                                 .codFiscale(r.getString("cod_fiscale"))
                                 .nome(r.getString("nome"))
                                 .cognome(r.getString("cognome"))
@@ -147,7 +144,8 @@ public class UtenteDAO {
     //fine base
 
     public static void doChangePassword(Utente u, String newPassword) {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET password = UNHEX(SHA1(?)) WHERE cod_fiscale = ?");
             p.setString(1, newPassword);
             p.setString(2, u.getCodFiscale());
@@ -158,7 +156,8 @@ public class UtenteDAO {
     }
 
     public static String doRecuperaPassword(String email) {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET password = UNHEX(SHA1(?)) WHERE email = ?");
             String tmp = RandomStringUtils.random(20, true, true);
 
@@ -173,7 +172,8 @@ public class UtenteDAO {
     }
 
     public static void doActivate(String email, String validation) {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE utente SET attivato = '0' WHERE email = ? AND attivato = ?");
             p.setString(1, email);
             p.setString(2, validation);
@@ -185,13 +185,14 @@ public class UtenteDAO {
 
     public static Utente doRetriveByEmailPassword(String email, String password) throws NoEntryException {
         Utente u = null;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT * FROM utente WHERE email = ? AND password = UNHEX(SHA1(?))");
             p.setString(1, email);
             p.setString(2, password);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
-            u = new Utente.UtenteBuilder()
+            u = Utente.builder()
                     .codFiscale(r.getString("cod_fiscale"))
                     .nome(r.getString("nome"))
                     .cognome(r.getString("cognome"))
@@ -215,13 +216,14 @@ public class UtenteDAO {
 
     public static LinkedList<Utente> doRetriveSearch(String name, String cognome) throws NoEntryException {
         LinkedList<Utente> utenti = new LinkedList<>();
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from utente WHERE MATCH(nome,cognome) AGAINST (?)");
             p.setString(1, name + " " + cognome);
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 utenti.add(
-                        new Utente.UtenteBuilder()
+                        Utente.builder()
                                 .codFiscale(r.getString("cod_fiscale"))
                                 .nome(r.getString("nome"))
                                 .cognome(r.getString("cognome"))

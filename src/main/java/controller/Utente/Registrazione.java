@@ -77,7 +77,8 @@ public class Registrazione extends HttpServlet {
                         .sitoWeb(sitoCompagnia)
                         .build();
 
-                CompagniaBrokerDAO.doSave(cb, u);
+                CompagniaBrokerDAO.doSave(cb);
+                CompagniaBrokerDAO.doSaveUtenteCompagnia(cb, u);
             }
 
             forward = "/login.jsp";

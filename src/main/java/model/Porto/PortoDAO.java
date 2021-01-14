@@ -14,7 +14,8 @@ import java.util.LinkedList;
 
 public class PortoDAO {
     public static void doSave(Porto porto, int id_area) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO porto(localcode, nome, id_area) VALUES (?,?,?);");
             p.setString(1, porto.getLocalcode());
             p.setString(2, porto.getNome());
@@ -28,7 +29,8 @@ public class PortoDAO {
     }
 
     public static void doUpdate(Porto porto, int id_area) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE porto SET nome = ?, id_area = ? WHERE localcode = ?");
             p.setString(1, porto.getNome());
             p.setInt(2, id_area);
@@ -42,7 +44,8 @@ public class PortoDAO {
     }
 
     public static void doDelete(Porto porto) {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM porto WHERE localcode = ?");
             p.setString(1, porto.getLocalcode());
             p.execute();
@@ -51,14 +54,15 @@ public class PortoDAO {
         }
     }
 
-    public Porto doRetriveByLocalCode(String localCode) throws NoEntryException {
+    public static Porto doRetriveByLocalCode(String localCode) throws NoEntryException {
         Porto porto = null;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from porto where localcode = ?;");
             p.setString(1, localCode);
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
-                porto = new Porto.PortoBuilder()
+                porto = Porto.builder()
                         .localcode(r.getString("localcode"))
                         .nome(r.getString("nome"))
                         .idArea(r.getInt("id_area"))
@@ -75,14 +79,15 @@ public class PortoDAO {
         return porto;
     }
 
-    public LinkedList<Porto> doRetriveAll() throws NoEntryException {
+    public static LinkedList<Porto> doRetriveAll() throws NoEntryException {
         LinkedList<Porto> porti = new LinkedList<>();
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from porto");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 porti.add(
-                        new Porto.PortoBuilder()
+                        Porto.builder()
                                 .localcode(r.getString("localcode"))
                                 .nome(r.getString("nome"))
                                 .idArea(r.getInt("id_area"))

@@ -1,6 +1,8 @@
 package model.Richiesta;
 
 import lombok.Cleanup;
+import model.Notifica.Notifica;
+import model.Utente.Utente;
 import model.Util.DB;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
@@ -11,7 +13,8 @@ import java.util.LinkedList;
 
 public class RichiestaDAO {
     public static void doSave(Richiesta r, String codiceFiscale, String pPartenza, String pArrivo) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO richiesta(cod_fiscale_utente, tipo_carico, quantita, data_partenza, porto_partenza, data_arrivo, porto_arrivo, documento) VALUES (?,?,?,?,?,?,?,?);");
             p.setString(1, codiceFiscale);
             p.setString(2, r.getTipoCarico());
@@ -30,7 +33,8 @@ public class RichiestaDAO {
     }
 
     public static void doUpdate(Richiesta r, String pPartenza, String pArrivo) throws DuplicateException {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE richiesta SET tipo_carico = ?, quantita = ?, data_partenza = ?, porto_partenza = ?, data_arrivo = ?, porto_arrivo = ?, documento = ? WHERE id = ?");
             p.setString(1, r.getTipoCarico());
             p.setFloat(2, r.getQuantita());
@@ -49,7 +53,8 @@ public class RichiestaDAO {
     }
 
     public static void doDelete(Richiesta r) {
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM richiesta WHERE id = ?");
             p.setInt(1, r.getId());
             p.execute();
@@ -60,12 +65,13 @@ public class RichiestaDAO {
 
     public static Richiesta doRetriveById(int id) {
         Richiesta tmp = null;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT *, documento IS NOT NULL as caricato FROM richiesta where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
-            tmp = new Richiesta.RichiestaBuilder()
+            tmp = Richiesta.builder()
                     .id(r.getInt("id"))
                     .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                     .tipoCarico(r.getString("tipo_carico"))
@@ -86,14 +92,15 @@ public class RichiestaDAO {
         return tmp;
     }
 
-    public LinkedList<Richiesta> doRetriveAll() throws NoEntryException {
+    public static LinkedList<Richiesta> doRetriveAll() throws NoEntryException {
         LinkedList<Richiesta> richieste = new LinkedList<>();
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from richiesta");
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 richieste.add(
-                        new Richiesta.RichiestaBuilder()
+                        Richiesta.builder()
                                 .id(r.getInt("id"))
                                 .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                                 .tipoCarico(r.getString("tipo_carico"))
@@ -123,7 +130,8 @@ public class RichiestaDAO {
 
     public static Blob doRetriveDocumento(int id) {
         Blob d;
-        try (Connection c = DB.getConnection()) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM richiesta where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
@@ -133,5 +141,39 @@ public class RichiestaDAO {
             throw new RuntimeException(e);
         }
         return d;
+    }
+
+    public static LinkedList<Richiesta> doRetriveBy(Utente u) throws NoEntryException{
+        LinkedList<Richiesta> richieste = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from richiesta where cod_fiscale_utente = ?");
+            p.setString(1, u.getCodFiscale());
+            @Cleanup ResultSet r = p.executeQuery();
+            while (r.next()) {
+                richieste.add(
+                        Richiesta.builder()
+                                .id(r.getInt("id"))
+                                .codFiscaleUtente(r.getString("cod_fiscale_utente"))
+                                .tipoCarico(r.getString("tipo_carico"))
+                                .quantita(r.getFloat("quantita"))
+                                .dataPartenza(r.getDate("data_partenza"))
+                                .portoPartenza(r.getString("porto_partenza"))
+                                .dataArrivo(r.getDate("data_arrivo"))
+                                .portoArrivo(r.getString("porto_arrivo"))
+                                .stato(r.getString("stato"))
+                                .caricato(r.getBoolean("caricato"))
+                                .build()
+                );
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new NoEntryException();
+            throw new RuntimeException(e);
+        } catch (InvalidParameterException e) {
+            System.out.println("database compromesso");
+            e.printStackTrace();
+        }
+        return richieste;
     }
 }

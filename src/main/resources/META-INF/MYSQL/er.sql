@@ -123,6 +123,3 @@ CREATE TABLE mediazione_imbarcazione
     imo_imbarcazione varchar(30) REFERENCES imbarcazione (imo) on UPDATE CASCADE on DELETE CASCADE,
     PRIMARY KEY (id_mediazione, imo_imbarcazione)
 );
-
-
-

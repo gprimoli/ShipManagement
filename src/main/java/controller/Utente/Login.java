@@ -31,7 +31,8 @@ public class Login extends HttpServlet {
                 forward = "login.jsp";
             } else {
                 s.setAttribute("utente", u);
-                forward = "index.jsp";
+                resp.sendRedirect("index.jsp");
+                return;
             }
         } catch (NoEntryException e) {
             req.setAttribute("notifica", "Hai inserito credenziali non valide");
