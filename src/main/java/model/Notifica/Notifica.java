@@ -20,5 +20,19 @@ public class Notifica {
                this.id = id;
                return this;
           }
+
+          public NotificaBuilder oggetto(String oggetto) throws InvalidParameterException {
+               if(oggetto.length() > 50 || oggetto.length()<1 )
+                    throw new InvalidParameterException();
+               this.oggetto = oggetto;
+               return this;
+          }
+
+          public NotificaBuilder corpo(String corpo) throws InvalidParameterException {
+               if(corpo.length() > 5000 || corpo.length()<1 )
+                    throw new InvalidParameterException();
+               this.corpo = corpo;
+               return this;
+          }
      }
 }

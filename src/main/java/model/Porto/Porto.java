@@ -15,9 +15,23 @@ public class Porto {
 
      public static class PortoBuilder {
           public PortoBuilder localcode(String localcode) throws InvalidParameterException {
-               if(localcode.length() < 10)
+               if(localcode.length() < 10 || (!localcode.matches("^[0-9]+$")))
                     throw new InvalidParameterException();
                this.localcode = localcode;
+               return this;
+          }
+
+          public PortoBuilder nome(String nome) throws InvalidParameterException {
+               if(nome.length()>50 || nome.length()<2 || (!nome.matches("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")))
+                    throw new InvalidParameterException();
+               this.nome= nome;
+               return this;
+          }
+
+          public PortoBuilder idArea(int idArea) throws InvalidParameterException {
+               if(idArea<999999)
+               throw new InvalidParameterException();
+               this.idArea= idArea;
                return this;
           }
      }
