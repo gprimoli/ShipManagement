@@ -272,7 +272,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form action="aggiungi-imbarcazione" method="post">
+                <form enctype="multipart/form-data" action="aggiungi-imbarcazione" method="post">
                     <input type="hidden" value="${sessionScope.utente.codFiscale}" name="codFiscale">
                     <div class="modal-body">
                         <div class="form-row">
