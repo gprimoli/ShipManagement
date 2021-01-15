@@ -88,7 +88,7 @@ CREATE TABLE richiesta
 (
     id                 bigint auto_increment,
     cod_fiscale_utente varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE,
-    tipo_carico        varchar(50) NOT NULL,
+    tipo_carico        enum('Container','Carico alla Rinfusa','Prodotti Chimici Solidi','Prodotti Chimici Liquidi','Prodotti Chimici Gassosi','Autoveicoli'),
     quantita           float       NOT NULL,
     data_partenza      timestamp   NOT NULL,
     porto_partenza     varchar(6) REFERENCES porto (localcode) on UPDATE CASCADE on DELETE CASCADE,
