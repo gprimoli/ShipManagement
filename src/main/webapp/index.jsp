@@ -571,8 +571,8 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
-                                <label class="small mb-1" for="inputLughezza">Lunghezza</label>
-                                <input name="lunghezza" class="form-control py-4" id="inputLughezza"
+                                <label class="small mb-1" for="inputlunghezza">Lunghezza</label>
+                                <input name="lunghezza" class="form-control py-4" id="inputlunghezza"
                                        type="number" step="1"
                                        required/>
                             </div>

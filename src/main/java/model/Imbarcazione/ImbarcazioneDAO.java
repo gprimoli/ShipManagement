@@ -22,8 +22,8 @@ public class ImbarcazioneDAO {
             p.setString(4, i.getTipologia());
             p.setInt(5, i.getAnnoCostruzione());
             p.setString(6, i.getBandiera());
-            p.setFloat(7, i.getQauntitaMax());
-            p.setFloat(8, i.getLughezza());
+            p.setFloat(7, i.getQuantitaMax());
+            p.setFloat(8, i.getLunghezza());
             p.setFloat(9, i.getAmpiezza());
             p.setFloat(10, i.getAltezza());
             p.setInt(11, i.getPosizione());
@@ -46,8 +46,8 @@ public class ImbarcazioneDAO {
             p.setString(3, i.getTipologia());
             p.setInt(4, i.getAnnoCostruzione());
             p.setString(5, i.getBandiera());
-            p.setFloat(6, i.getQauntitaMax());
-            p.setFloat(7, i.getLughezza());
+            p.setFloat(6, i.getQuantitaMax());
+            p.setFloat(7, i.getLunghezza());
             p.setFloat(8, i.getAmpiezza());
             p.setFloat(9, i.getAltezza());
             p.setInt(10, i.getPosizione());
@@ -88,8 +88,8 @@ public class ImbarcazioneDAO {
                         .tipologia(r.getString("tipologia"))
                         .annoCostruzione(r.getInt("anno_costruzione"))
                         .bandiera(r.getString("bandiera"))
-                        .qauntitaMax(r.getFloat("quantita_max"))
-                        .lughezza(r.getFloat("lunghezza_fuori_tutto"))
+                        .quantitaMax(r.getFloat("quantita_max"))
+                        .lunghezza(r.getFloat("lunghezza_fuori_tutto"))
                         .ampiezza(r.getFloat("ampiezza"))
                         .altezza(r.getFloat("altezza"))
                         .posizione(r.getInt("posizione"))
@@ -123,8 +123,8 @@ public class ImbarcazioneDAO {
                                 .tipologia(r.getString("tipologia"))
                                 .annoCostruzione(r.getInt("anno_costruzione"))
                                 .bandiera(r.getString("bandiera"))
-                                .qauntitaMax(r.getFloat("quantita_max"))
-                                .lughezza(r.getFloat("lunghezza_fuori_tutto"))
+                                .quantitaMax(r.getFloat("quantita_max"))
+                                .lunghezza(r.getFloat("lunghezza_fuori_tutto"))
                                 .ampiezza(r.getFloat("ampiezza"))
                                 .altezza(r.getFloat("altezza"))
                                 .posizione(r.getInt("posizione"))
@@ -178,8 +178,8 @@ public class ImbarcazioneDAO {
                                 .tipologia(r.getString("tipologia"))
                                 .annoCostruzione(r.getInt("anno_costruzione"))
                                 .bandiera(r.getString("bandiera"))
-                                .qauntitaMax(r.getFloat("quantita_max"))
-                                .lughezza(r.getFloat("lunghezza_fuori_tutto"))
+                                .quantitaMax(r.getFloat("quantita_max"))
+                                .lunghezza(r.getFloat("lunghezza_fuori_tutto"))
                                 .ampiezza(r.getFloat("ampiezza"))
                                 .altezza(r.getFloat("altezza"))
                                 .posizione(r.getInt("posizione"))
