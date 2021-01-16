@@ -17,11 +17,11 @@ public class EliminaMediazione extends HttpServlet {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         if (u == null) {
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("index");
             return;
         }
         int id = Integer.parseInt((String) req.getAttribute("id"));
-        String forward = "index.jsp";
+        String forward = "index";
         Mediazione m = MediazioneDAO.doRetriveById(id);
 
         if(m.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0){

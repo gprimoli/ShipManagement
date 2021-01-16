@@ -25,9 +25,10 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="card mb-4">
-                    <div class="card-header">${requestScope.azione} Mediazione</div>
+                    <div class="card-header">Visualizza Mediazione</div>
                     <div class="card-body">
-                        <c:if test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
+                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
+
                         <form action="modifica-mediazione" method="post">
                             </c:if>
                             <div class="form-row">
@@ -54,20 +55,26 @@
                                     <label class="small mb-1" for="inputContratto">Contratto</label>
                                     <input name="documento" class="form-control py-4" id="inputContratto"
                                            type="file"
-                                            <c:if test="${sessionScope.utente.ruolo.compareTo('broker') != 0}">
+                                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
                                                 disabled
                                             </c:if>
                                            value="${requestScope.mediazione.contratto}"/>
                                 </div>
                             </div>
-                            <c:if test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
-                            <button class="btn btn-primary" type="submit">Modifica</button>
+                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
+                                <button class="btn btn-primary" type="submit">Modifica</button>
+                            </c:if>
+                            <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('In attesa di Firma') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
+                                <button class="btn btn-outline-danger" data-toggle="modal"
+                                        data-target="#eliminazione"
+                                        type="button">Rimuovi
+                                </button>
+                            </c:if>
+                            <a href="index">
+                                <button class="btn btn-primary">Indietro</button>
+                            </a>
+                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
                         </form>
-                        <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('In attesa di Firma') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
-                            <button class="btn btn-outline-danger" data-toggle="modal" data-target="#eliminazione"
-                                    type="button">Rimuovi
-                            </button>
-                        </c:if>
                         </c:if>
                         <p class="h5 mt-2 mb-1">Dati Broker:</p>
                         <div class="form-row">
@@ -170,7 +177,7 @@
                                         <thead>
                                         <tr>
                                             <th>Tipo Carico</th>
-                                            <th>Quantità</th>
+                                            <th>Quantit&aacute;</th>
                                             <th>Data Partenza</th>
                                             <th>Data Arrivo</th>
                                             <th>Azioni</th>
@@ -207,7 +214,8 @@
             </div>
         </div>
     </div>
-    <c:if test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
+    <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
+
         <div class="modal fade" id="eliminazione" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

@@ -3,6 +3,7 @@ package controller.Utente;
 import model.Imbarcazione.ImbarcazioneDAO;
 import model.Mediazione.MediazioneDAO;
 import model.Notifica.NotificaDAO;
+import model.Porto.PortoDAO;
 import model.Richiesta.RichiestaDAO;
 import model.Utente.Utente;
 
@@ -27,8 +28,10 @@ public class IndexFilter extends HttpFilter {
         if (u != null) {
             httpreq.setAttribute("notifiche", NotificaDAO.doRetriveBy(u));
             httpreq.setAttribute("mediazioni", MediazioneDAO.doRetriveBy(u));
-            if (u.isCliente())
+            if (u.isCliente()){
+                httpreq.setAttribute("porti", PortoDAO.doRetriveAll());
                 httpreq.setAttribute("richieste", RichiestaDAO.doRetriveBy(u));
+            }
             else if (u.isArmatore())
                 httpreq.setAttribute("imbarcazioni", ImbarcazioneDAO.doRetriveBy(u));
         }

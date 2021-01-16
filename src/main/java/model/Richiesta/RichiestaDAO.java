@@ -12,17 +12,17 @@ import java.sql.*;
 import java.util.LinkedList;
 
 public class RichiestaDAO {
-    public static void doSave(Richiesta r, String codiceFiscale, String pPartenza, String pArrivo) throws DuplicateException {
+    public static void doSave(Richiesta r) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO richiesta(cod_fiscale_utente, tipo_carico, quantita, data_partenza, porto_partenza, data_arrivo, porto_arrivo, documento) VALUES (?,?,?,?,?,?,?,?);");
-            p.setString(1, codiceFiscale);
+            p.setString(1, r.getCodFiscaleUtente());
             p.setString(2, r.getTipoCarico());
             p.setFloat(3, r.getQuantita());
             p.setDate(4, r.getDataPartenza());
-            p.setString(5, pPartenza);
+            p.setString(5, r.getPortoPartenza());
             p.setDate(6, r.getDataArrivo());
-            p.setString(7, pArrivo);
+            p.setString(7, r.getPortoArrivo());
             p.setBlob(8, r.getDocumento());
             p.execute();
         } catch (SQLException e) {
@@ -32,16 +32,16 @@ public class RichiestaDAO {
         }
     }
 
-    public static void doUpdate(Richiesta r, String pPartenza, String pArrivo) throws DuplicateException {
+    public static void doUpdate(Richiesta r) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE richiesta SET tipo_carico = ?, quantita = ?, data_partenza = ?, porto_partenza = ?, data_arrivo = ?, porto_arrivo = ?, documento = ? WHERE id = ?");
             p.setString(1, r.getTipoCarico());
             p.setFloat(2, r.getQuantita());
             p.setDate(3, r.getDataPartenza());
-            p.setString(4, pPartenza);
+            p.setString(4, r.getPortoPartenza());
             p.setDate(5, r.getDataArrivo());
-            p.setString(6, pArrivo);
+            p.setString(6, r.getPortoArrivo());
             p.setBlob(7, r.getDocumento());
             p.setInt(8, r.getId());
             p.execute();

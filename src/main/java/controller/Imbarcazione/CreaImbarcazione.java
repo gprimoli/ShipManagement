@@ -3,34 +3,48 @@ package controller.Imbarcazione;
 import lombok.Cleanup;
 import model.Imbarcazione.Imbarcazione;
 import model.Imbarcazione.ImbarcazioneDAO;
+import model.Utente.Utente;
+import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.*;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+@WebServlet(
+        urlPatterns = "/aggiungi-imbarcazione"
+)
 @MultipartConfig
 public class CreaImbarcazione extends HttpServlet {
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String codFiscale = (String) req.getAttribute("codFiscale");
-        String imo = (String) req.getAttribute("imo");
-        String nome = (String) req.getAttribute("nome");
-        float quantita = Float.parseFloat((String) req.getAttribute("quantita"));
-        String bandiera = (String) req.getAttribute("bandiera");
-        int anno = Integer.parseInt((String) req.getAttribute("anno"));
-        float lunghezza = Float.parseFloat((String) req.getAttribute("lunghezza"));
-        float ampiezza = Float.parseFloat((String) req.getAttribute("ampiezza"));
-        float altezza = Float.parseFloat((String) req.getAttribute("altezza"));
+        HttpSession s = req.getSession();
+        Utente u = (Utente) s.getAttribute("utente");
+
+        if(u == null){
+            resp.sendRedirect("index");
+            return;
+        }
+
+        String forward = "/WEB-INF/error.jsp";
+        String codFiscale = u.getCodFiscale();
+        String tipologia = req.getParameter("tipologia");
+        String imo = req.getParameter("imo");
+        String nome = req.getParameter("nome");
+        String xx = req.getParameter("quantita");
+        float quantita = Float.parseFloat(req.getParameter("quantita"));
+        String bandiera = req.getParameter("bandiera");
+        int anno = Integer.parseInt(req.getParameter("anno"));
+        float lunghezza = Float.parseFloat(req.getParameter("lunghezza"));
+        float ampiezza = Float.parseFloat(req.getParameter("ampiezza"));
+        float altezza = Float.parseFloat(req.getParameter("altezza"));
         Part p = req.getPart("documento");
         byte[] byteArray = null;
         Blob documento = null;
@@ -54,17 +68,24 @@ public class CreaImbarcazione extends HttpServlet {
                     .altezza(altezza)
                     .documento(documento)
                     .caricato(tmp)
+                    .tipologia(tipologia)
                     .build();
 
             ImbarcazioneDAO.doSave(i);
 
             req.setAttribute("notifica", "Imbarcazione aggiunta con successo");
             req.setAttribute("tipoNotifica", "success");
+            forward = "index";
         } catch (InvalidParameterException | SQLException e) {
-            req.setAttribute("notifica", "Ops! Abbiamo riscontrato problemi con i campi inviati, riprova");
-            req.setAttribute("tipoNotifica", "danger");
+            req.setAttribute("errore", "422");
+            req.setAttribute("descrizione", "Parametri non validi");
+            req.setAttribute("back", "index.jsp");
+        } catch (DuplicateException e) {
+            req.setAttribute("errore", "422");
+            req.setAttribute("descrizione", "Imbarcazione già presente nel database contrallare i dati");
+            req.setAttribute("back", "index.jsp");
         }
-        req.getRequestDispatcher("index.jsp").forward(req, resp);
+        req.getRequestDispatcher(forward).forward(req, resp);
     }
 
 }

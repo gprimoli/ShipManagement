@@ -47,7 +47,7 @@ public class CompagniaBroker {
         }
 
         public CompagniaBrokerBuilder sitoWeb(String sitoWeb) throws InvalidParameterException {
-            if (sedeLegale.length() > 50 || sedeLegale.length() < 2 || (!sedeLegale.matches("^(http:\\/\\/www\\.|https:\\/\\/" +
+            if (sitoWeb.length() > 50 || sitoWeb.length() < 2 || (!sitoWeb.matches("^(http:\\/\\/www\\.|https:\\/\\/" +
                     "www\\.|http:\\/\\/|https:\\/\\/)?[a-z0-9]+([\\-\\.]" +
                     "{1}[a-z0-9]+)*\\.[a-z]{2,5}(:[0-9]{1,5})?(\\/.*)?$")))
                 throw new InvalidParameterException();

@@ -15,7 +15,7 @@ public class ImbarcazioneDAO {
     public static void doSave(Imbarcazione i) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO imbarcazione(cod_fiscale_utente, imo, nome, tipologia, anno_costruzione, bandiera, quantita_max, lunghezza_fuori_tutto, ampiezza, altezza, posizione, disponibile, documento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);");
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO imbarcazione(cod_fiscale_utente, imo, nome, tipologia, anno_costruzione, bandiera, quantita_max, lunghezza_fuori_tutto, ampiezza, altezza, posizione, documento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
             p.setString(1, i.getCodFiscaleUtente());
             p.setString(2, i.getImo());
             p.setString(3, i.getNome());
@@ -27,8 +27,7 @@ public class ImbarcazioneDAO {
             p.setFloat(9, i.getAmpiezza());
             p.setFloat(10, i.getAltezza());
             p.setInt(11, i.getPosizione());
-            p.setBoolean(12, i.isDisponibile());
-            p.setBlob(13, i.getDocumento());
+            p.setBlob(12, i.getDocumento());
             p.execute();
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)

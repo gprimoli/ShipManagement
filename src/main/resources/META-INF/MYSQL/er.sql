@@ -83,7 +83,6 @@ CREATE TABLE imbarcazione
     PRIMARY KEY (imo)
 );
 
-
 CREATE TABLE richiesta
 (
     id                 bigint auto_increment,

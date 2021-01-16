@@ -17,6 +17,20 @@
         </div>
     </header>
     <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card shadow-lg border-0 rounded-lg mt-5">
+                    <div class="card-header"><h3 class="text-center font-weight-light my-4">${requestScope.oggetto}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>${requestScope.corpo}</p>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a href="index"><button class="btn btn-primary">Indietro</button></a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 

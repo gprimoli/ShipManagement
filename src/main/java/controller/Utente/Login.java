@@ -31,7 +31,7 @@ public class Login extends HttpServlet {
                 forward = "login.jsp";
             } else {
                 s.setAttribute("utente", u);
-                resp.sendRedirect("index.jsp");
+                resp.sendRedirect("index");
                 return;
             }
         } catch (NoEntryException e) {

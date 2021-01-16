@@ -22,7 +22,7 @@ public class AggiornaCompagnia extends HttpServlet {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         if(u == null){
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("index");
             return;
         }
 

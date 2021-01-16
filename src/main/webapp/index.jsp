@@ -1,5 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <c:if test="${sessionScope.utente == null}">
     <c:redirect url="./login.jsp"/>
@@ -189,7 +188,7 @@
                                                             <td>${imbarcazione.tipologia}</td>
                                                             <td>${imbarcazione.disponibile ? 'Disponibile' : 'Non disponibile'}</td>
                                                             <td>
-                                                                <a href="visualizza-imbarcazione?id=${imbarcazione.imo}">
+                                                                <a href="visualizza-imbarcazione?imo=${imbarcazione.imo}">
                                                                     <button class="btn btn-primary">Visualizza</button>
                                                                 </a></td>
                                                         </tr>
@@ -223,7 +222,7 @@
                                                     <tr>
                                                         <th>N.</th>
                                                         <th>Tipo di carico</th>
-                                                        <th>Quantità</th>
+                                                        <th>Quantit&aacute;</th>
                                                         <th>Data di Partenza</th>
                                                         <th>Data di Arrivo</th>
                                                         <th>Stato</th>
@@ -263,458 +262,277 @@
     </main>
 
     <c:if test="${sessionScope.utente.ruolo.compareTo('armatore') == 0}">
-    <div class="modal fade" id="aggiungiImbarcazione" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Aggiungi Imbarcazione</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form enctype="multipart/form-data" action="aggiungi-imbarcazione" method="post">
-                    <input type="hidden" value="${sessionScope.utente.codFiscale}" name="codFiscale">
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputImo">Imo</label>
-                                <input name="imo" class="form-control py-4" id="inputImo"
-                                       type="text" maxlength="30"
-                                       placeholder="Inserisci Imo"
-                                       required/>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputNomeImbarcazione">Nome</label>
-                                <input name="nome" class="form-control py-4" id="inputNomeImbarcazione"
-                                       type="text"
-                                       required/>
-                            </div>
+        <div class="modal fade" id="aggiungiImbarcazione" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Aggiungi Imbarcazione</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form enctype="multipart/form-data" action="aggiungi-imbarcazione" method="post">
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="inputImo">Imo</label>
+                                    <input name="imo" class="form-control py-4" id="inputImo"
+                                           type="text" maxlength="7"
+                                           placeholder="Inserisci Imo"
+                                           value="ASD"
+                                           required/>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="inputNomeImbarcazione">Nome</label>
+                                    <input name="nome" class="form-control py-4" id="inputNomeImbarcazione"
+                                           type="text"
+                                           value="ASD"
+                                           required/>
+                                </div>
 
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="tipologia">Tipologia</label>
-                                <select name="tipologia" id="tipologia" class="custom-select" required>
-                                    <option selected value="Portacontainer">Portacontainer</option>
-                                    <option value="Carboniera">Carboniera</option>
-                                    <option value="Chimichiera">Chimichiera</option>
-                                    <option value="Lift-on/Lift-off">Lift-on/Lift-off</option>
-                                    <option value="Nave da Carico">Nave da Carico</option>
-                                    <option value="Nave Frigorifera">Nave Frigorifera</option>
-                                    <option value="Portarinfuse">Portarinfuse</option>
-                                    <option value="Roll-on/Roll-off">Roll-on/Roll-off</option>
-                                </select>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputQuantitaMAX">Quantit&aacute; Massima
-                                    Trasportabile</label>
-                                <input name="quantita" class="form-control py-4" id="inputQuantitaMAX"
-                                       type="number" step="1000"
-                                       required/>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="tipologia">Tipologia</label>
+                                    <select name="tipologia" id="tipologia" class="custom-select" required>
+                                        <option selected value="Portacontainer">Portacontainer</option>
+                                        <option value="Carboniera">Carboniera</option>
+                                        <option value="Chimichiera">Chimichiera</option>
+                                        <option value="Lift-on/Lift-off">Lift-on/Lift-off</option>
+                                        <option value="Nave da Carico">Nave da Carico</option>
+                                        <option value="Nave Frigorifera">Nave Frigorifera</option>
+                                        <option value="Portarinfuse">Portarinfuse</option>
+                                        <option value="Roll-on/Roll-off">Roll-on/Roll-off</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="inputQuantitaMAX">Quantit&aacute; Massima
+                                        Trasportabile</label>
+                                    <input name="quantita" class="form-control py-4" id="inputQuantitaMAX"
+                                           type="number" step="1000"
+                                           value="2000"
+                                           required/>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputBandiera">Bandiera</label>
-                                <select name="bandiera" id="inputBandiera" class="custom-select" required>
-                                    <option value="AF">AF</option>
-                                    <option value="AL">AL</option>
-                                    <option value="DZ">DZ</option>
-                                    <option value="AD">AD</option>
-                                    <option value="AO">AO</option>
-                                    <option value="AI">AI</option>
-                                    <option value="AQ">AQ</option>
-                                    <option value="AG">AG</option>
-                                    <option value="AN">AN</option>
-                                    <option value="SA">SA</option>
-                                    <option value="AR">AR</option>
-                                    <option value="AM">AM</option>
-                                    <option value="AW">AW</option>
-                                    <option value="AU">AU</option>
-                                    <option value="AT">AT</option>
-                                    <option value="AZ">AZ</option>
-                                    <option value="BS">BS</option>
-                                    <option value="BH">BH</option>
-                                    <option value="BD">BD</option>
-                                    <option value="BB">BB</option>
-                                    <option value="BE">BE</option>
-                                    <option value="BZ">BZ</option>
-                                    <option value="BJ">BJ</option>
-                                    <option value="BM">BM</option>
-                                    <option value="BY">BY</option>
-                                    <option value="BT">BT</option>
-                                    <option value="BO">BO</option>
-                                    <option value="BA">BA</option>
-                                    <option value="BW">BW</option>
-                                    <option value="BR">BR</option>
-                                    <option value="BN">BN</option>
-                                    <option value="BG">BG</option>
-                                    <option value="BF">BF</option>
-                                    <option value="BI">BI</option>
-                                    <option value="KH">KH</option>
-                                    <option value="CM">CM</option>
-                                    <option value="CA">CA</option>
-                                    <option value="CV">CV</option>
-                                    <option value="TD">TD</option>
-                                    <option value="CL">CL</option>
-                                    <option value="CN">CN</option>
-                                    <option value="CY">CY</option>
-                                    <option value="VA">VA</option>
-                                    <option value="CO">CO</option>
-                                    <option value="KM">KM</option>
-                                    <option value="KP">KP</option>
-                                    <option value="KR">KR</option>
-                                    <option value="CR">CR</option>
-                                    <option value="CI">CI</option>
-                                    <option value="HR">HR</option>
-                                    <option value="CU">CU</option>
-                                    <option value="DK">DK</option>
-                                    <option value="DM">DM</option>
-                                    <option value="EC">EC</option>
-                                    <option value="EG">EG</option>
-                                    <option value="IE">IE</option>
-                                    <option value="SV">SV</option>
-                                    <option value="AE">AE</option>
-                                    <option value="ER">ER</option>
-                                    <option value="EE">EE</option>
-                                    <option value="ET">ET</option>
-                                    <option value="RU">RU</option>
-                                    <option value="FJ">FJ</option>
-                                    <option value="PH">PH</option>
-                                    <option value="FI">FI</option>
-                                    <option value="FR">FR</option>
-                                    <option value="GA">GA</option>
-                                    <option value="GM">GM</option>
-                                    <option value="GE">GE</option>
-                                    <option value="DE">DE</option>
-                                    <option value="GH">GH</option>
-                                    <option value="JM">JM</option>
-                                    <option value="JP">JP</option>
-                                    <option value="GI">GI</option>
-                                    <option value="DJ">DJ</option>
-                                    <option value="JO">JO</option>
-                                    <option value="GR">GR</option>
-                                    <option value="GD">GD</option>
-                                    <option value="GL">GL</option>
-                                    <option value="GP">GP</option>
-                                    <option value="GU">GU</option>
-                                    <option value="GT">GT</option>
-                                    <option value="GN">GN</option>
-                                    <option value="GW">GW</option>
-                                    <option value="GQ">GQ</option>
-                                    <option value="GY">GY</option>
-                                    <option value="GF">GF</option>
-                                    <option value="HT">HT</option>
-                                    <option value="HN">HN</option>
-                                    <option value="HK">HK</option>
-                                    <option value="IN">IN</option>
-                                    <option value="ID">ID</option>
-                                    <option value="IR">IR</option>
-                                    <option value="IQ">IQ</option>
-                                    <option value="BV">BV</option>
-                                    <option value="CX">CX</option>
-                                    <option value="HM">HM</option>
-                                    <option value="KY">KY</option>
-                                    <option value="CC">CC</option>
-                                    <option value="CK">CK</option>
-                                    <option value="FK">FK</option>
-                                    <option value="FO">FO</option>
-                                    <option value="MH">MH</option>
-                                    <option value="MP">MP</option>
-                                    <option value="UM">UM</option>
-                                    <option value="NF">NF</option>
-                                    <option value="SB">SB</option>
-                                    <option value="TC">TC</option>
-                                    <option value="VI">VI</option>
-                                    <option value="VG">VG</option>
-                                    <option value="IL">IL</option>
-                                    <option value="IS">IS</option>
-                                    <option value="IT">IT</option>
-                                    <option value="KZ">KZ</option>
-                                    <option value="KE">KE</option>
-                                    <option value="KG">KG</option>
-                                    <option value="KI">KI</option>
-                                    <option value="KW">KW</option>
-                                    <option value="LA">LA</option>
-                                    <option value="LV">LV</option>
-                                    <option value="LS">LS</option>
-                                    <option value="LB">LB</option>
-                                    <option value="LR">LR</option>
-                                    <option value="LY">LY</option>
-                                    <option value="LI">LI</option>
-                                    <option value="LT">LT</option>
-                                    <option value="LU">LU</option>
-                                    <option value="MO">MO</option>
-                                    <option value="MK">MK</option>
-                                    <option value="MG">MG</option>
-                                    <option value="MW">MW</option>
-                                    <option value="MV">MV</option>
-                                    <option value="MY">MY</option>
-                                    <option value="ML">ML</option>
-                                    <option value="MT">MT</option>
-                                    <option value="MA">MA</option>
-                                    <option value="MQ">MQ</option>
-                                    <option value="MR">MR</option>
-                                    <option value="MU">MU</option>
-                                    <option value="YT">YT</option>
-                                    <option value="MX">MX</option>
-                                    <option value="MD">MD</option>
-                                    <option value="MC">MC</option>
-                                    <option value="MN">MN</option>
-                                    <option value="MS">MS</option>
-                                    <option value="MZ">MZ</option>
-                                    <option value="MM">MM</option>
-                                    <option value="NA">NA</option>
-                                    <option value="NR">NR</option>
-                                    <option value="NP">NP</option>
-                                    <option value="NI">NI</option>
-                                    <option value="NE">NE</option>
-                                    <option value="NG">NG</option>
-                                    <option value="NU">NU</option>
-                                    <option value="NO">NO</option>
-                                    <option value="NC">NC</option>
-                                    <option value="NZ">NZ</option>
-                                    <option value="OM">OM</option>
-                                    <option value="NL">NL</option>
-                                    <option value="PK">PK</option>
-                                    <option value="PW">PW</option>
-                                    <option value="PA">PA</option>
-                                    <option value="PG">PG</option>
-                                    <option value="PY">PY</option>
-                                    <option value="PE">PE</option>
-                                    <option value="PN">PN</option>
-                                    <option value="PF">PF</option>
-                                    <option value="PL">PL</option>
-                                    <option value="PT">PT</option>
-                                    <option value="PR">PR</option>
-                                    <option value="QA">QA</option>
-                                    <option value="GB">GB</option>
-                                    <option value="CZ">CZ</option>
-                                    <option value="CF">CF</option>
-                                    <option value="CG">CG</option>
-                                    <option value="CD">CD</option>
-                                    <option value="DO">DO</option>
-                                    <option value="RE">RE</option>
-                                    <option value="RO">RO</option>
-                                    <option value="RW">RW</option>
-                                    <option value="EH">EH</option>
-                                    <option value="KN">KN</option>
-                                    <option value="PM">PM</option>
-                                    <option value="VC">VC</option>
-                                    <option value="WS">WS</option>
-                                    <option value="AS">AS</option>
-                                    <option value="SM">SM</option>
-                                    <option value="SH">SH</option>
-                                    <option value="LC">LC</option>
-                                    <option value="ST">ST</option>
-                                    <option value="SN">SN</option>
-                                    <option value="XK">XK</option>
-                                    <option value="SC">SC</option>
-                                    <option value="SL">SL</option>
-                                    <option value="SG">SG</option>
-                                    <option value="SY">SY</option>
-                                    <option value="SK">SK</option>
-                                    <option value="SI">SI</option>
-                                    <option value="SO">SO</option>
-                                    <option value="ES">ES</option>
-                                    <option value="LK">LK</option>
-                                    <option value="FM">FM</option>
-                                    <option value="US">US</option>
-                                    <option value="ZA">ZA</option>
-                                    <option value="GS">GS</option>
-                                    <option value="SD">SD</option>
-                                    <option value="SR">SR</option>
-                                    <option value="SJ">SJ</option>
-                                    <option value="SE">SE</option>
-                                    <option value="CH">CH</option>
-                                    <option value="SZ">SZ</option>
-                                    <option value="TJ">TJ</option>
-                                    <option value="TH">TH</option>
-                                    <option value="TW">TW</option>
-                                    <option value="TZ">TZ</option>
-                                    <option value="IO">IO</option>
-                                    <option value="TF">TF</option>
-                                    <option value="PS">PS</option>
-                                    <option value="TL">TL</option>
-                                    <option value="TG">TG</option>
-                                    <option value="TK">TK</option>
-                                    <option value="TO">TO</option>
-                                    <option value="TT">TT</option>
-                                    <option value="TN">TN</option>
-                                    <option value="TR">TR</option>
-                                    <option value="TM">TM</option>
-                                    <option value="TV">TV</option>
-                                    <option value="UA">UA</option>
-                                    <option value="UG">UG</option>
-                                    <option value="HU">HU</option>
-                                    <option value="UY">UY</option>
-                                    <option value="UZ">UZ</option>
-                                    <option value="VU">VU</option>
-                                    <option value="VE">VE</option>
-                                    <option value="VN">VN</option>
-                                    <option value="WF">WF</option>
-                                    <option value="YE">YE</option>
-                                    <option value="ZM">ZM</option>
-                                    <option value="ZW">ZW</option>
-                                    <option value="RS">RS</option>
-                                    <option value="ME">ME</option>
-                                    <option value="TP">TP</option>
-                                    <option value="GG">GG</option>
-                                </select>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="inputBandiera">Bandiera</label>
+                                    <select name="bandiera" id="inputBandiera" class="custom-select" required>
+                                        <c:forEach items="AF,AL,DZ,AD,AO,AI,AQ,AG,AN,SA,AR,AM,AW,AU,AT,AZ,BS,BH,BD,BB,BE,BZ,BJ,BM,BY,BT,BO,BA,BW,BR,BN,BG,BF,BI,KH,CM,CA,CV,TD,CL,CN,CY,VA,CO,KM,KP,KR,CR,CI,HR,CU,DK,DM,EC,EG,IE,SV,AE,ER,EE,ET,RU,FJ,PH,FI,FR,GA,GM,GE,DE,GH,JM,JP,GI,DJ,JO,GR,GD,GL,GP,GU,GT,GN,GW,GQ,GY,GF,HT,HN,HK,IN,ID,IR,IQ,BV,CX,HM,KY,CC,CK,FK,FO,MH,MP,UM,NF,SB,TC,VI,VG,IL,IS,IT,KZ,KE,KG,KI,KW,LA,LV,LS,LB,LR,LY,LI,LT,LU,MO,MK,MG,MW,MV,MY,ML,MT,MA,MQ,MR,MU,YT,MX,MD,MC,MN,MS,MZ,MM,NA,NR,NP,NI,NE,NG,NU,NO,NC,NZ,OM,NL,PK,PW,PA,PG,PY,PE,PN,PF,PL,PT,PR,QA,GB,CZ,CF,CG,CD,DO,RE,RO,RW,EH,KN,PM,VC,WS,AS,SM,SH,LC,ST,SN,XK,SC,SL,SG,SY,SK,SI,SO,ES,LK,FM,US,ZA,GS,SD,SR,SJ,SE,CH,SZ,TJ,TH,TW,TZ,IO,TF,PS,TL,TG,TK,TO,TT,TN,TR,TM,TV,UA,UG,HU,UY,UZ,VU,VE,VN,WF,YE,ZM,ZW,RS,ME,TP,GG" var="item">
+                                            <option value="${item}">${item}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="inputAnnoCostruzione">Anno Costruzione</label>
+                                    <input name="anno" class="form-control py-4" id="inputAnnoCostruzione"
+                                           type="number" value="2000" step="1"
+                                           required/>
+                                </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputAnnoCostruzione">Anno Costruzione</label>
-                                <input name="anno" class="form-control py-4" id="inputAnnoCostruzione"
-                                       type="number" value="2000" step="1"
-                                       required/>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label class="small mb-1" for="inputlunghezza">Lunghezza</label>
+                                    <input name="lunghezza" class="form-control py-4" id="inputlunghezza"
+                                           type="number" step="1"
+                                           value="125"
+                                           required/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="small mb-1" for="inputAmpiezza">Ampiezza</label>
+                                    <input name="ampiezza" class="form-control py-4" id="inputAmpiezza"
+                                           type="number" step="1"
+                                           value="125"
+                                           required/>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label class="small mb-1" for="inputAltezza">Altezza (Pescaggio)</label>
+                                    <input name="altezza" class="form-control py-4" id="inputAltezza"
+                                           type="number" step="1"
+                                           value="125"
+                                           required/>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label class="small mb-1" for="inputDocumentoImbarcazione">Documento</label>
+                                        <input name="documento" class="form-control py-4"
+                                               id="inputDocumentoImbarcazione"
+                                               type="file"/>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-4">
-                                <label class="small mb-1" for="inputlunghezza">Lunghezza</label>
-                                <input name="lunghezza" class="form-control py-4" id="inputlunghezza"
-                                       type="number" step="1"
-                                       required/>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <button type="submit" class="btn btn-primary">Aggiungi</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </c:if>
+
+    <c:if test="${sessionScope.utente.ruolo.compareTo('cliente') == 0}">
+        <div class="modal fade" id="aggiungiRichiesta" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Aggiungi Richiesta</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form enctype="multipart/form-data" action="aggiungi-richiesta" method="post"
+                          onsubmit="return validateRichiesta()">
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="tipoCarico">Tipo di Carico</label>
+                                    <select name="tipoCarico" id="tipoCarico" class="custom-select" required>
+                                        <option selected value="Container">Container</option>
+                                        <option value="Carico alla Rinfusa">Carico alla Rinfusa</option>
+                                        <option value="Prodotti Chimici Solidi">Prodotti Chimici Solidi</option>
+                                        <option value="Prodotti Chimici Liquidi">Prodotti Chimici Liquidi</option>
+                                        <option value="Prodotti Chimici Gassosi">Prodotti Chimici Gassosi</option>
+                                        <option value="Autoveicoli">Autoveicoli</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="inputQuantita">Quantit&aacute;</label>
+                                    <input name="quantita" class="form-control py-4" id="inputQuantita"
+                                           type="number"
+                                           placeholder="Inserisci Quantit&aacute;"
+                                           required/>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="small mb-1" for="inputAmpiezza">Ampiezza</label>
-                                <input name="ampiezza" class="form-control py-4" id="inputAmpiezza"
-                                       type="number" step="1"
-                                       required/>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="portoPartenza">Porto di Partenza</label>
+                                    <select name="portoPartenza" id="portoPartenza" onfocusout="porto()"
+                                            class="custom-select" required>
+                                        <c:forEach items="${requestScope.porti}" var="porto">
+                                            <option value="${porto.localcode}">${porto.nome}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="dataPartenza">Data di Partenza</label>
+                                    <input name="dataPartenza" class="form-control py-4" id="dataPartenza"
+                                           onfocusout="data()"
+                                           type="date"
+                                           required/>
+                                </div>
                             </div>
-                            <div class="form-group col-md-4">
-                                <label class="small mb-1" for="inputAltezza">Altezza (Pescaggio)</label>
-                                <input name="altezza" class="form-control py-4" id="inputAltezza"
-                                       type="number" step="1"
-                                       required/>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="portoArrivo">Porto di Arrivo</label>
+                                    <select name="portoArrivo" id="portoArrivo" class="custom-select"
+                                            onfocusout="porto()" required>
+                                        <c:forEach items="${requestScope.porti}" var="porto">
+                                            <option value="${porto.localcode}">${porto.nome}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label class="small mb-1" for="dataArrivo">Data di Arrivo</label>
+                                    <input name="dataArrivo" class="form-control py-4" id="dataArrivo"
+                                           type="date"
+                                           onfocusout="data()"
+                                           required/>
+                                </div>
+                                <div id="portoError" class="invalid-feedback" style="display: none">
+                                    Non possono essere uguali il porto di arrivo e quello di partenza!
+                                </div>
+                                <div id="dataError" class="invalid-feedback" style="display: none">
+                                    La data di partenza non pu&oacute; superare la data di arrivo!
+                                </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label class="small mb-1" for="inputDocumentoImbarcazione">Documento</label>
-                                    <input name="documento" class="form-control py-4" id="inputDocumentoImbarcazione"
+                                    <label class="small mb-1" for="inputDocumento">Documento</label>
+                                    <input name="documento" class="form-control py-4" id="inputDocumento"
                                            type="file"/>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <button type="submit" class="btn btn-primary">Aggiungi</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-    </c:if>
-
-    <c:if test="${sessionScope.utente.ruolo.compareTo('cliente') == 0}">
-    <div class="modal fade" id="aggiungiRichiesta" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Aggiungi Richiesta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <button type="submit" class="btn btn-primary">Aggiungi</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="aggiungi-richiesta" method="post">
-                    <input name="codFiscale" type="hidden" value="${sessionScope.utente.codFiscale}">
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="tipoCarico">Tipo di Carico</label>
-                                <select name="tipoCarico" id="tipoCarico" class="custom-select" required>
-                                    <option selected value="Container">Container</option>
-                                    <option value="Carico alla Rinfusa">Carico alla Rinfusa</option>
-                                    <option value="Prodotti Chimici Solidi">Prodotti Chimici Solidi</option>
-                                    <option value="Prodotti Chimici Liquidi">Prodotti Chimici Liquidi</option>
-                                    <option value="Prodotti Chimici Gassosi">Prodotti Chimici Gassosi</option>
-                                    <option value="Autoveicoli">Autoveicoli</option>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="inputQuantita">Quantit&aacute;</label>
-                                <input name="nome" class="form-control py-4" id="inputQuantita"
-                                       type="number"
-                                       placeholder="Inserisci Quantit&aacute;"
-                                       required/>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="portoPartenza">Porto di Partenza</label>
-                                <select name="portoPartenza" id="portoPartenza" class="custom-select" required>
-                                        <%--                                    <option value="Autoveicoli">Autoveicoli</option>--%>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="dataPartenza">Data di Partenza</label>
-                                <input name="dataPartenza" class="form-control py-4" id="dataPartenza"
-                                       type="date"
-                                       required/>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="portoArrivo">Porto di Arrivo</label>
-                                <select name="portoPartenza" id="portoArrivo" class="custom-select" required>
-                                        <%--                                    <option value="Autoveicoli">Autoveicoli</option>--%>
-                                </select>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label class="small mb-1" for="dataArrivo">Data di Arrivo</label>
-                                <input name="dataArrivo" class="form-control py-4" id="dataArrivo"
-                                       type="date"
-                                       required/>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label class="small mb-1" for="inputDocumento">Documento</label>
-                                <input name="documento" class="form-control py-4" id="inputDocumento"
-                                       type="file"/>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <button type="submit" class="btn btn-primary">Aggiungi</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
     </c:if>
 
     <c:if test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
-    <div class="modal fade" id="aggiungiMediazione" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Conferma Operazione</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <form action="aggiungi-mediazione" method="post">
-                    <input type="hidden" value="${sessionScope.utente.codFiscale}" name="codFiscale">
-                    <div class="modal-body">
-                        <div class="form-row">
-                            <div class="form-group col-md-12">
-                                <label class="small mb-1" for="inputNome">Nome</label>
-                                <input name="nome" class="form-control py-4" id="inputNome"
-                                       type="text" maxlength="50" required/>
+        <div class="modal fade" id="aggiungiMediazione" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Conferma Operazione</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="aggiungi-mediazione" method="post">
+                        <div class="modal-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label class="small mb-1" for="inputNome">Nome</label>
+                                    <input name="nome" class="form-control py-4" id="inputNome"
+                                           type="text" maxlength="50" required/>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <button type="submit" class="btn btn-primary">Aggiungi</button>
-                    </div>
-                </form>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                            <button type="submit" class="btn btn-primary">Aggiungi</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
     </c:if>
 
-    <jsp:include page="footer.jsp"/>
+    <script>
+        $(document).ready(function () {
+            $("#dataArrivo").attr("min", moment().add(1,'days').format("YYYY-MM-DD"));
+            $("#dataPartenza").attr("min", moment().add(1,'days').format("YYYY-MM-DD"));
+        });
+
+
+        function checkUguale(val, val1) {
+            return val1 === val
+        }
+
+        function porto() {
+            let porto1 = $('#portoPartenza').val()
+            let porto2 = $('#portoArrivo').val()
+            if (porto1 === porto2) {
+                $('#portoError').show();
+                return false;
+            }
+            $('#portoError').hide();
+            return true;
+        }
+
+        function data() {
+            let dataPartenza = moment($('#dataPartenza').val());
+            let dataArrivo = moment($('#dataArrivo').val());
+            if (moment(dataPartenza).isAfter(moment(dataArrivo))) {
+                $('#dataError').show();
+                return false;
+            } else {
+                $('#dataError').hide();
+                return true;
+            }
+        }
+
+        function validateRichiesta() {
+            return porto() && data();
+        }
+    </script>
+
+</div>
+<jsp:include page="footer.jsp"/>

@@ -25,8 +25,8 @@ public class ProfiloFilter extends HttpFilter {
         HttpSession s = httpreq.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         if(u != null)
-            httpreq.setAttribute("compagniaBroker", CompagniaBrokerDAO.doRetriveBy(u));
-
+            if(u.isBroker())
+                httpreq.setAttribute("compagniaBroker", CompagniaBrokerDAO.doRetriveBy(u));
         chain.doFilter(req, resp);
     }
 }

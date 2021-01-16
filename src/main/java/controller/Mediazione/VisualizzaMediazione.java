@@ -24,10 +24,10 @@ public class VisualizzaMediazione extends HttpServlet {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         if (u == null) {
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("index");
             return;
         }
-        int id = Integer.parseInt((String) req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         String forward;
         Mediazione m = MediazioneDAO.doRetriveById(id);
         Utente b = UtenteDAO.doRetriveByCodFiscale(m.getCodFiscaleUtente());
@@ -39,7 +39,6 @@ public class VisualizzaMediazione extends HttpServlet {
                 r.stream().anyMatch(item -> item.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0)
         ){
 
-            req.setAttribute("azione", "Visualizza");
             req.setAttribute("mediazione", m);
             req.setAttribute("utente", b);
             req.setAttribute("inbarcazioni", i);
@@ -48,7 +47,7 @@ public class VisualizzaMediazione extends HttpServlet {
         }else {
             req.setAttribute("notifica", "Non hai i permessi per visualizzare la mediazione perchè non ne fai parte!");
             req.setAttribute("tipoNotifica", "danger");
-            forward = "index.jsp";
+            forward = "index";
         }
         req.getRequestDispatcher(forward).forward(req, resp);
 

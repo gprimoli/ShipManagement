@@ -29,7 +29,7 @@ public class AggiornaUtente extends HttpServlet {
         Utente u = (Utente) s.getAttribute("utente");
 
         if(u == null){
-            resp.sendRedirect("index.jsp");
+            resp.sendRedirect("index");
             return;
         }
 

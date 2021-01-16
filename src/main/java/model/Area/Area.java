@@ -23,12 +23,12 @@ public class Area {
             return this;
         }
 
-        public AreaBuilder nome(String nome) throws InvalidParameterException {
-            if (nome.length() > 10 || nome.length() < 2 || (!nome.matches("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")))
-                throw new InvalidParameterException();
-            this.nome = nome;
-            return this;
-        }
+//        public AreaBuilder nome(String nome) throws InvalidParameterException {
+//            if (nome.length() > 10 || nome.length() < 2 || (!nome.matches("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")))
+//                throw new InvalidParameterException();
+//            this.nome = nome;
+//            return this;
+//        }
 
         public Area build() throws InvalidParameterException {
             if (id < 0 || nome == null)
