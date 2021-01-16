@@ -1,5 +1,6 @@
 package model.Mediazione;
 
+import java.io.InputStream;
 import java.sql.Blob;
 import java.util.Arrays;
 
@@ -17,12 +18,12 @@ public class Mediazione {
     String nome;
     String stato;
     @NonFinal
-    Blob contratto;
+    InputStream contratto;
     String codFiscaleUtente;
     @NonFinal
     boolean caricato;
 
-    public Blob getDocumento() {
+    public InputStream getDocumento() {
         if (caricato && contratto == null) {
             caricato = true;
             contratto = MediazioneDAO.doRetriveDocumento(id);

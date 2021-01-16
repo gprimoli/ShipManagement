@@ -15,8 +15,6 @@ import javax.servlet.http.*;
 import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
 
 @WebServlet(
         urlPatterns = "/aggiungi-imbarcazione"
@@ -24,7 +22,7 @@ import java.sql.SQLException;
 @MultipartConfig
 public class CreaImbarcazione extends HttpServlet {
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
 
@@ -46,16 +44,15 @@ public class CreaImbarcazione extends HttpServlet {
         float ampiezza = Float.parseFloat(req.getParameter("ampiezza"));
         float altezza = Float.parseFloat(req.getParameter("altezza"));
         Part p = req.getPart("documento");
-        byte[] byteArray = null;
-        Blob documento = null;
+        @Cleanup InputStream documento = null;
         boolean tmp = false;
+
         try {
-            if (p.getSize() > 0) {
-                @Cleanup InputStream in = p.getInputStream();
-                byteArray = IOUtils.toByteArray(in);
-                documento = new SerialBlob(byteArray);
+            if (p.getSize() > 0 && p.getSize() < 4294967295.0 && p.getContentType().compareTo("application/pdf") == 0) {
+                documento = p.getInputStream();
                 tmp = true;
             }
+
             Imbarcazione i = Imbarcazione.builder()
                     .nome(nome)
                     .imo(imo)
@@ -76,7 +73,7 @@ public class CreaImbarcazione extends HttpServlet {
             req.setAttribute("notifica", "Imbarcazione aggiunta con successo");
             req.setAttribute("tipoNotifica", "success");
             forward = "index";
-        } catch (InvalidParameterException | SQLException e) {
+        } catch (InvalidParameterException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");
             req.setAttribute("back", "index.jsp");

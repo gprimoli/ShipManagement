@@ -79,7 +79,7 @@ CREATE TABLE imbarcazione
     altezza               float NOT NULL,
     posizione             bigint REFERENCES area (id) on UPDATE CASCADE on DELETE CASCADE,
     disponibile           boolean default true,
-    documento             blob,
+    documento             LONGBLOB,
     PRIMARY KEY (imo)
 );
 
@@ -94,7 +94,7 @@ CREATE TABLE richiesta
     data_arrivo        timestamp   NOT NULL,
     porto_arrivo       varchar(6) REFERENCES porto (localcode) on UPDATE CASCADE on DELETE CASCADE,
     stato              enum ('Disponibile', 'In Lavorazione', 'Terminata') default 'Disponibile',
-    documento          blob,
+    documento          LONGBLOB,
     PRIMARY KEY (id)
 );
 
@@ -104,7 +104,7 @@ CREATE TABLE mediazione
     id                 bigint auto_increment,
     nome               varchar(50) NOT NULL,
     stato              enum ('Default', 'In Corso', 'Richiesta Modifica', 'Richiesta Terminazione', 'In Attesa di Firma', 'Terminta') default 'Default',
-    contratto          blob,
+    contratto          LONGBLOB,
     cod_fiscale_utente varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE, /*utente = broker*/
     PRIMARY KEY (id)
 );

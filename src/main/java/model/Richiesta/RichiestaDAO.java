@@ -8,6 +8,7 @@ import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 import model.Util.NoEntryException;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
 
@@ -127,15 +128,15 @@ public class RichiestaDAO {
 
     //fine base
 
-    public static Blob doRetriveDocumento(int id) {
-        Blob d;
+    public static InputStream doRetriveDocumento(int id) {
+        InputStream d;
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM richiesta where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
-            d = r.getBlob("documento");
+            d = r.getBinaryStream("documento");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

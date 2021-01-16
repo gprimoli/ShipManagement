@@ -1,4 +1,6 @@
 package controller.Mediazione;
 
-public class RifiutaTerminazione {
+import javax.servlet.http.HttpServlet;
+
+public class RifiutaTerminazione extends HttpServlet {
 }

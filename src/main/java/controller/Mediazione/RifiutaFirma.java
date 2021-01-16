@@ -1,4 +1,6 @@
 package controller.Mediazione;
 
-public class RifiutaFirma {
+import javax.servlet.http.HttpServlet;
+
+public class RifiutaFirma  extends HttpServlet {
 }

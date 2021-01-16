@@ -1,5 +1,6 @@
 package model.Richiesta;
 
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.Arrays;
@@ -26,11 +27,11 @@ public class Richiesta {
     String portoArrivo;
     String stato;
     @NonFinal
-    Blob documento;
+    InputStream documento;
     @NonFinal
     boolean caricato;
 
-    public Blob getDocumento() {
+    public InputStream getDocumento() {
         if (caricato && documento == null) {
             caricato = true;
             documento = RichiestaDAO.doRetriveDocumento(id);

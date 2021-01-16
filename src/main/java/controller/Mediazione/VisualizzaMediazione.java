@@ -20,7 +20,7 @@ import java.util.LinkedList;
 @WebServlet(urlPatterns = "/visualizza-mediazione")
 public class VisualizzaMediazione extends HttpServlet {
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         if (u == null) {

@@ -1,4 +1,6 @@
 package controller.Mediazione;
 
-public class RimuoviImbarcazioneDallaMediazione {
+import javax.servlet.http.HttpServlet;
+
+public class RimuoviImbarcazioneDallaMediazione  extends HttpServlet {
 }

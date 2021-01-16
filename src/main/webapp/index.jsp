@@ -499,6 +499,7 @@
         $(document).ready(function () {
             $("#dataArrivo").attr("min", moment().add(1,'days').format("YYYY-MM-DD"));
             $("#dataPartenza").attr("min", moment().add(1,'days').format("YYYY-MM-DD"));
+            $("#inputAnnoCostruzione").attr("max", moment().format("YYYY"));
         });
 
 

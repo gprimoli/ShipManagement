@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat;
 public class AggiornaUtente extends HttpServlet {
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
 

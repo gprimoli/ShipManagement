@@ -1,4 +1,6 @@
 package controller.Mediazione;
 
-public class FirmaMediazione {
+import javax.servlet.http.HttpServlet;
+
+public class FirmaMediazione  extends HttpServlet {
 }

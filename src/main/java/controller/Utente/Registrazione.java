@@ -55,14 +55,6 @@ public class Registrazione extends HttpServlet {
                     .ruolo(ruolo)
                     .build();
 
-            String tmp = UtenteDAO.doSave(u, password);
-
-            Mail m = new Mail();
-            String path = getServletContext().getContextPath();
-            String link = "Link attivazione account: <a href='http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email="+ u.getEmail() + "'>Attiva account</a>";
-            System.out.println(link);
-//            m.sendMail(u.getEmail(), "Benvenuto in ShipManagment " + u.getNome(), link);
-
             if (u.isBroker()) {
                 String codFiscaleCompagnia = req.getParameter("codFiscaleCompagnia");
                 String nomeCompagnia = req.getParameter("nomeCompagnia");
@@ -81,8 +73,18 @@ public class Registrazione extends HttpServlet {
                 CompagniaBrokerDAO.doSaveUtenteCompagnia(cb, u);
             }
 
-            forward = "/login.jsp";
+            String tmp = UtenteDAO.doSave(u, password);
 
+            Mail m = new Mail();
+            String path = getServletContext().getContextPath();
+            String link = "Link attivazione account: <a href='http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email="+ u.getEmail() + "'>Attiva account</a>";
+            System.out.println(link);
+//            m.sendMail(u.getEmail(), "Benvenuto in ShipManagment " + u.getNome(), link);
+
+            req.setAttribute("notifica", "Registrazione avvenuta con successo");
+            req.setAttribute("tipoNotifica", "success");
+
+            forward = "/login.jsp";
         } catch (IllegalArgumentException | InvalidParameterException | ParseException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");

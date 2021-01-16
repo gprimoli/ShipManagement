@@ -28,7 +28,6 @@
                     <div class="card-header">Visualizza Mediazione</div>
                     <div class="card-body">
                         <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
-
                         <form action="modifica-mediazione" method="post">
                             </c:if>
                             <div class="form-row">
@@ -70,9 +69,11 @@
                                         type="button">Rimuovi
                                 </button>
                             </c:if>
-                            <a href="index">
-                                <button class="btn btn-primary">Indietro</button>
-                            </a>
+                            <div class="form-row">
+                                <a href="index">
+                                    <button class="btn btn-primary">Indietro</button>
+                                </a>
+                            </div>
                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
                         </form>
                         </c:if>
@@ -230,7 +231,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form action="elimina-mediazione" method="post">
+                        <form action="rimuovi-dalla-mediazione-imbarcazione" method="post">
                             <input name="id" value="${requestScope.mediazione.id}" type="hidden"/>
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>
@@ -253,7 +254,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form action="elimina-mediazione" method="post">
+                        <form action="rimuvoi-dalla-mediazione" method="post">
                             <input name="richiestaID" value="" type="hidden">
                             <input name="mediazioneID" value="" type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>
@@ -277,7 +278,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form action="elimina-mediazione" method="post">
+                        <form action="rimuvoi-imbarcazione-dalla-mediazione" method="post">
                             <input name="imbarcazioneIMO" value="" type="hidden">
                             <input name="mediazioneID" value="" type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>

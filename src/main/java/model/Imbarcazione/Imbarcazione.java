@@ -1,5 +1,6 @@
 package model.Imbarcazione;
 
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.Date;
 import java.util.ArrayList;
@@ -30,11 +31,11 @@ public class Imbarcazione {
     int posizione;
     boolean disponibile;
     @NonFinal
-    Blob documento;
+    InputStream documento;
     @NonFinal
     boolean caricato;
 
-    public Blob getDocumento() {
+    public InputStream getDocumento() {
         if (caricato && documento == null) {
             caricato = true;
             documento = ImbarcazioneDAO.doRetriveDocumento(imo);

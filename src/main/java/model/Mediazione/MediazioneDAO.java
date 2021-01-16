@@ -9,6 +9,7 @@ import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 import model.Util.NoEntryException;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
 
@@ -59,6 +60,10 @@ public class MediazioneDAO {
             p.execute();
 
             p = c.prepareStatement("DELETE FROM mediazione_richiesta as mr WHERE mr.id_mediazione = ?");
+            p.setInt(1, m.getId());
+            p.execute();
+
+            p = c.prepareStatement("DELETE FROM firma as f WHERE f.id_mediazione = ?");
             p.setInt(1, m.getId());
             p.execute();
 
@@ -125,15 +130,16 @@ public class MediazioneDAO {
 
     //fine base
 
-    public static Blob doRetriveDocumento(int id) {
-        Blob d;
+    public static InputStream doRetriveDocumento(int id) {
+        InputStream d;
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT contratto FROM mediazione where id = ?;");
             p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
-            d = r.getBlob("contratto");
+
+            d = r.getBinaryStream("documento");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -247,4 +253,21 @@ public class MediazioneDAO {
         }
         return imbarcazioni;
     }
+
+    public static boolean doCheck(Imbarcazione i) {
+        boolean tmp = false;
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * from (SELECT * from (SELECT * from imbarcazione where imo = ?) as i, mediazione_imbarcazione as mi where mi.imo_imbarcazione = i.imo) as x, mediazione as m where x.id_mediazione = m.id AND m.stato = 'In Corso'");
+            p.setString(1, i.getImo());
+            @Cleanup ResultSet r = p.executeQuery();
+            if(r.next())
+                tmp = true;
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                return true;
+        }
+        return tmp;
+    }
+
 }

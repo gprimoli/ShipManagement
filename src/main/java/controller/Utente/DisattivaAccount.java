@@ -17,7 +17,7 @@ import java.io.IOException;
 )
 public class DisattivaAccount extends HttpServlet {
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String forward = "profilo.jsp";
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");

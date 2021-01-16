@@ -7,6 +7,7 @@ import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 import model.Util.NoEntryException;
 
+import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
 
@@ -27,7 +28,7 @@ public class ImbarcazioneDAO {
             p.setFloat(9, i.getAmpiezza());
             p.setFloat(10, i.getAltezza());
             p.setInt(11, i.getPosizione());
-            p.setBlob(12, i.getDocumento());
+            p.setBinaryStream(12, i.getDocumento());
             p.execute();
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
@@ -61,11 +62,11 @@ public class ImbarcazioneDAO {
         }
     }
 
-    public static void doDelete(Imbarcazione i) {
+    public static void doDisponibileIndisponibile(Imbarcazione i) {
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM imbarcazione WHERE imo = ?");
-            p.setString(1, i.getImo());
+            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET disponibile = ? WHERE imo = ?");
+            p.setBoolean(1, !i.isDisponibile());
             p.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -146,15 +147,15 @@ public class ImbarcazioneDAO {
 
     //fine base
 
-    public static Blob doRetriveDocumento(String imo) {
-        Blob d;
+    public static InputStream doRetriveDocumento(String imo) {
+        InputStream d;
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM imbarcazione where imo = ?;");
             p.setString(1, imo);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
-            d = r.getBlob("documento");
+            d = r.getBinaryStream("documento");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -24,7 +24,7 @@ public class Mail {
 
         Session session = Session.getInstance(prop,
                 new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
+                    public PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(username, password);
                     }
                 });

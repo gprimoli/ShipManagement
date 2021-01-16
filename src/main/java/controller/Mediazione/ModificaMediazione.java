@@ -8,7 +8,7 @@ import java.io.IOException;
 
 public class ModificaMediazione extends HttpServlet {
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
     }
 }

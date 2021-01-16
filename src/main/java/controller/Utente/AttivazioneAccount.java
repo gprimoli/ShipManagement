@@ -13,7 +13,7 @@ import java.io.IOException;
         urlPatterns = "/attiva"
 )
 public class AttivazioneAccount extends HttpServlet {
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String codice = req.getParameter("codice");
         String mail = req.getParameter("email");
         if (codice.compareTo("-1") != 0) {

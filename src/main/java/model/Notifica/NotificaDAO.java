@@ -1,6 +1,9 @@
 package model.Notifica;
 
 import lombok.Cleanup;
+import model.Imbarcazione.Imbarcazione;
+import model.Mediazione.Mediazione;
+import model.Richiesta.Richiesta;
 import model.Utente.Utente;
 import model.Util.DB;
 import model.Util.DuplicateException;
@@ -22,6 +25,113 @@ public class NotificaDAO {
             p.setString(1, n.getOggetto());
             p.setString(2, n.getCorpo());
             p.execute();
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("23000") == 0)
+                throw new DuplicateException();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doSaveAll(Mediazione m, Notifica n) throws DuplicateException {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO notifica(oggetto, corpo) VALUES (?,?);");
+            p.setString(1, n.getOggetto());
+            p.setString(2, n.getCorpo());
+            p.execute();
+
+            p = c.prepareStatement("SELECT MAX(id) from notifica where oggetto = ?");
+            p.setString(1, n.getOggetto());
+            @Cleanup ResultSet rs = p.executeQuery();
+            int idNotifica = 0;
+            while (rs.next()){
+                idNotifica = rs.getInt(1);
+            }
+
+            p = c.prepareStatement("SELECT * from mediazione_richiesta as mr JOIN richiesta as r on mr.id_richiesta = r.id where mr.id_mediazione = ?");
+            p.setInt(1, m.getId());
+            rs = p.executeQuery();
+            while (rs.next()){
+                p = c.prepareStatement("Insert INTO notifica_utente(id_notifica, cod_fiscale_utente) values (?,?)");
+                p.setInt(1, idNotifica);
+                p.setString(2, rs.getString("cod_fiscale_utente"));
+                p.execute();
+            }
+
+            p = c.prepareStatement("SELECT * from mediazione_imbarcazione as mi JOIN imbarcazione as i on mi.imo_imbarcazione = i.imo where mi.id_mediazione = ?");
+            p.setInt(1, m.getId());
+            rs = p.executeQuery();
+            while (rs.next()){
+                p = c.prepareStatement("Insert INTO notifica_utente(id_notifica, cod_fiscale_utente) values (?,?)");
+                p.setInt(1, idNotifica);
+                p.setString(2, rs.getString("cod_fiscale_utente"));
+                p.execute();
+            }
+
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("23000") == 0)
+                throw new DuplicateException();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doSaveAll(Richiesta m, Notifica n) throws DuplicateException {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO notifica(oggetto, corpo) VALUES (?,?);");
+            p.setString(1, n.getOggetto());
+            p.setString(2, n.getCorpo());
+            p.execute();
+
+            p = c.prepareStatement("SELECT MAX(id) from notifica where oggetto = ?");
+            p.setString(1, n.getOggetto());
+            @Cleanup ResultSet rs = p.executeQuery();
+            int idNotifica = 0;
+            while (rs.next()){
+                idNotifica = rs.getInt(1);
+            }
+
+            p = c.prepareStatement("SELECT mediazione.cod_fiscale_utente from (SELECT mr.id_mediazione from (SELECT id from richiesta where richiesta.id = ?) as r, mediazione_richiesta as mr where mr.id_richiesta = r.id) as mk, mediazione where mk.id_mediazione = mediazione.id");
+            p.setInt(1, m.getId());
+            rs = p.executeQuery();
+            while (rs.next()){
+                p = c.prepareStatement("Insert INTO notifica_utente(id_notifica, cod_fiscale_utente) values (?,?)");
+                p.setInt(1, idNotifica);
+                p.setString(2, rs.getString("cod_fiscale_utente"));
+                p.execute();
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("23000") == 0)
+                throw new DuplicateException();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doSaveAll(Imbarcazione m, Notifica n) throws DuplicateException {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO notifica(oggetto, corpo) VALUES (?,?);");
+            p.setString(1, n.getOggetto());
+            p.setString(2, n.getCorpo());
+            p.execute();
+
+            p = c.prepareStatement("SELECT MAX(id) from notifica where oggetto = ?");
+            p.setString(1, n.getOggetto());
+            @Cleanup ResultSet rs = p.executeQuery();
+            int idNotifica = 0;
+            while (rs.next()){
+                idNotifica = rs.getInt(1);
+            }
+
+            p = c.prepareStatement("SELECT mediazione.cod_fiscale_utente from (SELECT mi.id_mediazione from (SELECT imo from imbarcazione where imbarcazione.imo = ?) as r, mediazione_imbarcazione as mi where mi.imo_imbarcazione = r.imo) as mk, mediazione where mk.id_mediazione = mediazione.id");
+            p.setString(1, m.getImo());
+            rs = p.executeQuery();
+            while (rs.next()){
+                p = c.prepareStatement("Insert INTO notifica_utente(id_notifica, cod_fiscale_utente) values (?,?)");
+                p.setInt(1, idNotifica);
+                p.setString(2, rs.getString("cod_fiscale_utente"));
+                p.execute();
+            }
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();

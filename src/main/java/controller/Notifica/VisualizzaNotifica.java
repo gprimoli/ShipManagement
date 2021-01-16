@@ -19,7 +19,7 @@ import java.util.LinkedList;
 
 public class VisualizzaNotifica extends HttpServlet {
 
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         int id;

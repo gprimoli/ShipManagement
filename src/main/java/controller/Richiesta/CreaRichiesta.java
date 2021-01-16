@@ -6,18 +6,14 @@ import model.Richiesta.RichiestaDAO;
 import model.Utente.Utente;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
-import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
-import javax.sql.rowset.serial.SerialBlob;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Blob;
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -27,7 +23,7 @@ import java.text.SimpleDateFormat;
 @MultipartConfig
 public class CreaRichiesta extends HttpServlet {
 
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
 
@@ -45,14 +41,12 @@ public class CreaRichiesta extends HttpServlet {
         String portoArrivo = req.getParameter("portoArrivo");
         String dataArrivo = req.getParameter("dataArrivo");
         Part p = req.getPart("documento");
-        byte[] byteArray = null;
-        Blob documento = null;
+        @Cleanup InputStream documento = null;
         boolean tmp = false;
+
         try {
-            if (p.getSize() > 0) {
-                @Cleanup InputStream in = p.getInputStream();
-                byteArray = IOUtils.toByteArray(in);
-                documento = new SerialBlob(byteArray);
+            if (p.getSize() > 0 && p.getSize() < 4294967295.0 && p.getContentType().compareTo("application/pdf") == 0) {
+                documento = p.getInputStream();
                 tmp = true;
             }
             Richiesta r = Richiesta.builder()
@@ -73,7 +67,7 @@ public class CreaRichiesta extends HttpServlet {
             req.setAttribute("notifica", "Richiesta aggiunta con successo");
             req.setAttribute("tipoNotifica", "success");
             forward = "index";
-        } catch (InvalidParameterException | SQLException | ParseException e) {
+        } catch (InvalidParameterException | ParseException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");
             req.setAttribute("back", "index.jsp");

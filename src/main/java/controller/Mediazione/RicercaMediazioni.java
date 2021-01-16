@@ -1,4 +1,6 @@
 package controller.Mediazione;
 
-public class RicercaMediazioni {
+import javax.servlet.http.HttpServlet;
+
+public class RicercaMediazioni  extends HttpServlet {
 }

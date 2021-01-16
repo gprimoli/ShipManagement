@@ -14,7 +14,7 @@ import java.io.IOException;
         urlPatterns = "/recuperopassword"
 )
 public class RecuperoPassword extends HttpServlet {
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String mail = req.getParameter("email");
 
         String newPassword = UtenteDAO.doRecuperaPassword(mail);
