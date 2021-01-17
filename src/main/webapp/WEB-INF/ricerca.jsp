@@ -32,7 +32,7 @@
     </header>
     <div class="container mt-4">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-12">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Richieste</h3>
                     </div>
@@ -88,7 +88,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
                 <div class="card shadow-lg border-0 rounded-lg mt-5">
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Imbarcazioni</h3>
                     </div>

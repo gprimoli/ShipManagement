@@ -36,11 +36,7 @@ public class CompagniaBrokerDAO {
     public static void doSaveUtenteCompagnia(CompagniaBroker cb, Utente u) {
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("DELETE from compagnia_broker_utente as c WHERE c.cod_fiscale_utente = ?;");
-            p.setString(1, u.getCodFiscale());
-            p.execute();
-
-            p = c.prepareStatement("INSERT INTO compagnia_broker_utente(cod_fiscale_compagnia, cod_fiscale_utente) VALUES (?,?);");
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO compagnia_broker_utente(cod_fiscale_compagnia, cod_fiscale_utente) VALUES (?,?);");
             p.setString(1, cb.getCodFiscale());
             p.setString(2, u.getCodFiscale());
 

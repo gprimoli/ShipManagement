@@ -95,7 +95,7 @@
                                            type="text"
                                            aria-describedby="codicefiscaleHelp"
                                            placeholder="Inserisci Codice Fiscale" minlength="16" maxlength="16"
-                                           pattern="^[A-Za-z0-9]*$"
+                                           pattern="^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$"
                                            title="Il campo non contenere un codice fiscale corretto"
                                            value="RMLGNR99R27F839Q"
                                            required/>
@@ -163,14 +163,15 @@
                                         <input name="codFiscaleCompagnia" class="form-control py-4"
                                                id="inputCodFiscaleCompagnia"
                                                type="text"
+                                               maxlength="16"
                                                aria-describedby="codicefiscaleCompagniaHelp"
-                                               placeholder="Inserisci Codice Fiscale Compagnia" pattern="^[A-Za-z0-9]*$"/>
+                                               placeholder="Inserisci Codice Fiscale Compagnia" pattern="^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$"/>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputNomeCompagnia">Nome
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="nomeCompagnia" class="form-control py-4"
                                                        id="inputNomeCompagnia"
                                                        type="text"
@@ -181,7 +182,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputNumTelefonoCompagnia">Telefono
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="telefonoCompagnia" class="form-control py-4"
                                                        id="inputNumTelefonoCompagnia"
                                                        type="text"
@@ -194,7 +195,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputSedeCompagnia">Sede Legale
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="sedeCompagnia" class="form-control py-4"
                                                        id="inputSedeCompagnia"
                                                        type="text"
@@ -205,12 +206,12 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputSitoCompagnia">Sito web
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="sitoCompagnia" class="form-control py-4"
                                                        id="inputSitoCompagnia"
                                                        type="url"
                                                        aria-describedby="sitoCompagniaHelp"
-                                                       placeholder="Inserisci Sito Web Compangia"/>
+                                                       placeholder="Inserisci Sito Web Compangnia"/>
                                             </div>
                                         </div>
                                     </div>

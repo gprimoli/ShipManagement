@@ -196,7 +196,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputNomeCompagnia">Nome
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="nomeCompagnia" class="form-control py-4"
                                                        id="inputNomeCompagnia"
                                                        type="text"
@@ -209,7 +209,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputNumTelefonoCompagnia">Telefono
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="telefonoCompagnia" class="form-control py-4"
                                                        id="inputNumTelefonoCompagnia"
                                                        type="text"
@@ -224,7 +224,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputSedeCompagnia">Sede Legale
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="sedeCompagnia" class="form-control py-4"
                                                        id="inputSedeCompagnia"
                                                        type="text"
@@ -237,13 +237,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label class="small mb-1" for="inputSitoCompagnia">Sito web
-                                                    Compangia</label>
+                                                    Compangnia</label>
                                                 <input name="sitoCompagnia" class="form-control py-4"
                                                        id="inputSitoCompagnia"
                                                        type="url"
                                                        aria-describedby="sitoCompagniaHelp"
                                                        value="${requestScope.compagniaBroker.sitoWeb}"
-                                                       placeholder="Inserisci Sito Web Compangia"/>
+                                                       placeholder="Inserisci Sito Web Compangnia"/>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary" type="submit">Aggiorna Compagnia Broker</button>

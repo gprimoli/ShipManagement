@@ -40,7 +40,7 @@ public class Registrazione extends HttpServlet {
             String password = req.getParameter("password");
             String repassword = req.getParameter("confermaPassword");
 
-            if(password.compareTo(repassword) != 0)
+            if (password.compareTo(repassword) != 0)
                 throw new InvalidParameterException();
 
             Utente u = Utente.builder()
@@ -68,8 +68,9 @@ public class Registrazione extends HttpServlet {
                         .sedeLegale(sedeCompagnia)
                         .sitoWeb(sitoCompagnia)
                         .build();
-
-                CompagniaBrokerDAO.doSave(cb);
+                try {
+                    CompagniaBrokerDAO.doSave(cb);
+                } catch (DuplicateException e) {}
                 CompagniaBrokerDAO.doSaveUtenteCompagnia(cb, u);
             }
 
@@ -77,7 +78,7 @@ public class Registrazione extends HttpServlet {
 
             Mail m = new Mail();
             String path = getServletContext().getContextPath();
-            String link = "Link attivazione account: <a href='http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email="+ u.getEmail() + "'>Attiva account</a>";
+            String link = "Link attivazione account: <a href='http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email=" + u.getEmail() + "'>Attiva account</a>";
             System.out.println(link);
 //            m.sendMail(u.getEmail(), "Benvenuto in ShipManagment " + u.getNome(), link);
 
@@ -90,7 +91,7 @@ public class Registrazione extends HttpServlet {
             req.setAttribute("descrizione", "Parametri non validi");
             req.setAttribute("back", "register.jsp");
             forward = "/WEB-INF/error.jsp";
-        }catch (DuplicateException e){
+        } catch (DuplicateException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Utente già registrato");
             req.setAttribute("back", "register.jsp");

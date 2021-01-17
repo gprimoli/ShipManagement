@@ -10,10 +10,13 @@ import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
 
+@WebServlet(urlPatterns = "/aggiungi-mediazione")
 public class CreaMediazione extends HttpServlet {
 
     @Override
@@ -29,22 +32,14 @@ public class CreaMediazione extends HttpServlet {
         String forward = "/WEB-INF/error.jsp";
         String codFiscale = u.getCodFiscale();
         String nome = req.getParameter("nome");
-        Part p = req.getPart("documento");
-        @Cleanup InputStream documento = null;
-        boolean tmp = false;
 
         try {
-            if (p.getSize() > 0 && p.getSize() < 4294967295.0 && p.getContentType().compareTo("application/pdf") == 0) {
-                documento = p.getInputStream();
-                tmp = true;
-            }
-
             Mediazione m = Mediazione.builder()
                     .nome(nome)
                     .stato("Disponibile")
                     .codFiscaleUtente(codFiscale)
-                    .contratto(documento)
-                    .caricato(tmp)
+                    .contratto(null)
+                    .caricato(false)
                     .build();
 
             int id = MediazioneDAO.doSave(m);

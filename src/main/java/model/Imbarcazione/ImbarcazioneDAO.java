@@ -10,12 +10,13 @@ import model.Util.NoEntryException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class ImbarcazioneDAO {
 
     public static void doSave(Imbarcazione i) throws DuplicateException {
         try {
-
+            Random r = new Random();
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO imbarcazione(cod_fiscale_utente, imo, nome, tipologia, anno_costruzione, bandiera, quantita_max, lunghezza_fuori_tutto, ampiezza, altezza, posizione, documento) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
             p.setString(1, i.getCodFiscaleUtente());
@@ -28,7 +29,7 @@ public class ImbarcazioneDAO {
             p.setFloat(8, i.getLunghezza());
             p.setFloat(9, i.getAmpiezza());
             p.setFloat(10, i.getAltezza());
-            p.setInt(11, i.getPosizione());
+            p.setInt(11, r.nextInt(8) + 1); //API marin traffic
             p.setBinaryStream(12, i.getDocumento());
             p.execute();
         } catch (SQLException e) {
