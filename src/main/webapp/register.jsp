@@ -45,7 +45,6 @@
                                                    placeholder="Inserisci Nome" minlength="2" maxlength="50"
                                                    pattern="^[A-Za-z\s]*$"
                                                    title="Il campo non pu&oacute; contenere numeri"
-                                                   value="asd"
                                                    required/>
                                         </div>
                                     </div>
@@ -56,7 +55,7 @@
                                                    type="text" placeholder="Inserisci Cognome" minlength="2"
                                                    maxlength="50" pattern="^[A-Za-z\s]*$"
                                                    title="Il campo non pu&oacute; contenere numeri"
-                                                   value="asd"
+
                                                    required/>
                                         </div>
                                     </div>
@@ -84,7 +83,7 @@
                                                    placeholder="Inserisci Lugoo di Nascita" minlength="2"
                                                    maxlength="50" pattern="^[A-Za-z]*$"
                                                    title="Il campo non pu&oacute; contenere numeri"
-                                                   value="Napoli"
+
                                                    required/>
                                         </div>
                                     </div>
@@ -97,7 +96,7 @@
                                            placeholder="Inserisci Codice Fiscale" minlength="16" maxlength="16"
                                            pattern="^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$"
                                            title="Il campo non contenere un codice fiscale corretto"
-                                           value="RMLGNR99R27F839Q"
+
                                            required/>
                                 </div>
                                 <div class="form-group">
@@ -107,7 +106,7 @@
                                            aria-describedby="teledonoHelp"
                                            placeholder="Inserisci numero di telefono" maxlength="10"
                                            pattern="^[0-9]+$" title="Il campo non pu&oacute; contenere lettere"
-                                           value="3337800499"
+
                                            required/>
                                 </div>
                                 <div class="form-group">
@@ -115,7 +114,7 @@
                                     <input name="email" class="form-control py-4" id="inputEmailAddress"
                                            type="email"
                                            aria-describedby="emailHelp" placeholder="Inserisci Email"
-                                           value="g.rimoli@studenti.unisa.it"
+
                                            required/>
                                 </div>
                                 <div class="form-row">
@@ -127,7 +126,7 @@
                                                    type="password" placeholder="Inserisci Password"
                                                    pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
                                                    onfocusout="checkPassword()"
-                                                   value="@Gennaro1"
+
                                                    required/>
                                         </div>
                                     </div>
@@ -140,7 +139,7 @@
                                                    placeholder="Conferma Password"
                                                    pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
                                                    onfocusout="checkPassword()"
-                                                   value="@Gennaro1"
+
                                                    required/>
                                         </div>
                                     </div>

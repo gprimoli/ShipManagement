@@ -192,6 +192,9 @@ public class UtenteDAO {
             p.setString(2, password);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
+
+            String xx = r.getString("attivato");
+
             u = Utente.builder()
                     .codFiscale(r.getString("cod_fiscale"))
                     .nome(r.getString("nome"))
