@@ -58,10 +58,12 @@ public class Utente {
             return this;
         }
 
-        public UtenteBuilder dataNascita(Date dataNascita) throws InvalidParameterException {
+            public UtenteBuilder dataNascita(Date dataNascita) throws InvalidParameterException {
             Calendar compareDate = Calendar.getInstance();
             compareDate.add(Calendar.YEAR, -18);
-            if (dataNascita.after(compareDate.getTime()))
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataNascita);
+            if (cal.after(compareDate.getTime()))
                 throw new InvalidParameterException();
             this.dataNascita = dataNascita;
             return this;
@@ -112,14 +114,14 @@ public class Utente {
         }
 
         public UtenteBuilder clone(Utente u) throws InvalidParameterException {
-            if (this.codFiscale == null
-                    || this.nome == null
-                    || this.cognome == null
-                    || this.dataNascita == null
-                    || this.luogoNascita == null
-                    || this.email == null
-                    || this.telefono == null
-                    || this.ruolo == null
+            if (u.codFiscale == null
+                    || u.nome == null
+                    || u.cognome == null
+                    || u.dataNascita == null
+                    || u.luogoNascita == null
+                    || u.email == null
+                    || u.telefono == null
+                    || u.ruolo == null
             )
                 throw new InvalidParameterException();
 
