@@ -1,8 +1,6 @@
 package controller.Richiesta;
 
 import lombok.SneakyThrows;
-import model.Mediazione.Mediazione;
-import model.Mediazione.MediazioneDAO;
 import model.Notifica.Notifica;
 import model.Notifica.NotificaDAO;
 import model.Richiesta.Richiesta;
@@ -32,14 +30,14 @@ public class EliminaRichiesta extends HttpServlet {
             resp.sendRedirect("index");
             return;
         }
-        int id = Integer.parseInt((String) req.getAttribute("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         String forward = "index";
         Richiesta r = RichiestaDAO.doRetriveById(id);
 
         if(r.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0){
             if(r.getStato().compareTo("Disponibile") == 0){
 
-                Notifica n = Notifica.builder().corpo("Richiesta " + r.getId() + " eliminata").oggetto("La richiesta " + r.getId() + " &egrave; stata eliminata dal clinete " + r.getCodFiscaleUtente()).build();
+                Notifica n = Notifica.builder().oggetto("Richiesta " + r.getId() + " eliminata").corpo("La richiesta " + r.getId() + " &egrave; stata eliminata dal clinete " + r.getCodFiscaleUtente()).build();
 
                 NotificaDAO.doSaveAll(r, n);
 
@@ -47,12 +45,16 @@ public class EliminaRichiesta extends HttpServlet {
                 req.setAttribute("notifica", "Richiesta Eliminata!");
                 req.setAttribute("tipoNotifica", "danger");
             }else {
-                req.setAttribute("notifica", "Non puoi eliminare una richiesta avviata!");
-                req.setAttribute("tipoNotifica", "danger");
+                req.setAttribute("errore", "422");
+                req.setAttribute("back", "index.jsp");
+                forward = "/WEB-INF/errore.jsp";
+                req.setAttribute("descrizione", "Non puoi eliminare una richiesta avviata!");
             }
         }else {
-            req.setAttribute("notifica", "Non hai i permessi per rimuovere la richiesta perchè non ne fai parte!");
-            req.setAttribute("tipoNotifica", "danger");
+            req.setAttribute("errore", "422");
+            req.setAttribute("back", "index.jsp");
+            forward = "/WEB-INF/errore.jsp";
+            req.setAttribute("descrizione", "Non hai i permessi per rimuovere la richiesta perchè non ne fai parte!");
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }

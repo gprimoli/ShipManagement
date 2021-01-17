@@ -39,7 +39,7 @@ public class VisualizzaDocumento extends HttpServlet {
         try {
             Richiesta r = RichiestaDAO.doRetriveById(id);
 
-            if (u.isBroker() || r.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
+            if ((u.isBroker() || r.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) && r.isCaricato()) {
 
                 resp.setContentType("application/pdf");
 
@@ -69,7 +69,7 @@ public class VisualizzaDocumento extends HttpServlet {
                     } catch (NoEntryException ignored) {
                     }
                 }
-                if (tmp) {
+                if (tmp && r.isCaricato()) {
 
                     resp.setContentType("application/pdf");
 
@@ -83,15 +83,17 @@ public class VisualizzaDocumento extends HttpServlet {
                     }
                     return;
                 } else {
-                    req.setAttribute("notifica", "Non hai i permessi per visualizzare l'imbarcazione!");
-                    req.setAttribute("tipoNotifica", "danger");
-                    forward = "index";
+                    req.setAttribute("errore", "422");
+                    req.setAttribute("descrizione", "Non hai i permessi per visualizzare l'imbarcazione!");
+                    req.setAttribute("back", "index.jsp");
+                    forward = "/WEB-INF/error.jsp";
                 }
             }
         } catch (NoEntryException e) {
-            req.setAttribute("notifica", "Imbarcazione inesistente");
-            req.setAttribute("tipoNotifica", "danger");
-            forward = "index";
+            req.setAttribute("errore", "422");
+            req.setAttribute("descrizione", "Imbarcazione inesistente");
+            req.setAttribute("back", "index.jsp");
+            forward = "/WEB-INF/error.jsp";
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }

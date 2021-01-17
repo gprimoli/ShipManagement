@@ -164,7 +164,7 @@
                                                id="inputCodFiscaleCompagnia"
                                                type="text"
                                                aria-describedby="codicefiscaleCompagniaHelp"
-                                               placeholder="Inserisci Codice Fiscale Compagnia" pattern=""/>
+                                               placeholder="Inserisci Codice Fiscale Compagnia" pattern="^[A-Za-z0-9]*$"/>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-6">

@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class MediazioneDAO {
 
-    public static void doSave(Mediazione m) throws DuplicateException {
+    public static int doSave(Mediazione m) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO mediazione(nome, stato, contratto, cod_fiscale_utente) VALUES (?,?,?,?);");
@@ -24,6 +24,12 @@ public class MediazioneDAO {
             p.setBlob(3, m.getContratto());
             p.setString(4, m.getCodFiscaleUtente());
             p.execute();
+
+            p = c.prepareStatement("SELECT MAX(id) from mediazione where cod_fiscale_utente = ?;");
+            p.setString(1, m.getCodFiscaleUtente());
+            @Cleanup ResultSet rs = p.executeQuery();
+            rs.next();
+            return rs.getInt(1);
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();

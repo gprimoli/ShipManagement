@@ -83,15 +83,17 @@ public class VisualizzaContratto extends HttpServlet {
                     }
                     return;
                 } else {
-                    req.setAttribute("notifica", "Non hai i permessi per visualizzare l'imbarcazione!");
-                    req.setAttribute("tipoNotifica", "danger");
-                    forward = "index";
+                    req.setAttribute("errore", "422");
+                    req.setAttribute("back", "index.jsp");
+                    forward = "/WEB-INF/errore.jsp";
+                    req.setAttribute("descrizione", "Non hai i permessi per visualizzare l'imbarcazione!");
                 }
             }
         } catch (NoEntryException e) {
-            req.setAttribute("notifica", "Imbarcazione inesistente");
-            req.setAttribute("tipoNotifica", "danger");
-            forward = "index";
+            req.setAttribute("errore", "422");
+            req.setAttribute("back", "index.jsp");
+            forward = "/WEB-INF/errore.jsp";
+            req.setAttribute("descrizione", "Imbarcazione inesistente");
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }

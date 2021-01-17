@@ -44,6 +44,14 @@
                                        value="${sessionScope.utente.email}"
                                        required/>
                             </div>
+                            <div class="form-group">
+                                <label class="small mb-1" for="inputEmailAddress">Telefono</label>
+                                <input name="telefono" class="form-control py-4" id="telefono"
+                                       type="tel"
+                                       aria-describedby="telHelp" placeholder="Inserisci Telefono"
+                                       value="${sessionScope.utente.telefono}"
+                                       required/>
+                            </div>
                             <!-- Form Row-->
                             <div class="form-row">
                                 <!-- Form Group (first name)-->

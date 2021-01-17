@@ -29,7 +29,7 @@ public class EliminaMediazione extends HttpServlet {
             resp.sendRedirect("index");
             return;
         }
-        int id = Integer.parseInt((String) req.getAttribute("id"));
+        int id = Integer.parseInt(req.getParameter("id"));
         String forward = "index";
         Mediazione m = MediazioneDAO.doRetriveById(id);
 
@@ -41,7 +41,7 @@ public class EliminaMediazione extends HttpServlet {
                 req.setAttribute("notifica", "Mediazione Eliminata!");
                 req.setAttribute("tipoNotifica", "danger");
             } else if (m.getStato().compareTo("In Attesa di Firma") == 0 || m.getStato().compareTo("Richiesta Modifica") == 0) {
-                Notifica n = Notifica.builder().corpo("Mediazione " + m.getNome() + " eliminata").oggetto("La mediazione " + m.getNome() + " di cui facevi parte &egrave; stata eliminata").build();
+                Notifica n = Notifica.builder().oggetto("Mediazione " + m.getNome() + " eliminata").corpo("La mediazione " + m.getNome() + " di cui facevi parte &egrave; stata eliminata").build();
 
                 NotificaDAO.doSaveAll(m, n);
                 MediazioneDAO.doDelete(m);
@@ -49,12 +49,16 @@ public class EliminaMediazione extends HttpServlet {
                 req.setAttribute("notifica", "Mediazione Eliminata!");
                 req.setAttribute("tipoNotifica", "danger");
             } else {
-                req.setAttribute("notifica", "Non puoi eliminare una mediazione avviata!");
-                req.setAttribute("tipoNotifica", "danger");
+                req.setAttribute("errore", "422");
+                req.setAttribute("back", "index.jsp");
+                forward = "/WEB-INF/errore.jsp";
+                req.setAttribute("descrizione", "Non puoi eliminare una mediazione avviata!");
             }
         } else {
-            req.setAttribute("notifica", "Non hai i permessi per visualizzare la mediazione perchè non ne fai parte!");
-            req.setAttribute("tipoNotifica", "danger");
+            req.setAttribute("errore", "422");
+            req.setAttribute("back", "index.jsp");
+            forward = "/WEB-INF/errore.jsp";
+            req.setAttribute("descrizione", "Non hai i permessi per visualizzare la mediazione perchè non ne fai parte!");
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }

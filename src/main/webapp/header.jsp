@@ -14,8 +14,8 @@
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous"></script>
     <link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" crossorigin="anonymous"/>
     <script src="https://kit.fontawesome.com/75df56a8b8.js" crossorigin="anonymous"></script>
-    <link href="assets/css/styles.css" rel="stylesheet"/>
-    <script src="assets/js/moment.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" crossorigin="anonymous"></script>
+    <link href="assets/css/styles.css" rel="stylesheet" crossorigin="anonymous"/>
 </head>
 <body class="sb-nav-fixed sb-sidenav-toggled">
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark d-flex justify-content-between">

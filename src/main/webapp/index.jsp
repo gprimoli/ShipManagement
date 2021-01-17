@@ -32,7 +32,6 @@
         });
     });
 </script>
-
 <div id="layoutSidenav_content mt-0">
     <main>
         <div class="container-fluid">
@@ -59,7 +58,7 @@
                                 <button class="btn btn-primary" data-toggle="modal"
                                         data-target="#aggiungiMediazione" type="button">Aggiungi Mediazione
                                 </button>
-                                <a href="ricerca.jsp">
+                                <a href="ricerca-mediazioni">
                                     <button class="btn btn-warning">Ricerca</button>
                                 </a>
                             </c:otherwise>

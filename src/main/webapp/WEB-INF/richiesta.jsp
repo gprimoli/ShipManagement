@@ -27,13 +27,13 @@
                         <form enctype="multipart/form-data" action="modifica-richiesta" method="post"
                               onsubmit="return validateRichiesta()">
                             </c:if>
-                            <input type="hidden" value="${requestScope.richiesta.id}"/>
+                            <input name="id" type="hidden" value="${requestScope.richiesta.id}"/>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="tipoCarico">Tipo di Carico</label>
                                     <select name="tipoCarico" id="tipoCarico" class="custom-select"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                             required>
                                         <c:forEach
@@ -52,7 +52,7 @@
                                            placeholder="Inserisci Quantit&aacute;"
                                            value="${requestScope.richiesta.quantita}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -63,7 +63,7 @@
                                     <select name="portoPartenza" id="portoPartenza" onfocusout="porto()"
                                             class="custom-select"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                             required>
                                         <c:forEach items="${requestScope.porti}" var="porto">
@@ -80,7 +80,7 @@
                                            type="date"
                                            value="${requestScope.richiesta.dataPartenza}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -91,12 +91,12 @@
                                     <select name="portoArrivo" id="portoArrivo" class="custom-select"
                                             onfocusout="porto()"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                             required>
                                         <c:forEach items="${requestScope.porti}" var="porto">
                                             <option <c:if
-                                                    test="${requestScope.richiesta.portoPartenza.compareTo(porto.localcode) == 0}"> selected </c:if>
+                                                    test="${porto.localcode.compareTo(requestScope.richiesta.portoArrivo) == 0}"> selected </c:if>
                                                     value="${porto.localcode}">${porto.nome}</option>
                                         </c:forEach>
                                     </select>
@@ -108,7 +108,7 @@
                                            onfocusout="data()"
                                            value="${requestScope.richiesta.dataArrivo}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -124,32 +124,36 @@
                                     <label class="small mb-1" for="inputDocumento">Documento</label>
                                     <input name="documento" class="form-control py-4" id="inputDocumento"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            value="${requestScope.richiesta.documento}"
                                            type="file"/>
+                                    <c:if test="${!requestScope.richiesta.caricato}">
+                                        <p>Documento non caricato</p>
+                                    </c:if>
                                 </div>
                             </div>
                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) == 0}">
                             <button type="submit" class="btn btn-primary">Modifica</button>
-                            <button class="btn btn-danger"
-                                    data-toggle="modal" data-target="#rimuovi"
-                                    type="button">
-                                Rimuovi
-                            </button>
+                    </div>
+                    </form>
+                    </c:if>
+                    <div class="card-footer">
+                        <button class="btn btn-danger"
+                                data-toggle="modal" data-target="#rimuovi"
+                                type="button">
+                            Rimuovi
+                        </button>
+                        <c:if test="${requestScope.richiesta.caricato}">
                             <a href="visualizza-richiesta-documento?id=${requestScope.richiesta.id}">
                                 <button class="btn btn-success">Visualizza Documento</button>
                             </a>
-                            </c:if>
-                    </div>
-                    <div class="form-row">
+                        </c:if>
+
                         <a href="index">
                             <button class="btn btn-primary">Indietro</button>
                         </a>
                     </div>
-                    <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) == 0}">
-                        </form>
-                    </c:if>
                 </div>
             </div>
         </div>

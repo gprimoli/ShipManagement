@@ -35,12 +35,14 @@ public class AggiornaUtente extends HttpServlet {
 
         String email = req.getParameter("email");
         String nome = req.getParameter("nome");
+        String telefono = req.getParameter("telefono");
         String cognome = req.getParameter("cognome");
         String dataDiNascita = req.getParameter("dataDiNascita");
         String luogoDiNascita = req.getParameter("luogoDiNascita");
         try {
             Utente nu = Utente.builder()
                     .clone(u)
+                    .telefono(telefono)
                     .email(email)
                     .nome(nome)
                     .cognome(cognome)

@@ -27,10 +27,11 @@
                 <div class="card mb-4">
                     <div class="card-header">Visualizza Mediazione</div>
                     <div class="card-body">
-                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
+                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
                         <form action="modifica-mediazione" method="post">
                             </c:if>
-                            <div class="form-row">
+                                <input name="id" type="hidden" value="${requestScope.mediazione.id}"/>
+                                <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label class="small mb-1" for="inputNome">Nome</label>
                                     <input name="nome" class="form-control py-4" id="inputNome"
@@ -40,7 +41,7 @@
                                            title="Il campo non pu&oacute; contenere caratteri speciali"
                                            value="${requestScope.mediazione.nome}"
                                             <c:if test="${sessionScope.utente.ruolo.compareTo('broker') != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -48,35 +49,33 @@
                                     <label class="small mb-1" for="inputStato">Stato</label>
                                     <input name="nome" class="form-control py-4" id="inputStato"
                                            type="text"
-                                           value="${requestScope.mediazione.stato}" disabled/>
+                                           value="${requestScope.mediazione.stato}" readonly/>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label class="small mb-1" for="inputContratto">Contratto</label>
                                     <input name="documento" class="form-control py-4" id="inputContratto"
                                            type="file"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            value="${requestScope.mediazione.contratto}"/>
                                 </div>
                             </div>
-                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
-                                <button class="btn btn-primary" type="submit">Modifica</button>
-                            </c:if>
+                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
+                            <button class="btn btn-primary" type="submit">Modifica</button>
+                        </form>
+                        </c:if>
+                        <div class="card-footer">
                             <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('In attesa di Firma') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
                                 <button class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#eliminazione"
                                         type="button">Rimuovi
                                 </button>
                             </c:if>
-                            <div class="form-row">
-                                <a href="index">
-                                    <button class="btn btn-primary">Indietro</button>
-                                </a>
-                            </div>
-                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
-                        </form>
-                        </c:if>
+                            <a href="index">
+                                <button class="btn btn-primary">Indietro</button>
+                            </a>
+                        </div>
                         <p class="h5 mt-2 mb-1">Dati Broker:</p>
                         <div class="form-row">
                             <!-- Form Group (first name)-->
@@ -85,7 +84,7 @@
                                 <input name="cognome" class="form-control py-4" id="inputNomeBroker"
                                        type="text"
                                        value="${requestScope.utente.nome}"
-                                       disabled/>
+                                       readonly/>
                             </div>
                             <!-- Form Group (last name)-->
                             <div class="form-group col-md-6">
@@ -93,21 +92,21 @@
                                 <input name="cognome" class="form-control py-4" id="inputCognomeBroker"
                                        type="text"
                                        value="${requestScope.utente.cognome}"
-                                       disabled/>
+                                       readonly/>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="small mb-1" for="inputTelefonoBroker">Telefono</label>
                                 <input name="cognome" class="form-control py-4" id="inputTelefonoBroker"
                                        type="text"
                                        value="${requestScope.utente.telefono}"
-                                       disabled/>
+                                       readonly/>
                             </div>
                             <div class="form-group col-md-12">
                                 <label class="small mb-1" for="inputEmailBroker">Email</label>
                                 <input name="cognome" class="form-control py-4" id="inputEmailBroker"
                                        type="text"
                                        value="${requestScope.utente.email}"
-                                       disabled/>
+                                       readonly/>
                             </div>
                         </div>
                     </div>
@@ -231,7 +230,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form action="rimuovi-dalla-mediazione-imbarcazione" method="post">
+                        <form>
                             <input name="id" value="${requestScope.mediazione.id}" type="hidden"/>
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>
@@ -254,7 +253,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form action="rimuvoi-dalla-mediazione" method="post">
+                        <form action="rimuvoi-dalla-mediazione-richiesta" method="post">
                             <input name="richiestaID" value="" type="hidden">
                             <input name="mediazioneID" value="" type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>
@@ -278,7 +277,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form action="rimuvoi-imbarcazione-dalla-mediazione" method="post">
+                        <form action="rimuovi-dalla-mediazione-imbarcazione" method="post">
                             <input name="imbarcazioneIMO" value="" type="hidden">
                             <input name="mediazioneID" value="" type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>

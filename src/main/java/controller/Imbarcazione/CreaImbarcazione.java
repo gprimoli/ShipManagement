@@ -36,7 +36,6 @@ public class CreaImbarcazione extends HttpServlet {
         String tipologia = req.getParameter("tipologia");
         String imo = req.getParameter("imo");
         String nome = req.getParameter("nome");
-        String xx = req.getParameter("quantita");
         float quantita = Float.parseFloat(req.getParameter("quantita"));
         String bandiera = req.getParameter("bandiera");
         int anno = Integer.parseInt(req.getParameter("anno"));
@@ -70,9 +69,8 @@ public class CreaImbarcazione extends HttpServlet {
 
             ImbarcazioneDAO.doSave(i);
 
-            req.setAttribute("notifica", "Imbarcazione aggiunta con successo");
-            req.setAttribute("tipoNotifica", "success");
-            forward = "index";
+            resp.sendRedirect("visualizza-imbarcazione?imo=" + imo);
+            return;
         } catch (InvalidParameterException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");

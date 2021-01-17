@@ -22,7 +22,7 @@ import java.io.IOException;
 public class RendiIndisponibileDisponibile extends HttpServlet {
 
     @SneakyThrows
-    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
         if (u == null) {
@@ -36,7 +36,7 @@ public class RendiIndisponibileDisponibile extends HttpServlet {
         if(i.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0){
             if(i.isDisponibile()){
 
-                Notifica n = Notifica.builder().corpo("Imbarcazione " + i.getImo() + " eliminata").oggetto("L'imbarcazione " + i.getNome() + " &egrave; stata resa indisponibile dall'armatore " + i.getCodFiscaleUtente()).build();
+                Notifica n = Notifica.builder().oggetto("Imbarcazione " + i.getImo() + " resa indisponibile").corpo("L'imbarcazione " + i.getNome() + " &egrave; stata resa indisponibile dall'armatore " + i.getCodFiscaleUtente()).build();
 
                 NotificaDAO.doSaveAll(i, n);
 
@@ -50,13 +50,17 @@ public class RendiIndisponibileDisponibile extends HttpServlet {
                     req.setAttribute("notifica", "Imbarcazione resa disponibile!");
                     req.setAttribute("tipoNotifica", "success");
                 } else{
-                    req.setAttribute("notifica", "L'imbarcazione fa parte di una mediazione non può essere disponibile.!");
-                    req.setAttribute("tipoNotifica", "warnign");
+                    req.setAttribute("errore", "422");
+                    req.setAttribute("back", "index.jsp");
+                    forward = "/WEB-INF/errore.jsp";
+                    req.setAttribute("descrizione", "L'imbarcazione fa parte di una mediazione non può essere disponibile.!");
                 }
             }
         }else {
-            req.setAttribute("notifica", "Non hai i permessi per rimuovere la richiesta perchè non ne fai parte!");
-            req.setAttribute("tipoNotifica", "danger");
+            req.setAttribute("errore", "422");
+            req.setAttribute("back", "index.jsp");
+            forward = "/WEB-INF/errore.jsp";
+            req.setAttribute("descrizione", "Non hai i permessi per rimuovere la richiesta perchè non ne fai parte!");
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }

@@ -1,15 +1,15 @@
 use shipmanagmentdb;
 
-INSERT INTO area(nome) VALUES ('WTNNfF7kYt');
-INSERT INTO area(nome) VALUES ('VR9pCGDY8n');
-INSERT INTO area(nome) VALUES ('T9VhhN2AC0');
-INSERT INTO area(nome) VALUES ('LB1OpGpwBy');
-INSERT INTO area(nome) VALUES ('qQZCZPrsvV');
-INSERT INTO area(nome) VALUES ('uC3sxVmrLy');
-INSERT INTO area(nome) VALUES ('ib3sPUHQsn');
-INSERT INTO area(nome) VALUES ('0fyq18NB7f');
-INSERT INTO area(nome) VALUES ('5dkPnXdBjB');
-INSERT INTO area(nome) VALUES ('7TzQjqlKWG');
+INSERT INTO area(nome) VALUES ('A1');
+INSERT INTO area(nome) VALUES ('A2');
+INSERT INTO area(nome) VALUES ('A3');
+INSERT INTO area(nome) VALUES ('A4');
+INSERT INTO area(nome) VALUES ('A5');
+INSERT INTO area(nome) VALUES ('A6');
+INSERT INTO area(nome) VALUES ('A7');
+INSERT INTO area(nome) VALUES ('A8');
+INSERT INTO area(nome) VALUES ('A9');
+INSERT INTO area(nome) VALUES ('A0');
 
 INSERT INTO porto(localcode, nome, id_area) VALUES ('DWeDcF', 'A', '1');
 INSERT INTO porto(localcode, nome, id_area) VALUES ('KeeUtE', 'B', '2');

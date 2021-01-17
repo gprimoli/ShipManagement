@@ -47,11 +47,9 @@ public class CreaMediazione extends HttpServlet {
                     .caricato(tmp)
                     .build();
 
-            MediazioneDAO.doSave(m);
+            int id = MediazioneDAO.doSave(m);
 
-            req.setAttribute("notifica", "Mediazione aggiunta con successo");
-            req.setAttribute("tipoNotifica", "success");
-            forward = "index";
+            resp.sendRedirect("visualizza-mediazione?id=" + id);
         } catch (InvalidParameterException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");

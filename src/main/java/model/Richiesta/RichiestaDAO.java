@@ -13,7 +13,7 @@ import java.sql.*;
 import java.util.LinkedList;
 
 public class RichiestaDAO {
-    public static void doSave(Richiesta r) throws DuplicateException {
+    public static int doSave(Richiesta r) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO richiesta(cod_fiscale_utente, tipo_carico, quantita, data_partenza, porto_partenza, data_arrivo, porto_arrivo, documento) VALUES (?,?,?,?,?,?,?,?);");
@@ -26,6 +26,12 @@ public class RichiestaDAO {
             p.setString(7, r.getPortoArrivo());
             p.setBlob(8, r.getDocumento());
             p.execute();
+
+            p = c.prepareStatement("SELECT MAX(id) from richiesta where cod_fiscale_utente = ?;");
+            p.setString(1, r.getCodFiscaleUtente());
+            @Cleanup ResultSet rs = p.executeQuery();
+            rs.next();
+            return rs.getInt(1);
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();
@@ -176,4 +182,38 @@ public class RichiestaDAO {
         }
         return richieste;
     }
+
+    public static LinkedList<Richiesta> doRetriveAllDisponibili() throws NoEntryException{
+        LinkedList<Richiesta> richieste = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from richiesta where stato = 'Disponibile'");
+            @Cleanup ResultSet r = p.executeQuery();
+            while (r.next()) {
+                richieste.add(
+                        Richiesta.builder()
+                                .id(r.getInt("id"))
+                                .codFiscaleUtente(r.getString("cod_fiscale_utente"))
+                                .tipoCarico(r.getString("tipo_carico"))
+                                .quantita(r.getFloat("quantita"))
+                                .dataPartenza(r.getDate("data_partenza"))
+                                .portoPartenza(r.getString("porto_partenza"))
+                                .dataArrivo(r.getDate("data_arrivo"))
+                                .portoArrivo(r.getString("porto_arrivo"))
+                                .stato(r.getString("stato"))
+                                .caricato(r.getBoolean("caricato"))
+                                .build()
+                );
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new NoEntryException();
+            throw new RuntimeException(e);
+        } catch (InvalidParameterException e) {
+            System.out.println("database compromesso");
+            e.printStackTrace();
+        }
+        return richieste;
+    }
+
 }

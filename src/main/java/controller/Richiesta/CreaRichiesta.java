@@ -27,7 +27,7 @@ public class CreaRichiesta extends HttpServlet {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
 
-        if(u == null){
+        if (u == null) {
             resp.sendRedirect("index");
             return;
         }
@@ -62,11 +62,10 @@ public class CreaRichiesta extends HttpServlet {
                     .stato("Disponibile")
                     .build();
 
-            RichiestaDAO.doSave(r);
+            int id = RichiestaDAO.doSave(r);
 
-            req.setAttribute("notifica", "Richiesta aggiunta con successo");
-            req.setAttribute("tipoNotifica", "success");
-            forward = "index";
+            resp.sendRedirect("visualizza-richiesta?id=" + id);
+            return;
         } catch (InvalidParameterException | ParseException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");

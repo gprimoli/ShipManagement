@@ -23,9 +23,7 @@
                     <div class="card-header"><h3 class="text-center font-weight-light my-4">Visualizza Imbarcazione</h3>
                     </div>
                     <div class="card-body">
-                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) == 0}">
                         <form enctype="multipart/form-data" action="modifica-imbarcazione" method="post">
-                            </c:if>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="inputImo">Imo</label>
@@ -33,9 +31,7 @@
                                            type="text" maxlength="7"
                                            placeholder="Inserisci Imo"
                                            value="${requestScope.imbarcazione.imo}"
-                                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
-                                            </c:if>
+                                           readonly
                                            required/>
                                 </div>
                                 <div class="form-group col-md-6">
@@ -44,7 +40,7 @@
                                            type="text"
                                            value="${requestScope.imbarcazione.nome}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -55,7 +51,7 @@
                                     <label class="small mb-1" for="tipologia">Tipologia</label>
                                     <select name="tipologia" id="tipologia" class="custom-select"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                             required>
                                         <c:forEach
@@ -75,7 +71,7 @@
                                            type="number" step="1000"
                                            value="${requestScope.imbarcazione.quantitaMax}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -85,7 +81,7 @@
                                     <label class="small mb-1" for="inputBandiera">Bandiera</label>
                                     <select name="bandiera" id="inputBandiera" class="custom-select"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                             required>
                                         <c:forEach
@@ -104,7 +100,7 @@
                                            type="number" value="${requestScope.imbarcazione.annoCostruzione}"
                                            step="1"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -116,7 +112,7 @@
                                            type="number" step="1"
                                            value="${requestScope.imbarcazione.lunghezza}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -126,7 +122,7 @@
                                            type="number" step="1"
                                            value="${requestScope.imbarcazione.ampiezza}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -136,7 +132,7 @@
                                            type="number" step="1"
                                            value="${requestScope.imbarcazione.altezza}"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                disabled
+                                                readonly
                                             </c:if>
                                            required/>
                                 </div>
@@ -146,7 +142,7 @@
                                         <input name="nome" class="form-control py-4" id="inputStato"
                                                type="text"
                                                value="${requestScope.imbarcazione.disponibile ? 'Disponibile' : 'Non Disponibile'}"
-                                               disabled/>
+                                               readonly/>
                                     </div>
 
                                     <div class="form-group col-md-6">
@@ -155,32 +151,33 @@
                                         <input name="documento" class="form-control py-4"
                                                id="inputDocumentoImbarcazione"
                                                 <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                                    disabled
+                                                    readonly
                                                 </c:if>
                                                value="${requestScope.imbarcazione.documento}"
                                                type="file"/>
+                                        <c:if test="${!requestScope.imbarcazione.caricato}">
+                                            <p>Documento non caricato</p>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) == 0}">
-                                <button type="submit" class="btn btn-primary">Modifica</button>
-                                <button class="btn btn-${requestScope.imbarcazione.disponibile ? 'danger' : 'success' }"
-                                        data-toggle="modal" data-target="#rimuovi"
-                                        type="button">
-                                    Rendi ${requestScope.imbarcazione.disponibile ? 'Indisponibile' : 'Disponibile'}
-                                </button>
-                                <a href="visualizza-imbarcazione-documento?imo=${requestScope.imbarcazione.imo}">
-                                    <button class="btn btn-success">Visualizza Documento</button>
-                                </a>
-                            </c:if>
-                            <div class="form-row">
-                                <a href="index">
-                                    <button class="btn btn-primary">Indietro</button>
-                                </a>
-                            </div>
-                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) == 0}">
+                            <button type="submit" class="btn btn-primary">Modifica</button>
                         </form>
+                    </div>
+                    <div class="card-footer">
+                        <c:if test="${requestScope.imbarcazione.caricato}">
+                            <a href="visualizza-imbarcazione-documento?imo=${requestScope.imbarcazione.imo}">
+                                <button class="btn btn-success">Visualizza Documento</button>
+                            </a>
                         </c:if>
+                        <button class="btn btn-${requestScope.imbarcazione.disponibile ? 'danger' : 'success' }"
+                                data-toggle="modal" data-target="#rimuovi"
+                                type="button">
+                            Rendi ${requestScope.imbarcazione.disponibile ? 'Indisponibile' : 'Disponibile'}
+                        </button>
+                        <a href="index">
+                            <button class="btn btn-primary">Indietro</button>
+                        </a>
                     </div>
                 </div>
             </div>

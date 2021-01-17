@@ -61,15 +61,17 @@ public class VisualizazRichiesta extends HttpServlet {
                     req.setAttribute("richiesta", r);
                     req.setAttribute("porti", PortoDAO.doRetriveAll());
                 } else {
-                    req.setAttribute("notifica", "Non hai i permessi per visualizzare la richiesta!");
-                    req.setAttribute("tipoNotifica", "danger");
-                    forward = "index";
+                    req.setAttribute("errore", "422");
+                    req.setAttribute("back", "index.jsp");
+                    req.setAttribute("descrizione", "Non hai i permessi per visualizzare la richiesta!");
+                    forward = "/WEB-INF/errore.jsp";
                 }
             }
         } catch (NoEntryException e) {
-            req.setAttribute("notifica", "Richiesta inesistente");
-            req.setAttribute("tipoNotifica", "danger");
-            forward = "index";
+            req.setAttribute("descrizione", "Richiesta inesistente");
+            req.setAttribute("errore", "422");
+            req.setAttribute("back", "index.jsp");
+            forward = "/WEB-INF/errore.jsp";
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }
