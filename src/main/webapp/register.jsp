@@ -175,7 +175,7 @@
                                                        id="inputNomeCompagnia"
                                                        type="text"
                                                        aria-describedby="nomeCompagniaHelp"
-                                                       placeholder="Inserisci Nome Compagnia" pattern=""/>
+                                                       placeholder="Inserisci Nome Compagnia" pattern="^[A-Za-z\s]*$"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
@@ -186,7 +186,7 @@
                                                        id="inputNumTelefonoCompagnia"
                                                        type="text"
                                                        aria-describedby="telefonoCompagniaHelp"
-                                                       placeholder="Inserisci Telefono Compagnia" pattern=""/>
+                                                       placeholder="Inserisci Telefono Compagnia" pattern="^[0-9]*$"/>
                                             </div>
                                         </div>
                                     </div>
@@ -199,7 +199,7 @@
                                                        id="inputSedeCompagnia"
                                                        type="text"
                                                        aria-describedby="sedeCompagniaHelp"
-                                                       placeholder="Inserisci Sede Legale Compagnia" pattern=""/>
+                                                       placeholder="Inserisci Sede Legale Compagnia" pattern="^[A-Za-z\s]*$"/>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
