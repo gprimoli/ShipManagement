@@ -58,25 +58,44 @@ public class ModificaRichiesta extends HttpServlet {
             if (origin.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
 
                 if (origin.getStato().compareTo("Disponibile") == 0) {
-                    Richiesta r = Richiesta.builder()
-                            .id(origin.getId())
-                            .codFiscaleUtente(u.getCodFiscale())
-                            .tipoCarico(tipoCarico)
-                            .quantita(quantita)
-                            .dataPartenza(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dataPartenza).getTime()))
-                            .dataArrivo(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dataArrivo).getTime()))
-                            .portoPartenza(portoPartenza)
-                            .portoArrivo(portoArrivo)
-                            .stato(origin.getStato())
-                            .documento(documento)
-                            .caricato(tmp)
-                            .build();
+                    Richiesta r;
+                    if(tmp){
+                        r = Richiesta.builder()
+                                .id(origin.getId())
+                                .codFiscaleUtente(u.getCodFiscale())
+                                .tipoCarico(tipoCarico)
+                                .quantita(quantita)
+                                .dataPartenza(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dataPartenza).getTime()))
+                                .dataArrivo(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dataArrivo).getTime()))
+                                .portoPartenza(portoPartenza)
+                                .portoArrivo(portoArrivo)
+                                .stato(origin.getStato())
+                                .documento(documento)
+                                .caricato(tmp)
+                                .build();
+                    }else {
+                        r = Richiesta.builder()
+                                .id(origin.getId())
+                                .codFiscaleUtente(u.getCodFiscale())
+                                .tipoCarico(tipoCarico)
+                                .quantita(quantita)
+                                .dataPartenza(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dataPartenza).getTime()))
+                                .dataArrivo(new Date(new SimpleDateFormat("yyyy-MM-dd").parse(dataArrivo).getTime()))
+                                .portoPartenza(portoPartenza)
+                                .portoArrivo(portoArrivo)
+                                .stato(origin.getStato())
+                                .documento(origin.getDocumento())
+                                .caricato(tmp)
+                                .build();
+                    }
+
 
                     RichiestaDAO.doUpdate(r);
 
                     Notifica n = Notifica.builder().oggetto("Richiesta " + r.getId() + " modificata").corpo("La richiesta " + r.getId() + " &egrave; stata modficata dall'armatore " + r.getCodFiscaleUtente()).build();
 
-                    NotificaDAO.doSaveAll(r, n);
+                    int idNotifica = NotificaDAO.doSave(n);
+                    NotificaDAO.doSendToBroker(r, idNotifica);
 
                     resp.sendRedirect("visualizza-richiesta?id=" + id);
                     return;

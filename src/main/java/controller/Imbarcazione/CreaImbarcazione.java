@@ -67,10 +67,13 @@ public class CreaImbarcazione extends HttpServlet {
                     .tipologia(tipologia)
                     .build();
 
-            int id = ImbarcazioneDAO.doSave(i);
-
-            resp.sendRedirect("visualizza-imbarcazione?id=" + id);
-            return;
+            if (!ImbarcazioneDAO.doCheckIMO(i)){
+                int id = ImbarcazioneDAO.doSave(i);
+                resp.sendRedirect("visualizza-imbarcazione?id=" + id);
+                return;
+            }else {
+                throw new DuplicateException();
+            }
         } catch (InvalidParameterException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");

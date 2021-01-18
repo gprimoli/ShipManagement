@@ -45,8 +45,8 @@
                         <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
                         <form action="modifica-mediazione" method="post" enctype="multipart/form-data">
                             </c:if>
-                                <input name="id" type="hidden" value="${requestScope.mediazione.id}"/>
-                                <div class="form-row">
+                            <input name="id" type="hidden" value="${requestScope.mediazione.id}"/>
+                            <div class="form-row">
                                 <div class="form-group col-md-4">
                                     <label class="small mb-1" for="inputNome">Nome</label>
                                     <input name="nome" class="form-control py-4" id="inputNome"
@@ -79,6 +79,12 @@
                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
                             <button class="btn btn-primary" type="submit">Modifica</button>
                         </form>
+                        <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
+                            <form action="finalizza-mediazione" method="post">
+                                <input name="id" value="${requestScope.mediazione.id}" type="hidden"/>
+                                <button class="btn btn-primary">Finalizza Mediazione</button>
+                            </form>
+                        </c:if>
                         </c:if>
                         <div class="card-footer">
                             <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('In attesa di Firma') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
@@ -88,7 +94,7 @@
                                 </button>
                             </c:if>
 
-                            <c:if test="${requestScope.imbarcazione.caricato}">
+                            <c:if test="${requestScope.mediazione.caricato}">
                                 <a href="visualizza-mediazione-contratto?id=${requestScope.mediazione.id}">
                                     <button class="btn btn-success">Visualizza Contratto</button>
                                 </a>
@@ -96,9 +102,20 @@
 
                             <c:forEach items="${requestScope.firme}" var="firma">
                                 <c:if test="${sessionScope.utente.codFiscale.compareTo(firma) == 0}">
-
+                                    <c:set var="tmp" value="${true}"/>
                                 </c:if>
                             </c:forEach>
+
+                            <c:if test="${!tmp && requestScope.mediazione.stato.compareTo('In Attesa di Firma') == 0 && !sessionScope.utente.broker}">
+                                <form action="firma">
+                                    <input name="id" value="${requestScope.mediazione.id}" type="hidden"/>
+                                    <button class="btn btn-success" type="submit">Firma Mediazione</button>
+                                </form>
+                                <button class="btn btn-danger" data-toggle="modal"
+                                        data-target="#nofirma" type="button">
+                                    Rifiuta Firma
+                                </button>
+                            </c:if>
                             <a href="index">
                                 <button class="btn btn-primary">Indietro</button>
                             </a>
@@ -170,7 +187,9 @@
                                                 <td>${imbarcazione.tipologia}</td>
                                                 <td>
                                                     <button class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#rimuoviImbarcazione" type="button" onclick="$('#imbarcazioneIMO').attr('value', '${imbarcazione.imo}')">Rimuovi dalla Mediazione
+                                                            data-target="#rimuoviImbarcazione" type="button"
+                                                            onclick="$('#imbarcazioneIMO').attr('value', '${imbarcazione.id}')">
+                                                        Rimuovi dalla Mediazione
                                                     </button>
                                                     <a href="visualizza-imbarcazione?id=${imbarcazione.id}">
                                                         <button class="btn btn-primary">Visualizza</button>
@@ -220,7 +239,9 @@
                                                 <td>${richiesta.dataArrivo}</td>
                                                 <td>
                                                     <button class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#rimuoviRichiesta" type="button" onclick="$('#richiestaID').attr('value', '${richiesta.id}')">Rimuovi dalla Mediazione
+                                                            data-target="#rimuoviRichiesta" type="button"
+                                                            onclick="$('#richiestaID').attr('value', '${richiesta.id}')">
+                                                        Rimuovi dalla Mediazione
                                                     </button>
                                                     <a href="visualizza-richiesta?id=${richiesta.id}">
                                                         <button class="btn btn-primary">Visualizza</button>
@@ -305,8 +326,9 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
                         <form action="rimuovi-dalla-mediazione-imbarcazione" method="post">
-                            <input id="imbarcazioneIMO" name="imbarcazioneIMO" value="" type="hidden">
-                            <input id="mediazioneID" name="mediazioneID" value="${requestScope.mediazione.id}" type="hidden">
+                            <input id="imbarcazioneIMO" name="imbarcazioneID" value="" type="hidden">
+                            <input id="mediazioneID" name="mediazioneID" value="${requestScope.mediazione.id}"
+                                   type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>
                     </div>
@@ -315,7 +337,7 @@
         </div>
     </c:if>
 
-    <div class="modal fade" id="rifiuta" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="nofirma" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -327,7 +349,7 @@
                 <div class="modal-body">
                     <form action="rifiuta-firma" method="post">
                         <input name="motivazione" value="" type="text" rows="5"/>
-                        <input id="mediazioneIDFirma" name="mediazioineID" value="" type="hidden"/>
+                        <input name="mediazioineID" value="${requestScope.mediazione.id}" type="hidden"/>
                         <button class="btn btn-danger">Rifiuta</button>
                     </form>
                 </div>

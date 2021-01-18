@@ -29,7 +29,7 @@ public class AggiungiImbarcazioneAllaMediazione extends HttpServlet {
             int idMediazione = Integer.parseInt(req.getParameter("mediazione"));
             MediazioneDAO.doSaveImbarcazioneMediazione(idMediazione, id);
 
-            resp.sendRedirect("visualizza-imbarcazione?id=" + id);
+            resp.sendRedirect("visualizza-mediazione?id=" + idMediazione);
             return;
         } catch (NumberFormatException e) {
             req.setAttribute("errore", "422");

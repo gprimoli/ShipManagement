@@ -28,7 +28,7 @@ public class RimuoviImbarcazioneDallaMediazione extends HttpServlet {
             int mediazioneID = Integer.parseInt(req.getParameter("mediazioneID"));
 
             MediazioneDAO.doDeleteImbarcazioneMediazione(mediazioneID, id);
-            resp.sendRedirect("visualizza-imbarcazione?id=" + id);
+            resp.sendRedirect("visualizza-mediazione?id=" + mediazioneID);
             return;
         } catch (NumberFormatException e) {
             req.setAttribute("errore", "422");

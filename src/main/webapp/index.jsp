@@ -204,7 +204,7 @@
                             </div>
                         </div>
                     </c:when>
-                    <c:when test="${sessionScope.utente.armatore}">
+                    <c:when test="${sessionScope.utente.cliente}">
                         <div class="col-xl-12">
                             <div class="card mb-4">
                                 <div class="card-header">
@@ -371,7 +371,7 @@
         </div>
     </c:if>
 
-    <c:if test="${sessionScope.utente.armatore}">
+    <c:if test="${sessionScope.utente.cliente}">
         <div class="modal fade" id="aggiungiRichiesta" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -401,6 +401,7 @@
                                     <input name="quantita" class="form-control py-4" id="inputQuantita"
                                            type="number"
                                            placeholder="Inserisci Quantit&aacute;"
+                                           min="1"
                                            required/>
                                 </div>
                             </div>
@@ -464,7 +465,7 @@
         </div>
     </c:if>
 
-    <c:if test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
+    <c:if test="${sessionScope.utente.broker}">
         <div class="modal fade" id="aggiungiMediazione" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

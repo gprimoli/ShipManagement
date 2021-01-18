@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import lombok.*;
 import lombok.experimental.NonFinal;
 import model.CompagniaBroker.CompagniaBroker;
+import model.Porto.PortoDAO;
 import model.Util.InvalidParameterException;
 
 @Value
@@ -89,19 +90,19 @@ public class Richiesta {
 //        }
 //
 //
-//        public RichiestaBuilder portoPartenza(String portoPartenza) throws InvalidParameterException {
-//            if (portoPartenza.length() > 6)
-//                throw new InvalidParameterException();
-//            this.portoPartenza = portoPartenza;
-//            return this;
-//        }
-//
-//        public RichiestaBuilder portoArrivo(String portoArrivo) throws InvalidParameterException {
-//            if (portoArrivo.length() > 6)
-//                throw new InvalidParameterException();
-//            this.portoArrivo = portoArrivo;
-//            return this;
-//        }
+        public RichiestaBuilder portoPartenza(String portoPartenza) throws InvalidParameterException {
+            if (PortoDAO.doCheckPorto(portoPartenza))
+                throw new InvalidParameterException();
+            this.portoPartenza = portoPartenza;
+            return this;
+        }
+
+        public RichiestaBuilder portoArrivo(String portoArrivo) throws InvalidParameterException {
+            if (PortoDAO.doCheckPorto(portoArrivo))
+                throw new InvalidParameterException();
+            this.portoArrivo = portoArrivo;
+            return this;
+        }
 //
 //        public RichiestaBuilder stato(String stato) throws InvalidParameterException {
 //            String[] ar = new String[]{"Disponibile", "In lavorazione", "Terminata"};

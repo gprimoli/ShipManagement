@@ -122,7 +122,7 @@
                                             </c:if>
                                         </c:forEach>
                                         <td>
-                                            <a href="visualizza-imbarcazione?id${imbarcazione.id}">
+                                            <a href="visualizza-imbarcazione?id=${imbarcazione.id}">
                                                 <button class="btn btn-primary">Visualizza</button>
                                             </a></td>
                                     </tr>

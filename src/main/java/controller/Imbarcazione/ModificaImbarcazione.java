@@ -3,6 +3,8 @@ package controller.Imbarcazione;
 import lombok.Cleanup;
 import model.Imbarcazione.Imbarcazione;
 import model.Imbarcazione.ImbarcazioneDAO;
+import model.Mediazione.Mediazione;
+import model.Mediazione.MediazioneDAO;
 import model.Notifica.Notifica;
 import model.Notifica.NotificaDAO;
 import model.Utente.Utente;
@@ -16,6 +18,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Enumeration;
+import java.util.LinkedList;
 
 @WebServlet(
         urlPatterns = "/modifica-imbarcazione"
@@ -57,27 +60,48 @@ public class ModificaImbarcazione extends HttpServlet {
             Imbarcazione origin = ImbarcazioneDAO.doRetriveById(id);
             if (origin.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
                 if (origin.isDisponibile()) {
-                    Imbarcazione i = Imbarcazione.builder()
-                            .id(id)
-                            .nome(nome)
-                            .imo(imo)
-                            .codFiscaleUtente(codFiscale)
-                            .quantitaMax(quantita)
-                            .bandiera(bandiera)
-                            .annoCostruzione(anno)
-                            .lunghezza(lunghezza)
-                            .ampiezza(ampiezza)
-                            .altezza(altezza)
-                            .documento(documento)
-                            .caricato(tmp)
-                            .tipologia(tipologia)
-                            .build();
+                    Imbarcazione i;
+                    if(tmp){
+                        i = Imbarcazione.builder()
+                                .id(id)
+                                .nome(nome)
+                                .imo(imo)
+                                .codFiscaleUtente(codFiscale)
+                                .quantitaMax(quantita)
+                                .bandiera(bandiera)
+                                .annoCostruzione(anno)
+                                .lunghezza(lunghezza)
+                                .ampiezza(ampiezza)
+                                .altezza(altezza)
+                                .documento(documento)
+                                .caricato(tmp)
+                                .tipologia(tipologia)
+                                .build();
+                    }else {
+                         i = Imbarcazione.builder()
+                                .id(id)
+                                .nome(nome)
+                                .imo(imo)
+                                .codFiscaleUtente(codFiscale)
+                                .quantitaMax(quantita)
+                                .bandiera(bandiera)
+                                .annoCostruzione(anno)
+                                .lunghezza(lunghezza)
+                                .ampiezza(ampiezza)
+                                .altezza(altezza)
+                                .documento(origin.getDocumento())
+                                .caricato(tmp)
+                                .tipologia(tipologia)
+                                .build();
+                    }
 
                     ImbarcazioneDAO.doUpdate(i);
 
                     Notifica n = Notifica.builder().oggetto("Imbarcazione " + i.getImo() + " modificata").corpo("L'imbarcazione " + i.getNome() + " &egrave; stata modficata dall'armatore " + i.getCodFiscaleUtente()).build();
 
-                    NotificaDAO.doSaveAll(i, n);
+                    int notificaID = NotificaDAO.doSave(n);
+
+                    NotificaDAO.doSendToBroker(i, notificaID);
 
                     resp.sendRedirect("visualizza-imbarcazione?id=" + id);
                     return;

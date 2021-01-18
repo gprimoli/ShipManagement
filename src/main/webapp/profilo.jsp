@@ -129,7 +129,7 @@
         <div class="row">
 
             <c:choose>
-            <c:when test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
+            <c:when test="${sessionScope.utente.broker}">
             <div class="col-xl-6">
                 </c:when>
                 <c:otherwise>
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                 </div>
-                <c:if test="${sessionScope.utente.ruolo.compareTo('broker') == 0}">
+                <c:if test="${sessionScope.utente.broker}">
                     <div class="col-xl-6">
                         <div class="card mb-4">
                             <div class="card-header">Dati Compagnia Broker</div>

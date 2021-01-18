@@ -31,27 +31,17 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="tipoCarico">Tipo di Carico</label>
-
-                                    <c:choose>
-                                        <c:when test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
-                                            <c:forEach
-                                                    items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
-                                                    var="item">
-                                                <c:if test="${requestScope.richiesta.tipoCarico.compareTo(item) == 0}"> ${item} </c:if>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <select name="tipoCarico" id="tipoCarico" class="custom-select" required>
-                                                <c:forEach
-                                                        items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
-                                                        var="item">
-                                                    <option <c:if
-                                                            test="${requestScope.richiesta.tipoCarico.compareTo(item) == 0}"> selected </c:if>
-                                                            value="${item}">${item}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <select name="tipoCarico" id="tipoCarico" class="custom-select"
+                                            <c:if test="${requestScope.imbarcazione.codFiscaleUtente.compareTo(sessionScope.utente.codFiscale) != 0}"> disabled </c:if>
+                                            required>
+                                        <c:forEach
+                                                items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
+                                                var="item">
+                                            <option <c:if
+                                                    test="${requestScope.richiesta.tipoCarico.compareTo(item) == 0}"> selected </c:if>
+                                                    value="${item}">${item}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="inputQuantita">Quantit&aacute;</label>
@@ -71,7 +61,7 @@
                                     <select name="portoPartenza" id="portoPartenza" onfocusout="porto()"
                                             class="custom-select"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                readonly
+                                                disabled
                                             </c:if>
                                             required>
                                         <c:forEach items="${requestScope.porti}" var="porto">
@@ -99,7 +89,7 @@
                                     <select name="portoArrivo" id="portoArrivo" class="custom-select"
                                             onfocusout="porto()"
                                             <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                readonly
+                                                disabled
                                             </c:if>
                                             required>
                                         <c:forEach items="${requestScope.porti}" var="porto">
@@ -147,11 +137,13 @@
                     </form>
                     </c:if>
                     <div class="card-footer">
-                        <button class="btn btn-danger"
-                                data-toggle="modal" data-target="#rimuovi"
-                                type="button">
-                            Rimuovi
-                        </button>
+                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) == 0}">
+                            <button class="btn btn-danger"
+                                    data-toggle="modal" data-target="#rimuovi"
+                                    type="button">
+                                Rimuovi
+                            </button>
+                        </c:if>
                         <c:if test="${requestScope.richiesta.caricato}">
                             <a href="visualizza-richiesta-documento?id=${requestScope.richiesta.id}">
                                 <button class="btn btn-success">Visualizza Documento</button>

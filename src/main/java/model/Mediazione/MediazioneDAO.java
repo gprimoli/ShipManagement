@@ -69,7 +69,7 @@ public class MediazioneDAO {
             p.setInt(1, m.getId());
             p.execute();
 
-            p = c.prepareStatement("DELETE FROM firma WHERE id_mediazione = ?");
+            p = c.prepareStatement("DELETE FROM decisione_utente WHERE id_mediazione = ?");
             p.setInt(1, m.getId());
             p.execute();
 
@@ -349,14 +349,42 @@ public class MediazioneDAO {
         LinkedList<String> firme = new LinkedList<>();
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * FROM firma WHERE id_mediazione = ?;");
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * FROM decisione_utente WHERE id_mediazione = ? && firma = true;");
             p.setInt(1, m.getId());
             @Cleanup ResultSet r = p.executeQuery();
-            firme.add(r.getString(2));
+            while (r.next())
+                firme.add(r.getString(2));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
         return firme;
+    }
+
+    public static void doSaveFirma(Mediazione m, String codFiscale) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO decisione_utente(id_mediazione, cod_fiscale_utente, firma) VALUES(?,?,true);");
+            p.setInt(1, m.getId());
+            p.setString(2, codFiscale);
+            p.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doRifiutaFirma(Mediazione m) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("DELETE from decisione_utente WHERE id_mediazione = ?;");
+            p.setInt(1, m.getId());
+            p.execute();
+
+            c.prepareStatement("UPDATE mediazione SET stato = 'Richiesta Modifica' WHERE id = ?;");
+            p.setInt(1, m.getId());
+            p.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean doCheck(Imbarcazione i) {

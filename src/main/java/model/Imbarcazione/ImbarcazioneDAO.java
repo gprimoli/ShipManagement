@@ -45,10 +45,22 @@ public class ImbarcazioneDAO {
         }
     }
 
+    public static boolean doCheckIMO(Imbarcazione i) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * from imbarcazione where imo = ?;");
+            p.setString(1, i.getImo());
+            @Cleanup ResultSet r = p.executeQuery();
+            return r.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void doUpdate(Imbarcazione i) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET cod_fiscale_utente = ?, nome = ?, tipologia = ?, anno_costruzione = ?, bandiera = ?, quantita_max = ?, lunghezza_fuori_tutto = ?, ampiezza = ?, altezza = ?, posizione = ?, documento = ? WHERE imo = ?");
+            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET cod_fiscale_utente = ?, nome = ?, tipologia = ?, anno_costruzione = ?, bandiera = ?, quantita_max = ?, lunghezza_fuori_tutto = ?, ampiezza = ?, altezza = ?, posizione = ?, documento = ? WHERE id = ?");
             p.setString(1, i.getCodFiscaleUtente());
             p.setString(2, i.getNome());
             p.setString(3, i.getTipologia());
@@ -60,7 +72,7 @@ public class ImbarcazioneDAO {
             p.setFloat(9, i.getAltezza());
             p.setInt(10, i.getPosizione());
             p.setBlob(11, i.getDocumento());
-            p.setString(12, i.getImo());
+            p.setInt(12, i.getId());
             p.execute();
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
@@ -104,6 +116,7 @@ public class ImbarcazioneDAO {
                         .posizione(r.getInt("posizione"))
                         .disponibile(r.getBoolean("disponibile"))
                         .caricato(r.getBoolean("caricato"))
+                        .trasferito(r.getBoolean("trasferito"))
                         .build();
             }
         } catch (SQLException e) {
@@ -140,6 +153,7 @@ public class ImbarcazioneDAO {
                                 .posizione(r.getInt("posizione"))
                                 .disponibile(r.getBoolean("disponibile"))
                                 .caricato(r.getBoolean("caricato"))
+                                .trasferito(r.getBoolean("trasferito"))
                                 .build()
                 );
             }
@@ -176,7 +190,7 @@ public class ImbarcazioneDAO {
         LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where cod_fiscale_utente = ?;");
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where cod_fiscale_utente = ? && trasferito = false;");
             p.setString(1, u.getCodFiscale());
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
@@ -196,6 +210,7 @@ public class ImbarcazioneDAO {
                                 .posizione(r.getInt("posizione"))
                                 .disponibile(r.getBoolean("disponibile"))
                                 .caricato(r.getBoolean("caricato"))
+                                .trasferito(r.getBoolean("trasferito"))
                                 .build()
                 );
             }
@@ -233,6 +248,7 @@ public class ImbarcazioneDAO {
                                 .posizione(r.getInt("posizione"))
                                 .disponibile(r.getBoolean("disponibile"))
                                 .caricato(r.getBoolean("caricato"))
+                                .trasferito(r.getBoolean("trasferito"))
                                 .build()
                 );
             }

@@ -35,6 +35,8 @@ public class Imbarcazione {
     InputStream documento;
     @NonFinal
     boolean caricato;
+    @NonFinal
+    boolean trasferito;
 
     public InputStream getDocumento() {
         if (caricato && documento == null) {
@@ -143,7 +145,7 @@ public class Imbarcazione {
                     || this.bandiera == null
             )
                 throw new InvalidParameterException();
-            return new Imbarcazione(id, codFiscaleUtente, imo, nome, tipologia, annoCostruzione, bandiera, quantitaMax, lunghezza, ampiezza, altezza, posizione, disponibile, documento, caricato);
+            return new Imbarcazione(id, codFiscaleUtente, imo, nome, tipologia, annoCostruzione, bandiera, quantitaMax, lunghezza, ampiezza, altezza, posizione, disponibile, documento, caricato, trasferito);
         }
     }
 }

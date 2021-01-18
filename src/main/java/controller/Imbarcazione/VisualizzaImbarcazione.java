@@ -40,6 +40,14 @@ public class VisualizzaImbarcazione extends HttpServlet {
             Imbarcazione im = ImbarcazioneDAO.doRetriveById(id);
 
             if (u.isBroker() || im.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
+                if (im.isTrasferito()){
+                    req.setAttribute("errore", "422");
+                    req.setAttribute("back", "index.jsp");
+                    forward = "/WEB-INF/errore.jsp";
+                    req.setAttribute("descrizione", "Non hai i permessi per visualizzare l'imbarcazione!");
+                    req.getRequestDispatcher(forward).forward(req, resp);
+                    return;
+                }
                 req.setAttribute("imbarcazione", im);
                 req.setAttribute("aree", AreaDAO.doRetriveAll());
                 req.setAttribute("mediazioni", MediazioneDAO.doRetriveOKBy(u));

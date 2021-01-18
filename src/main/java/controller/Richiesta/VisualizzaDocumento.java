@@ -24,7 +24,7 @@ import java.util.LinkedList;
 public class VisualizzaDocumento extends HttpServlet {
 
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Integer id = Integer.parseInt(req.getParameter("id"));
         Utente u = (Utente) s.getAttribute("utente");

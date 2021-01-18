@@ -38,9 +38,11 @@ public class RendiIndisponibileDisponibile extends HttpServlet {
             if (i.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
                 if (i.isDisponibile()) {
 
-                    Notifica n = Notifica.builder().oggetto("Imbarcazione " + i.getImo() + " resa indisponibile").corpo("L'imbarcazione " + i.getNome() + " &egrave; stata resa indisponibile dall'armatore " + i.getCodFiscaleUtente()).build();
+                    Notifica n = Notifica.builder().oggetto("Imbarcazione " + i.getImo() + " resa " + (i.isDisponibile() ? "Disponibile" : "Indisponibile")).corpo("L'imbarcazione " + i.getNome() + " &egrave; stata resa " + (i.isDisponibile() ? "Disponibile" : "Indisponibile") + " dall'armatore " + i.getCodFiscaleUtente()).build();
 
-                    NotificaDAO.doSaveAll(i, n);
+                    int idNotifica = NotificaDAO.doSave(n);
+
+                    NotificaDAO.doSendToBroker(i, idNotifica);
 
                     ImbarcazioneDAO.doDisponibileIndisponibile(i);
 

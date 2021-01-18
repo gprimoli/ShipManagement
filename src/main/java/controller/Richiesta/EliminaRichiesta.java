@@ -39,7 +39,9 @@ public class EliminaRichiesta extends HttpServlet {
 
                 Notifica n = Notifica.builder().oggetto("Richiesta " + r.getId() + " eliminata").corpo("La richiesta " + r.getId() + " &egrave; stata eliminata dal clinete " + r.getCodFiscaleUtente()).build();
 
-                NotificaDAO.doSaveAll(r, n);
+                int notificaID = NotificaDAO.doSave(n);
+
+                NotificaDAO.doSendToBroker(r, notificaID);
 
                 RichiestaDAO.doDelete(r);
                 req.setAttribute("notifica", "Richiesta Eliminata!");

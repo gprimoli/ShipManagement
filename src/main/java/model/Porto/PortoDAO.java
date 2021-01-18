@@ -79,6 +79,19 @@ public class PortoDAO {
         return porto;
     }
 
+    public static boolean doCheckPorto(String localCode) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("Select * from porto where nome = ?;");
+            p.setString(1, localCode);
+            @Cleanup ResultSet r = p.executeQuery();
+           return r.next();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public static LinkedList<Porto> doRetriveAll() throws NoEntryException {
         LinkedList<Porto> porti = new LinkedList<>();
         try {

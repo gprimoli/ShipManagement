@@ -27,7 +27,7 @@ public class AggiungiRichiestaAllaMediazione extends HttpServlet {
             int idRichiesta = Integer.parseInt(req.getParameter("id"));
             int idMediazione = Integer.parseInt(req.getParameter("mediazione"));
             MediazioneDAO.doSaveRichiestaMediazione(idMediazione, idRichiesta);
-            resp.sendRedirect("visualizza-richiesta?id=" + idRichiesta);
+            resp.sendRedirect("visualizza-mediazione?id=" + idMediazione);
             return;
         } catch (NumberFormatException e) {
             req.setAttribute("errore", "422");

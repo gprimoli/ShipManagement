@@ -1,10 +1,12 @@
 package controller.Mediazione;
 
 import lombok.Cleanup;
+import model.Imbarcazione.Imbarcazione;
 import model.Mediazione.Mediazione;
 import model.Mediazione.MediazioneDAO;
 import model.Notifica.Notifica;
 import model.Notifica.NotificaDAO;
+import model.Richiesta.Richiesta;
 import model.Utente.Utente;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
@@ -15,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
 
 @MultipartConfig
 @WebServlet(urlPatterns = "/modifica-mediazione")
@@ -47,20 +50,41 @@ public class ModificaMediazione extends HttpServlet {
 
             if (origin.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
                 if (origin.getStato().compareTo("Default") == 0 || origin.getStato().compareTo("Richiesta Modifica") == 0) {
-                    Mediazione m = Mediazione.builder()
-                            .id(origin.getId())
-                            .nome(nome)
-                            .contratto(documento)
-                            .codFiscaleUtente(u.getCodFiscale())
-                            .caricato(tmp)
-                            .stato(origin.getStato())
-                            .build();
+                    Mediazione m;
+                    if (tmp) {
+                        m = Mediazione.builder()
+                                .id(origin.getId())
+                                .nome(nome)
+                                .contratto(documento)
+                                .codFiscaleUtente(u.getCodFiscale())
+                                .caricato(tmp)
+                                .stato(origin.getStato())
+                                .build();
+                    } else {
+                        m = Mediazione.builder()
+                                .id(origin.getId())
+                                .nome(nome)
+                                .contratto(origin.getContratto())
+                                .codFiscaleUtente(u.getCodFiscale())
+                                .caricato(tmp)
+                                .stato(origin.getStato())
+                                .build();
+                    }
+
 
                     MediazioneDAO.doUpdate(m);
 
+                    LinkedList<Imbarcazione> i = MediazioneDAO.doRetriveImbarcazioniFrom(m);
+                    LinkedList<Richiesta> r = MediazioneDAO.doRetriveRichiesteFrom(m);
+
                     Notifica n = Notifica.builder().oggetto("Mediazione " + m.getId() + " modificata").corpo("La mediazione " + m.getId() + " &egrave; stata modficata dall'armatore " + m.getCodFiscaleUtente()).build();
 
-                    NotificaDAO.doSaveAll(m, n);
+                    int notificaID = NotificaDAO.doSave(n);
+
+                    for (Imbarcazione im : i)
+                        NotificaDAO.doSendToPropietario(im, notificaID);
+                    for (Richiesta ri : r)
+                        NotificaDAO.doSendToPropietario(ri, notificaID);
 
                     resp.sendRedirect("visualizza-mediazione?id=" + id);
                     return;

@@ -125,11 +125,14 @@ CREATE TABLE mediazione_imbarcazione
     PRIMARY KEY (id_mediazione, id_imbarcazione)
 );
 
-CREATE TABLE firma
+CREATE TABLE decisione_utente
 (
     id_mediazione    bigint REFERENCES mediazione (id) on UPDATE CASCADE on DELETE CASCADE,
     cod_fiscale_utente varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE, /*utente = broker*/
+    firma boolean,
     PRIMARY KEY (id_mediazione, cod_fiscale_utente)
 );
 
-alter table utente modify data_nascita timestamp null;
+alter table utente alter column data_nascita drop default;
+alter table richiesta alter column data_partenza drop default;
+alter table richiesta alter column data_arrivo drop default;
