@@ -64,7 +64,7 @@ public class ModificaMediazione extends HttpServlet {
                         m = Mediazione.builder()
                                 .id(origin.getId())
                                 .nome(nome)
-                                .contratto(origin.getContratto())
+                                .contratto(origin.getDocumento())
                                 .codFiscaleUtente(u.getCodFiscale())
                                 .caricato(tmp)
                                 .stato(origin.getStato())
@@ -77,14 +77,17 @@ public class ModificaMediazione extends HttpServlet {
                     LinkedList<Imbarcazione> i = MediazioneDAO.doRetriveImbarcazioniFrom(m);
                     LinkedList<Richiesta> r = MediazioneDAO.doRetriveRichiesteFrom(m);
 
-                    Notifica n = Notifica.builder().oggetto("Mediazione " + m.getId() + " modificata").corpo("La mediazione " + m.getId() + " &egrave; stata modficata dall'armatore " + m.getCodFiscaleUtente()).build();
+                    if (m.getStato().compareTo("Richiesta Modifica") == 0) {
+                        Notifica n = Notifica.builder().oggetto("Mediazione " + m.getId() + " modificata").corpo("La mediazione " + m.getId() + " &egrave; stata modficata dall'armatore " + m.getCodFiscaleUtente()).build();
 
-                    int notificaID = NotificaDAO.doSave(n);
+                        int notificaID = NotificaDAO.doSave(n);
 
-                    for (Imbarcazione im : i)
-                        NotificaDAO.doSendToPropietario(im, notificaID);
-                    for (Richiesta ri : r)
-                        NotificaDAO.doSendToPropietario(ri, notificaID);
+                        NotificaDAO.doSendToBroker(m, notificaID);
+                        for (Imbarcazione im : i)
+                            NotificaDAO.doSendToPropietario(im, notificaID);
+                        for (Richiesta ri : r)
+                            NotificaDAO.doSendToPropietario(ri, notificaID);
+                    }
 
                     resp.sendRedirect("visualizza-mediazione?id=" + id);
                     return;
