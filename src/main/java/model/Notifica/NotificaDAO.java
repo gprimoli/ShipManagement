@@ -51,6 +51,7 @@ public class NotificaDAO {
                 p = c.prepareStatement("INSERT into notifica_utente(id_notifica, cod_fiscale_utente) VALUES (?,?)");
                 p.setInt(1, idNotifica);
                 p.setString(2, rs.getString(1));
+                p.execute();
             }
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
@@ -83,7 +84,9 @@ public class NotificaDAO {
                 p = c.prepareStatement("INSERT into notifica_utente(id_notifica, cod_fiscale_utente) VALUES (?,?)");
                 p.setInt(1, idNotifica);
                 p.setString(2, rs.getString(1));
+                p.execute();
             }
+
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();
@@ -94,14 +97,10 @@ public class NotificaDAO {
     public static void doSendToPropietario(Richiesta r, int idNotifica) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("SELECT r.cod_fiscale_utente from richiesta as r, mediazione_richiesta as mr WHERE r.id = mr.id_mediazione AND mr.id_richiesta = ?");
-            p.setInt(1, r.getId());
-            @Cleanup ResultSet rs = p.executeQuery();
-            while (rs.next()) {
-                p = c.prepareStatement("INSERT into notifica_utente(id_notifica, cod_fiscale_utente) VALUES (?,?)");
-                p.setInt(1, idNotifica);
-                p.setString(2, r.getCodFiscaleUtente());
-            }
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT into notifica_utente(id_notifica, cod_fiscale_utente) VALUES (?,?)");
+            p.setInt(1, idNotifica);
+            p.setString(2, r.getCodFiscaleUtente());
+            p.execute();
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();
@@ -115,6 +114,7 @@ public class NotificaDAO {
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT into notifica_utente(id_notifica, cod_fiscale_utente) VALUES (?,?)");
             p.setInt(1, idNotifica);
             p.setString(2, m.getCodFiscaleUtente());
+            p.execute();
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();
@@ -203,7 +203,7 @@ public class NotificaDAO {
         LinkedList<Notifica> notifiche = new LinkedList<>();
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("Select n.id, n.corpo, n.oggetto from notifica as n JOIN notifica_utente on cod_fiscale_utente = ?");
+            @Cleanup PreparedStatement p = c.prepareStatement("Select n.id, n.corpo, n.oggetto from (select * from notifica_utente where cod_fiscale_utente = ?) as nu, notifica n where nu.id_notifica = n.id;");
             p.setString(1, u.getCodFiscale());
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {

@@ -42,7 +42,7 @@
                 <div class="card mb-4">
                     <div class="card-header">Visualizza Mediazione</div>
                     <div class="card-body">
-                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
+                        <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0 && (requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0)}">
                         <form action="modifica-mediazione" method="post" enctype="multipart/form-data">
                             </c:if>
                             <input name="id" type="hidden" value="${requestScope.mediazione.id}"/>
@@ -76,7 +76,7 @@
                                            value="${requestScope.mediazione.contratto}"/>
                                 </div>
                             </div>
-                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
+                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0 && (requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0)}">
                             <button class="btn btn-primary" type="submit">Modifica</button>
                         </form>
                         <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
@@ -87,7 +87,7 @@
                         </c:if>
                         </c:if>
                         <div class="card-footer">
-                            <c:if test="${requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('In attesa di Firma') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0}">
+                            <c:if test="${sessionScope.utente.broker && (requestScope.mediazione.stato.compareTo('Default') == 0 || requestScope.mediazione.stato.compareTo('In attesa di Firma') == 0 || requestScope.mediazione.stato.compareTo('Richiesta Modifica') == 0)}">
                                 <button class="btn btn-outline-danger" data-toggle="modal"
                                         data-target="#eliminazione"
                                         type="button">Rimuovi
@@ -186,11 +186,13 @@
                                                 <td>${imbarcazione.nome}</td>
                                                 <td>${imbarcazione.tipologia}</td>
                                                 <td>
-                                                    <button class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#rimuoviImbarcazione" type="button"
-                                                            onclick="$('#imbarcazioneIMO').attr('value', '${imbarcazione.id}')">
-                                                        Rimuovi dalla Mediazione
-                                                    </button>
+                                                    <c:if test="${sessionScope.utente.broker}">
+                                                        <button class="btn btn-danger" data-toggle="modal"
+                                                                data-target="#rimuoviImbarcazione" type="button"
+                                                                onclick="$('#imbarcazioneIMO').attr('value', '${imbarcazione.id}')">
+                                                            Rimuovi dalla Mediazione
+                                                        </button>
+                                                    </c:if>
                                                     <a href="visualizza-imbarcazione?id=${imbarcazione.id}">
                                                         <button class="btn btn-primary">Visualizza</button>
                                                     </a>
@@ -238,11 +240,13 @@
                                                 <td>${richiesta.dataPartenza}</td>
                                                 <td>${richiesta.dataArrivo}</td>
                                                 <td>
-                                                    <button class="btn btn-danger" data-toggle="modal"
-                                                            data-target="#rimuoviRichiesta" type="button"
-                                                            onclick="$('#richiestaID').attr('value', '${richiesta.id}')">
-                                                        Rimuovi dalla Mediazione
-                                                    </button>
+                                                    <c:if test="${sessionScope.utente.broker}">
+                                                        <button class="btn btn-danger" data-toggle="modal"
+                                                                data-target="#rimuoviRichiesta" type="button"
+                                                                onclick="$('#richiestaID').attr('value', '${richiesta.id}')">
+                                                            Rimuovi dalla Mediazione
+                                                        </button>
+                                                    </c:if>
                                                     <a href="visualizza-richiesta?id=${richiesta.id}">
                                                         <button class="btn btn-primary">Visualizza</button>
                                                     </a>

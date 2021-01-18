@@ -43,7 +43,7 @@ public class MediazioneDAO {
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE mediazione SET nome = ?, stato = ?, contratto = ?, cod_fiscale_utente = ? WHERE id = ?");
             p.setString(1, m.getNome());
             p.setString(2, m.getStato());
-            p.setBlob(3, m.getContratto());
+            p.setBlob(3, m.getDocumento());
             p.setString(4, m.getCodFiscaleUtente());
             p.setInt(5, m.getId());
             p.execute();
@@ -144,7 +144,7 @@ public class MediazioneDAO {
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
 
-            d = r.getBinaryStream("documento");
+            d = r.getBinaryStream("contratto");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
