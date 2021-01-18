@@ -64,6 +64,18 @@ public class Mediazione {
 //            return this;
 //        }
 
+
+        public MediazioneBuilder clone(Mediazione m){
+            this.id = m.id;
+            this.nome = m.nome;
+            this.stato = m.stato;
+            this.contratto = m.contratto;
+            this.caricato = m.caricato;
+            this.codFiscaleUtente = m.codFiscaleUtente;
+            return this;
+        }
+
+
         public Mediazione build() throws InvalidParameterException {
             if (this.nome == null
                     || this.stato == null

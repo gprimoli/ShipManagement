@@ -20,7 +20,7 @@ public class MediazioneDAO {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO mediazione(nome, stato, contratto, cod_fiscale_utente) VALUES (?,?,?,?);");
             p.setString(1, m.getNome());
-            p.setString(2, m.getStato());
+            p.setString(2, "Default");
             p.setBlob(3, m.getContratto());
             p.setString(4, m.getCodFiscaleUtente());
             p.execute();
@@ -61,15 +61,15 @@ public class MediazioneDAO {
             p.setInt(1, m.getId());
             p.execute();
 
-            p = c.prepareStatement("DELETE FROM mediazione_imbarcazione as mi WHERE mi.id_mediazione = ?");
+            p = c.prepareStatement("DELETE FROM mediazione_imbarcazione WHERE id_mediazione = ?");
             p.setInt(1, m.getId());
             p.execute();
 
-            p = c.prepareStatement("DELETE FROM mediazione_richiesta as mr WHERE mr.id_mediazione = ?");
+            p = c.prepareStatement("DELETE FROM mediazione_richiesta WHERE id_mediazione = ?");
             p.setInt(1, m.getId());
             p.execute();
 
-            p = c.prepareStatement("DELETE FROM firma as f WHERE f.id_mediazione = ?");
+            p = c.prepareStatement("DELETE FROM firma WHERE id_mediazione = ?");
             p.setInt(1, m.getId());
             p.execute();
 
@@ -133,7 +133,6 @@ public class MediazioneDAO {
         return mediazioni;
     }
 
-
     //fine base
 
     public static InputStream doRetriveDocumento(int id) {
@@ -160,10 +159,41 @@ public class MediazioneDAO {
             if (u.isBroker())
                 p = c.prepareStatement("Select *, contratto IS NOT NULL as caricato from mediazione where cod_fiscale_utente = ?;");
             else if (u.isArmatore())
-                p = c.prepareStatement("SELECT m.id, m.nome, m.stato, m.contratto IS NOT NULL as caricato, m.cod_fiscale_utente from imbarcazione as i JOIN mediazione_imbarcazione as mi on i.cod_fiscale_utente = ? AND i.imo = mi.imo_imbarcazione JOIN mediazione as m on mi.id_mediazione = m.id;");
+                p = c.prepareStatement("SELECT m.id, m.nome, m.stato, m.contratto IS NOT NULL as caricato, m.cod_fiscale_utente from imbarcazione as i JOIN mediazione_imbarcazione as mi on i.cod_fiscale_utente = ? AND i.id = mi.id_imbarcazione JOIN mediazione as m on mi.id_mediazione = m.id;");
             else //if (u.isCliente())
                 p = c.prepareStatement("SELECT m.id, m.nome, m.stato, m.contratto IS NOT NULL as caricato, m.cod_fiscale_utente from richiesta as r JOIN mediazione_richiesta as mr on r.cod_fiscale_utente = ? AND r.id = mr.id_richiesta JOIN mediazione as m on mr.id_mediazione = m.id;");
 
+            p.setString(1, u.getCodFiscale());
+
+            @Cleanup ResultSet r = p.executeQuery();
+            while (r.next()) {
+                mediazioni.add(
+                        Mediazione.builder()
+                                .id(r.getInt("id"))
+                                .nome(r.getString("nome"))
+                                .stato(r.getString("stato"))
+                                .caricato(r.getBoolean("caricato"))
+                                .codFiscaleUtente(r.getString("cod_fiscale_utente"))
+                                .build()
+                );
+            }
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("S1000") == 0)
+                throw new NoEntryException();
+            throw new RuntimeException(e);
+        } catch (InvalidParameterException e) {
+            System.out.println("database compromesso");
+            e.printStackTrace();
+        }
+        return mediazioni;
+    }
+
+    public static LinkedList<Mediazione> doRetriveOKBy(Utente u) throws NoEntryException {
+        LinkedList<Mediazione> mediazioni = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = null;
+            p = c.prepareStatement("Select *, contratto IS NOT NULL as caricato from mediazione where cod_fiscale_utente = ? AND (stato = 'Default' OR stato = 'Richiesta Modifica');");
             p.setString(1, u.getCodFiscale());
 
             @Cleanup ResultSet r = p.executeQuery();
@@ -227,12 +257,13 @@ public class MediazioneDAO {
         LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("SELECT i.cod_fiscale_utente, i.imo, i.nome, i.tipologia, i.anno_costruzione, i.bandiera, i.quantita_max, i.lunghezza_fuori_tutto, i.altezza, i.ampiezza, i.posizione, i.disponibile, i.documento IS NOT NULL as caricato FROM mediazione as m JOIN mediazione_imbarcazione as mi ON m.id = ? AND m.id = mi.id_mediazione JOIN imbarcazione as i on mi.imo_imbarcazione = i.imo;");
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT i.id, i.cod_fiscale_utente, i.imo, i.nome, i.tipologia, i.anno_costruzione, i.bandiera, i.quantita_max, i.lunghezza_fuori_tutto, i.altezza, i.ampiezza, i.posizione, i.disponibile, i.documento IS NOT NULL as caricato FROM mediazione as m JOIN mediazione_imbarcazione as mi ON m.id = ? AND m.id = mi.id_mediazione JOIN imbarcazione as i on mi.id_imbarcazione = i.id;");
             p.setInt(1, m.getId());
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 imbarcazioni.add(
                         Imbarcazione.builder()
+                                .id(r.getInt("id"))
                                 .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                                 .imo(r.getString("imo"))
                                 .nome(r.getString("nome"))
@@ -260,14 +291,82 @@ public class MediazioneDAO {
         return imbarcazioni;
     }
 
+    public static void doSaveImbarcazioneMediazione(int idMediazione, int idImbarcazione) throws DuplicateException {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO mediazione_imbarcazione(id_mediazione, id_imbarcazione) VALUES (?,?);");
+            p.setInt(1, idMediazione);
+            p.setInt(2, idImbarcazione);
+            p.execute();
+
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("23000") == 0)
+                throw new DuplicateException();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doSaveRichiestaMediazione(int idMediazione, int idRichiesta) throws DuplicateException {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO mediazione_richiesta(id_mediazione, id_richiesta) VALUES (?,?);");
+            p.setInt(1, idMediazione);
+            p.setInt(2, idRichiesta);
+            p.execute();
+
+        } catch (SQLException e) {
+            if (e.getSQLState().compareTo("23000") == 0)
+                throw new DuplicateException();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doDeleteRichiestaMediazione(int idMediazione, int idRichiesta) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM mediazione_richiesta WHERE id_mediazione = ? AND  id_richiesta = ?;");
+            p.setInt(1, idMediazione);
+            p.setInt(2, idRichiesta);
+            p.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void doDeleteImbarcazioneMediazione(int idMediazione, int id) {
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("DELETE FROM mediazione_imbarcazione WHERE id_mediazione = ? AND  id_imbarcazione = ?;");
+            p.setInt(1, idMediazione);
+            p.setInt(2, id);
+            p.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static LinkedList<String> doRetriveFirme(Mediazione m) {
+        LinkedList<String> firme = new LinkedList<>();
+        try {
+            @Cleanup Connection c = DB.getConnection();
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * FROM firma WHERE id_mediazione = ?;");
+            p.setInt(1, m.getId());
+            @Cleanup ResultSet r = p.executeQuery();
+            firme.add(r.getString(2));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return firme;
+    }
+
     public static boolean doCheck(Imbarcazione i) {
         boolean tmp = false;
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * from (SELECT * from (SELECT * from imbarcazione where imo = ?) as i, mediazione_imbarcazione as mi where mi.imo_imbarcazione = i.imo) as x, mediazione as m where x.id_mediazione = m.id AND m.stato = 'In Corso'");
-            p.setString(1, i.getImo());
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT * from (SELECT * from (SELECT * from imbarcazione where id = ?) as i, mediazione_imbarcazione as mi where mi.id_imbarcazione = i.id) as x, mediazione as m where x.id_mediazione = m.id AND m.stato = 'In Corso'");
+            p.setInt(1, i.getId());
             @Cleanup ResultSet r = p.executeQuery();
-            if(r.next())
+            if (r.next())
                 tmp = true;
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("S1000") == 0)

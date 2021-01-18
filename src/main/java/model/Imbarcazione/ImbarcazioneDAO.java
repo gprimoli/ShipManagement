@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class ImbarcazioneDAO {
 
-    public static void doSave(Imbarcazione i) throws DuplicateException {
+    public static int doSave(Imbarcazione i) throws DuplicateException {
         try {
             Random r = new Random();
             @Cleanup Connection c = DB.getConnection();
@@ -32,6 +32,12 @@ public class ImbarcazioneDAO {
             p.setInt(11, r.nextInt(8) + 1); //API marin traffic
             p.setBinaryStream(12, i.getDocumento());
             p.execute();
+
+            p = c.prepareStatement("SELECT MAX(id) from imbarcazione where cod_fiscale_utente = ?;");
+            p.setString(1, i.getCodFiscaleUtente());
+            @Cleanup ResultSet rs = p.executeQuery();
+            rs.next();
+            return rs.getInt(1);
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
                 throw new DuplicateException();
@@ -66,24 +72,25 @@ public class ImbarcazioneDAO {
     public static void doDisponibileIndisponibile(Imbarcazione i) {
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET disponibile = ? WHERE imo = ?");
+            @Cleanup PreparedStatement p = c.prepareStatement("UPDATE imbarcazione SET disponibile = ? WHERE id = ?");
             p.setBoolean(1, !i.isDisponibile());
-            p.setString(2, i.getImo());
+            p.setInt(2, i.getId());
             p.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static Imbarcazione doRetriveById(String imo) throws NoEntryException {
+    public static Imbarcazione doRetriveById(int id) throws NoEntryException {
         Imbarcazione imbarcazione = null;
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where imo = ?;");
-            p.setString(1, imo);
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where id = ?;");
+            p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {
                 imbarcazione = Imbarcazione.builder()
+                        .id(r.getInt("id"))
                         .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                         .imo(r.getString("imo"))
                         .nome(r.getString("nome"))
@@ -119,6 +126,7 @@ public class ImbarcazioneDAO {
             while (r.next()) {
                 imbarcazioni.add(
                         Imbarcazione.builder()
+                                .id(r.getInt("id"))
                                 .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                                 .imo(r.getString("imo"))
                                 .nome(r.getString("nome"))
@@ -149,12 +157,12 @@ public class ImbarcazioneDAO {
 
     //fine base
 
-    public static InputStream doRetriveDocumento(String imo) {
+    public static InputStream doRetriveDocumento(int id) {
         InputStream d;
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM imbarcazione where imo = ?;");
-            p.setString(1, imo);
+            @Cleanup PreparedStatement p = c.prepareStatement("SELECT documento FROM imbarcazione where id = ?;");
+            p.setInt(1, id);
             @Cleanup ResultSet r = p.executeQuery();
             r.next();
             d = r.getBinaryStream("documento");
@@ -174,6 +182,7 @@ public class ImbarcazioneDAO {
             while (r.next()) {
                 imbarcazioni.add(
                         Imbarcazione.builder()
+                                .id(r.getInt("id"))
                                 .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                                 .imo(r.getString("imo"))
                                 .nome(r.getString("nome"))
@@ -210,6 +219,7 @@ public class ImbarcazioneDAO {
             while (r.next()) {
                 imbarcazioni.add(
                         Imbarcazione.builder()
+                                .id(r.getInt("id"))
                                 .codFiscaleUtente(r.getString("cod_fiscale_utente"))
                                 .imo(r.getString("imo"))
                                 .nome(r.getString("nome"))

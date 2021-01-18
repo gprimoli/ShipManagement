@@ -26,10 +26,9 @@ public class VisualizzaDocumento extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
-        String imo = req.getParameter("imo");
         Utente u = (Utente) s.getAttribute("utente");
 
-        if (u == null || imo == null) {
+        if (u == null) {
             resp.sendRedirect("index");
             return;
         }
@@ -37,7 +36,9 @@ public class VisualizzaDocumento extends HttpServlet {
         String forward = "/WEB-INF/imbarcazione.jsp";
 
         try {
-            Imbarcazione im = ImbarcazioneDAO.doRetriveById(imo);
+            int id = Integer.parseInt(req.getParameter("id"));
+
+            Imbarcazione im = ImbarcazioneDAO.doRetriveById(id);
 
             if ((u.isBroker() || im.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) && im.isCaricato()) {
 
@@ -93,6 +94,11 @@ public class VisualizzaDocumento extends HttpServlet {
             req.setAttribute("errore", "422");
             req.setAttribute("back", "index.jsp");
             req.setAttribute("descrizione", "Imbarcazione inesistente");
+            forward = "/WEB-INF/error.jsp";
+        } catch (NumberFormatException e) {
+            req.setAttribute("errore", "422");
+            req.setAttribute("back", "index.jsp");
+            req.setAttribute("descrizione", "Parametri Errati");
             forward = "/WEB-INF/error.jsp";
         }
         req.getRequestDispatcher(forward).forward(req, resp);

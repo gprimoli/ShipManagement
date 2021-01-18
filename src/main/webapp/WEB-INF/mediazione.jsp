@@ -7,6 +7,21 @@
     <jsp:param name="titolo" value="Mediazione"/>
 </jsp:include>
 
+<script>
+    $(document).ready(function () {
+        $("#richiesteCoinvolte").DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Italian.json"
+            }
+        });
+        $("#imbarcazioniCoinvolte").DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.22/i18n/Italian.json"
+            }
+        });
+    });
+</script>
+
 <main>
     <header class="page-header page-header-compact page-header-light border-bottom bg-white mb-4">
         <div class="container-fluid">
@@ -28,7 +43,7 @@
                     <div class="card-header">Visualizza Mediazione</div>
                     <div class="card-body">
                         <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
-                        <form action="modifica-mediazione" method="post">
+                        <form action="modifica-mediazione" method="post" enctype="multipart/form-data">
                             </c:if>
                                 <input name="id" type="hidden" value="${requestScope.mediazione.id}"/>
                                 <div class="form-row">
@@ -40,7 +55,7 @@
                                            pattern="^[A-Za-z1-9\s]*$"
                                            title="Il campo non pu&oacute; contenere caratteri speciali"
                                            value="${requestScope.mediazione.nome}"
-                                            <c:if test="${sessionScope.utente.ruolo.compareTo('broker') != 0}">
+                                            <c:if test="${!sessionScope.utente.broker}">
                                                 readonly
                                             </c:if>
                                            required/>
@@ -72,6 +87,18 @@
                                         type="button">Rimuovi
                                 </button>
                             </c:if>
+
+                            <c:if test="${requestScope.imbarcazione.caricato}">
+                                <a href="visualizza-mediazione-contratto?id=${requestScope.mediazione.id}">
+                                    <button class="btn btn-success">Visualizza Contratto</button>
+                                </a>
+                            </c:if>
+
+                            <c:forEach items="${requestScope.firme}" var="firma">
+                                <c:if test="${sessionScope.utente.codFiscale.compareTo(firma) == 0}">
+
+                                </c:if>
+                            </c:forEach>
                             <a href="index">
                                 <button class="btn btn-primary">Indietro</button>
                             </a>
@@ -122,7 +149,7 @@
                     </div>
                     <div class="card-body">
                         <c:choose>
-                            <c:when test="${requestScope.imbarcazioni.size() != 0}">
+                            <c:when test="${requestScope.inbarcazioni.size() != 0}">
                                 <div class="table-responsive">
                                     <table class="table table-bordered" id="imbarcazioniCoinvolte" width="100%"
                                            cellspacing="0">
@@ -135,17 +162,17 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <c:forEach items="${requestScope.imbarcazioni}" var="imbarcazione"
+                                        <c:forEach items="${requestScope.inbarcazioni}" var="imbarcazione"
                                                    varStatus="indice">
                                             <tr>
                                                 <td>${imbarcazione.imo}</td>
                                                 <td>${imbarcazione.nome}</td>
                                                 <td>${imbarcazione.tipologia}</td>
                                                 <td>
-                                                    <button class="btn btn-outline-danger" data-toggle="modal"
-                                                            data-target="#rimuoviImbarcazione" type="button">Rimuovi
+                                                    <button class="btn btn-danger" data-toggle="modal"
+                                                            data-target="#rimuoviImbarcazione" type="button" onclick="$('#imbarcazioneIMO').attr('value', '${imbarcazione.imo}')">Rimuovi dalla Mediazione
                                                     </button>
-                                                    <a href="visualizza-imbarcazione?id=${imbarcazione.imo}">
+                                                    <a href="visualizza-imbarcazione?id=${imbarcazione.id}">
                                                         <button class="btn btn-primary">Visualizza</button>
                                                     </a>
                                                 </td>
@@ -192,8 +219,8 @@
                                                 <td>${richiesta.dataPartenza}</td>
                                                 <td>${richiesta.dataArrivo}</td>
                                                 <td>
-                                                    <button class="btn btn-outline-danger" data-toggle="modal"
-                                                            data-target="#rimuoviRichiesta" type="button">Rimuovi
+                                                    <button class="btn btn-danger" data-toggle="modal"
+                                                            data-target="#rimuoviRichiesta" type="button" onclick="$('#richiestaID').attr('value', '${richiesta.id}')">Rimuovi dalla Mediazione
                                                     </button>
                                                     <a href="visualizza-richiesta?id=${richiesta.id}">
                                                         <button class="btn btn-primary">Visualizza</button>
@@ -214,7 +241,7 @@
             </div>
         </div>
     </div>
-    <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) != 0}">
+    <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.mediazione.codFiscaleUtente) == 0}">
 
         <div class="modal fade" id="eliminazione" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -230,7 +257,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
-                        <form>
+                        <form action="rimuovi-mediazione" method="post">
                             <input name="id" value="${requestScope.mediazione.id}" type="hidden"/>
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>
@@ -254,8 +281,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
                         <form action="rimuvoi-dalla-mediazione-richiesta" method="post">
-                            <input name="richiestaID" value="" type="hidden">
-                            <input name="mediazioneID" value="" type="hidden">
+                            <input id="richiestaID" name="richiestaID" value="" type="hidden">
+                            <input name="mediazioneID" value="${requestScope.mediazione.id}" type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>
                     </div>
@@ -278,8 +305,8 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
                         <form action="rimuovi-dalla-mediazione-imbarcazione" method="post">
-                            <input name="imbarcazioneIMO" value="" type="hidden">
-                            <input name="mediazioneID" value="" type="hidden">
+                            <input id="imbarcazioneIMO" name="imbarcazioneIMO" value="" type="hidden">
+                            <input id="mediazioneID" name="mediazioneID" value="${requestScope.mediazione.id}" type="hidden">
                             <button type="submit" class="btn btn-primary">Conferma</button>
                         </form>
                     </div>
@@ -287,6 +314,31 @@
             </div>
         </div>
     </c:if>
+
+    <div class="modal fade" id="rifiuta" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Rifiuta Firma</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="rifiuta-firma" method="post">
+                        <input name="motivazione" value="" type="text" rows="5"/>
+                        <input id="mediazioneIDFirma" name="mediazioineID" value="" type="hidden"/>
+                        <button class="btn btn-danger">Rifiuta</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </main>
 
 <jsp:include page="../footer.jsp"/>

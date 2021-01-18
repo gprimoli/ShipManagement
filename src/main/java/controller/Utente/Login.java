@@ -24,7 +24,7 @@ public class Login extends HttpServlet {
                 throw new NoEntryException();
 
             Utente u = UtenteDAO.doRetriveByEmailPassword(email, password);
-
+            if (u == null) throw new NoEntryException();
             if (!u.isAttivato()) {
                 req.setAttribute("notifica", "Account non attivato");
                 req.setAttribute("tipoNotifica", "danger");

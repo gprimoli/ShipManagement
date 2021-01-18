@@ -1,5 +1,6 @@
 package controller.Richiesta;
 
+import model.Area.AreaDAO;
 import model.Mediazione.Mediazione;
 import model.Mediazione.MediazioneDAO;
 import model.Porto.PortoDAO;
@@ -40,6 +41,7 @@ public class VisualizazRichiesta extends HttpServlet {
             if (u.isBroker() || r.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
                 req.setAttribute("richiesta", r);
                 req.setAttribute("porti", PortoDAO.doRetriveAll());
+                req.setAttribute("mediazioni", MediazioneDAO.doRetriveOKBy(u));
             } else {
                 LinkedList<Mediazione> propMediazini = MediazioneDAO.doRetriveBy(u);
                 boolean tmp = false;

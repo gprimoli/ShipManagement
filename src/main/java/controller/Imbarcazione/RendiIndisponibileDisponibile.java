@@ -29,38 +29,46 @@ public class RendiIndisponibileDisponibile extends HttpServlet {
             resp.sendRedirect("index");
             return;
         }
-        String imo = req.getParameter("imo");
         String forward = "index";
-        Imbarcazione i = ImbarcazioneDAO.doRetriveById(imo);
 
-        if(i.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0){
-            if(i.isDisponibile()){
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            Imbarcazione i = ImbarcazioneDAO.doRetriveById(id);
 
-                Notifica n = Notifica.builder().oggetto("Imbarcazione " + i.getImo() + " resa indisponibile").corpo("L'imbarcazione " + i.getNome() + " &egrave; stata resa indisponibile dall'armatore " + i.getCodFiscaleUtente()).build();
+            if (i.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
+                if (i.isDisponibile()) {
 
-                NotificaDAO.doSaveAll(i, n);
+                    Notifica n = Notifica.builder().oggetto("Imbarcazione " + i.getImo() + " resa indisponibile").corpo("L'imbarcazione " + i.getNome() + " &egrave; stata resa indisponibile dall'armatore " + i.getCodFiscaleUtente()).build();
 
-                ImbarcazioneDAO.doDisponibileIndisponibile(i);
+                    NotificaDAO.doSaveAll(i, n);
 
-                req.setAttribute("notifica", "Imbarcazione resa indisponibile!");
-                req.setAttribute("tipoNotifica", "danger");
-            }else{
-                if(!MediazioneDAO.doCheck(i)){
                     ImbarcazioneDAO.doDisponibileIndisponibile(i);
-                    req.setAttribute("notifica", "Imbarcazione resa disponibile!");
-                    req.setAttribute("tipoNotifica", "success");
-                } else{
-                    req.setAttribute("errore", "422");
-                    req.setAttribute("back", "index.jsp");
-                    forward = "/WEB-INF/errore.jsp";
-                    req.setAttribute("descrizione", "L'imbarcazione fa parte di una mediazione non può essere disponibile.!");
+
+                    req.setAttribute("notifica", "Imbarcazione resa indisponibile!");
+                    req.setAttribute("tipoNotifica", "danger");
+                } else {
+                    if (!MediazioneDAO.doCheck(i)) {
+                        ImbarcazioneDAO.doDisponibileIndisponibile(i);
+                        req.setAttribute("notifica", "Imbarcazione resa disponibile!");
+                        req.setAttribute("tipoNotifica", "success");
+                    } else {
+                        req.setAttribute("errore", "422");
+                        req.setAttribute("back", "index.jsp");
+                        forward = "/WEB-INF/errore.jsp";
+                        req.setAttribute("descrizione", "L'imbarcazione fa parte di una mediazione non può essere disponibile.!");
+                    }
                 }
+            } else {
+                req.setAttribute("errore", "422");
+                req.setAttribute("back", "index.jsp");
+                forward = "/WEB-INF/errore.jsp";
+                req.setAttribute("descrizione", "Non hai i permessi per rimuovere la richiesta perchè non ne fai parte!");
             }
-        }else {
+        } catch (NumberFormatException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("back", "index.jsp");
             forward = "/WEB-INF/errore.jsp";
-            req.setAttribute("descrizione", "Non hai i permessi per rimuovere la richiesta perchè non ne fai parte!");
+            req.setAttribute("descrizione", "Parametri errati!");
         }
         req.getRequestDispatcher(forward).forward(req, resp);
     }

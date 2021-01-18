@@ -5,20 +5,19 @@ import model.Mediazione.Mediazione;
 import model.Mediazione.MediazioneDAO;
 import model.Notifica.Notifica;
 import model.Notifica.NotificaDAO;
-import model.Richiesta.Richiesta;
-import model.Richiesta.RichiestaDAO;
 import model.Utente.Utente;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
+@MultipartConfig
+@WebServlet(urlPatterns = "/modifica-mediazione")
 public class ModificaMediazione extends HttpServlet {
 
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,12 +29,13 @@ public class ModificaMediazione extends HttpServlet {
             return;
         }
 
-        int id = Integer.parseInt(req.getParameter("nome"));
+        int id = Integer.parseInt(req.getParameter("id"));
         String nome = req.getParameter("nome");
         Part p = req.getPart("documento");
         @Cleanup InputStream documento = null;
         boolean tmp = false;
         String forward = "/WEB-INF/error.jsp";
+
         try {
             if (p.getSize() > 0 && p.getSize() < 4294967295.0 && p.getContentType().compareTo("application/pdf") == 0) {
                 documento = p.getInputStream();
@@ -53,6 +53,7 @@ public class ModificaMediazione extends HttpServlet {
                             .contratto(documento)
                             .codFiscaleUtente(u.getCodFiscale())
                             .caricato(tmp)
+                            .stato(origin.getStato())
                             .build();
 
                     MediazioneDAO.doUpdate(m);

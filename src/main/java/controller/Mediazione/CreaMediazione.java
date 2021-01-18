@@ -1,8 +1,5 @@
 package controller.Mediazione;
 
-import lombok.Cleanup;
-import model.Imbarcazione.Imbarcazione;
-import model.Imbarcazione.ImbarcazioneDAO;
 import model.Mediazione.Mediazione;
 import model.Mediazione.MediazioneDAO;
 import model.Utente.Utente;
@@ -10,11 +7,9 @@ import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.io.IOException;
-import java.io.InputStream;
 
 @WebServlet(urlPatterns = "/aggiungi-mediazione")
 public class CreaMediazione extends HttpServlet {
@@ -36,7 +31,7 @@ public class CreaMediazione extends HttpServlet {
         try {
             Mediazione m = Mediazione.builder()
                     .nome(nome)
-                    .stato("Disponibile")
+                    .stato("Default")
                     .codFiscaleUtente(codFiscale)
                     .contratto(null)
                     .caricato(false)
@@ -45,6 +40,7 @@ public class CreaMediazione extends HttpServlet {
             int id = MediazioneDAO.doSave(m);
 
             resp.sendRedirect("visualizza-mediazione?id=" + id);
+            return;
         } catch (InvalidParameterException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri non validi");

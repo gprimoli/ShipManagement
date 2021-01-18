@@ -58,7 +58,7 @@ public class NotificaDAO {
                 p.execute();
             }
 
-            p = c.prepareStatement("SELECT * from mediazione_imbarcazione as mi JOIN imbarcazione as i on mi.imo_imbarcazione = i.imo where mi.id_mediazione = ?");
+            p = c.prepareStatement("SELECT * from mediazione_imbarcazione as mi JOIN imbarcazione as i on mi.id_imbarcazione = i.id where mi.id_mediazione = ?");
             p.setInt(1, m.getId());
             rs = p.executeQuery();
             while (rs.next()){
@@ -123,7 +123,7 @@ public class NotificaDAO {
                 idNotifica = rs.getInt(1);
             }
 
-            p = c.prepareStatement("SELECT mediazione.cod_fiscale_utente from (SELECT mi.id_mediazione from (SELECT imo from imbarcazione where imbarcazione.imo = ?) as r, mediazione_imbarcazione as mi where mi.imo_imbarcazione = r.imo) as mk, mediazione where mk.id_mediazione = mediazione.id");
+            p = c.prepareStatement("SELECT mediazione.cod_fiscale_utente from (SELECT mi.id_mediazione from (SELECT id from imbarcazione where imbarcazione.imo = ?) as r, mediazione_imbarcazione as mi where mi.id_imbarcazione = r.id) as mk, mediazione where mk.id_mediazione = mediazione.id");
             p.setString(1, m.getImo());
             rs = p.executeQuery();
             while (rs.next()){

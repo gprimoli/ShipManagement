@@ -139,7 +139,7 @@
                     <div class="card mb-4">
                         <div class="card-header">Cambia Password</div>
                         <div class="card-body">
-                            <form action="aggiornapassword" method="post" onsubmit="return validateForm()">
+                            <form action="aggiornapassword" method="post">
                                 <!-- Form Group (new password)-->
                                 <div class="form-group">
                                     <label class="small mb-1" for="inputPassword">Password (minimo 8

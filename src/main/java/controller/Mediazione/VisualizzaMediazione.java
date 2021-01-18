@@ -1,6 +1,5 @@
 package controller.Mediazione;
 
-import model.CompagniaBroker.CompagniaBrokerDAO;
 import model.Imbarcazione.Imbarcazione;
 import model.Mediazione.Mediazione;
 import model.Mediazione.MediazioneDAO;
@@ -38,7 +37,7 @@ public class VisualizzaMediazione extends HttpServlet {
                 i.stream().anyMatch(item -> item.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) ||
                 r.stream().anyMatch(item -> item.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0)
         ){
-
+            req.setAttribute("firme", MediazioneDAO.doRetriveFirme(m));
             req.setAttribute("mediazione", m);
             req.setAttribute("utente", b);
             req.setAttribute("inbarcazioni", i);

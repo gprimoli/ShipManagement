@@ -18,6 +18,7 @@ import model.Util.InvalidParameterException;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NonFinal
 public class Imbarcazione {
+    int id;
     String codFiscaleUtente;
     String imo;
     String nome;
@@ -38,7 +39,7 @@ public class Imbarcazione {
     public InputStream getDocumento() {
         if (caricato && documento == null) {
             caricato = true;
-            documento = ImbarcazioneDAO.doRetriveDocumento(imo);
+            documento = ImbarcazioneDAO.doRetriveDocumento(id);
         }
         return documento;
     }
@@ -142,7 +143,7 @@ public class Imbarcazione {
                     || this.bandiera == null
             )
                 throw new InvalidParameterException();
-            return new Imbarcazione(codFiscaleUtente, imo, nome, tipologia, annoCostruzione, bandiera, quantitaMax, lunghezza, ampiezza, altezza, posizione, disponibile, documento, caricato);
+            return new Imbarcazione(id, codFiscaleUtente, imo, nome, tipologia, annoCostruzione, bandiera, quantitaMax, lunghezza, ampiezza, altezza, posizione, disponibile, documento, caricato);
         }
     }
 }

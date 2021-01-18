@@ -43,12 +43,12 @@
                 <div class="col-xl-4 mb-2 mx-auto">
                     <p>Azioni Disponibili:
                         <c:choose>
-                            <c:when test="${sessionScope.utente.ruolo.compareTo('cliente') == 0}">
+                            <c:when test="${sessionScope.utente.cliente}">
                                 <button class="btn btn-primary" data-toggle="modal"
                                         data-target="#aggiungiRichiesta" type="button">Aggiungi Richiesta
                                 </button>
                             </c:when>
-                            <c:when test="${sessionScope.utente.ruolo.compareTo('armatore') == 0}">
+                            <c:when test="${sessionScope.utente.armatore}">
                                 <button class="btn btn-primary" data-toggle="modal"
                                         data-target="#aggiungiImbarcazione" type="button">Aggiungi
                                     Imbarcazione
@@ -154,7 +154,7 @@
             </div>
             <div class="row">
                 <c:choose>
-                    <c:when test="${sessionScope.utente.ruolo.compareTo('armatore') == 0}">
+                    <c:when test="${sessionScope.utente.armatore}">
                         <div class="col-xl-12">
                             <div class="card mb-4">
                                 <div class="card-header">
@@ -187,7 +187,7 @@
                                                             <td>${imbarcazione.tipologia}</td>
                                                             <td>${imbarcazione.disponibile ? 'Disponibile' : 'Non disponibile'}</td>
                                                             <td>
-                                                                <a href="visualizza-imbarcazione?imo=${imbarcazione.imo}">
+                                                                <a href="visualizza-imbarcazione?id=${imbarcazione.id}">
                                                                     <button class="btn btn-primary">Visualizza</button>
                                                                 </a></td>
                                                         </tr>
@@ -204,7 +204,7 @@
                             </div>
                         </div>
                     </c:when>
-                    <c:when test="${sessionScope.utente.ruolo.compareTo('cliente') == 0}">
+                    <c:when test="${sessionScope.utente.armatore}">
                         <div class="col-xl-12">
                             <div class="card mb-4">
                                 <div class="card-header">
@@ -260,7 +260,7 @@
         </div>
     </main>
 
-    <c:if test="${sessionScope.utente.ruolo.compareTo('armatore') == 0}">
+    <c:if test="${sessionScope.utente.armatore}">
         <div class="modal fade" id="aggiungiImbarcazione" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
@@ -371,7 +371,7 @@
         </div>
     </c:if>
 
-    <c:if test="${sessionScope.utente.ruolo.compareTo('cliente') == 0}">
+    <c:if test="${sessionScope.utente.armatore}">
         <div class="modal fade" id="aggiungiRichiesta" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">

@@ -32,6 +32,7 @@ public class ModificaImbarcazione extends HttpServlet {
             return;
         }
 
+        int id = Integer.parseInt(req.getParameter("id"));
         String forward = "/WEB-INF/error.jsp";
         String codFiscale = u.getCodFiscale();
         String tipologia = req.getParameter("tipologia");
@@ -53,10 +54,11 @@ public class ModificaImbarcazione extends HttpServlet {
                 tmp = true;
             }
 
-            Imbarcazione origin = ImbarcazioneDAO.doRetriveById(imo);
+            Imbarcazione origin = ImbarcazioneDAO.doRetriveById(id);
             if (origin.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
                 if (origin.isDisponibile()) {
                     Imbarcazione i = Imbarcazione.builder()
+                            .id(id)
                             .nome(nome)
                             .imo(imo)
                             .codFiscaleUtente(codFiscale)
@@ -77,7 +79,7 @@ public class ModificaImbarcazione extends HttpServlet {
 
                     NotificaDAO.doSaveAll(i, n);
 
-                    resp.sendRedirect("visualizza-imbarcazione?imo=" + imo);
+                    resp.sendRedirect("visualizza-imbarcazione?id=" + id);
                     return;
                 }
             } else {
@@ -85,7 +87,7 @@ public class ModificaImbarcazione extends HttpServlet {
                 req.setAttribute("descrizione", "Questa imbarcazione non ti appartiene");
                 req.setAttribute("back", "index.jsp");
             }
-        } catch (DuplicateException | InvalidParameterException e) {
+        } catch (NumberFormatException | DuplicateException | InvalidParameterException e) {
             req.setAttribute("errore", "422");
             req.setAttribute("descrizione", "Parametri errati");
             req.setAttribute("back", "index.jsp");

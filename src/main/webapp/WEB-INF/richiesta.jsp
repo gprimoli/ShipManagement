@@ -31,19 +31,27 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="tipoCarico">Tipo di Carico</label>
-                                    <select name="tipoCarico" id="tipoCarico" class="custom-select"
-                                            <c:if test="${sessionScope.utente.codFiscale.compareTo(requestScope.richiesta.codFiscaleUtente) != 0}">
-                                                readonly
-                                            </c:if>
-                                            required>
-                                        <c:forEach
-                                                items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
-                                                var="item">
-                                            <option <c:if
-                                                    test="${requestScope.richiesta.tipoCarico.compareTo(item) == 0}"> selected </c:if>
-                                                    value="${item}">${item}</option>
-                                        </c:forEach>
-                                    </select>
+
+                                    <c:choose>
+                                        <c:when test="${sessionScope.utente.codFiscale.compareTo(requestScope.imbarcazione.codFiscaleUtente) != 0}">
+                                            <c:forEach
+                                                    items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
+                                                    var="item">
+                                                <c:if test="${requestScope.richiesta.tipoCarico.compareTo(item) == 0}"> ${item} </c:if>
+                                            </c:forEach>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select name="tipoCarico" id="tipoCarico" class="custom-select" required>
+                                                <c:forEach
+                                                        items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
+                                                        var="item">
+                                                    <option <c:if
+                                                            test="${requestScope.richiesta.tipoCarico.compareTo(item) == 0}"> selected </c:if>
+                                                            value="${item}">${item}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="inputQuantita">Quantit&aacute;</label>
@@ -150,6 +158,14 @@
                             </a>
                         </c:if>
 
+                        <c:if test="${sessionScope.utente.broker}">
+                            <button class="btn btn-primary" data-toggle="modal"
+                                    data-target="#aggiungiMediazione"
+                                    type="button">
+                                Aggiungi Alla mediazione
+                            </button>
+                        </c:if>
+
                         <a href="index">
                             <button class="btn btn-primary">Indietro</button>
                         </a>
@@ -181,6 +197,36 @@
             </div>
         </div>
     </div>
+
+    <c:if test="${sessionScope.utente.broker}">
+        <div class="modal fade" id="aggiungiMediazione" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Aggiungi alla Mediazione</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Aggiungi alla mediazine</p>
+                        <form action="aggiungi-richiesta-mediazione" method="post">
+                            <select name="mediazione" class="custom-select" required>
+                                <c:forEach items="${requestScope.mediazioni}" var="mediazione">
+                                    <option value="${mediazione.id}">${mediazione.nome}</option>
+                                </c:forEach>
+                            </select>
+                            <input name="id" value="${requestScope.richiesta.id}" type="hidden"/>
+                            <button class="btn btn-primary">Aggiungi</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Chiudi</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:if>
 
 </main>
 

@@ -8,7 +8,7 @@ CREATE TABLE utente
     password      BINARY(20)                             not null,
     nome          varchar(50)                            NOT NULL,
     cognome       varchar(50)                            NOT NULL,
-    data_nascita  timestamp                              NOT NULL,
+    data_nascita  timestamp,
     luogo_nascita varchar(50)                            NOT NULL,
     email         varchar(255) unique,
     telefono      varchar(15) unique,
@@ -67,6 +67,7 @@ CREATE TABLE compagnia_broker_utente
 
 CREATE TABLE imbarcazione
 (
+    id                    bigint auto_increment,
     cod_fiscale_utente    varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE,
     imo                   varchar(30),
     nome                  varchar(50) NOT NULL,
@@ -80,7 +81,8 @@ CREATE TABLE imbarcazione
     posizione             bigint REFERENCES area (id) on UPDATE CASCADE on DELETE CASCADE,
     disponibile           boolean default true,
     documento             LONGBLOB,
-    PRIMARY KEY (imo)
+    trasferito            boolean default false,
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE richiesta
@@ -119,8 +121,8 @@ CREATE TABLE mediazione_richiesta
 CREATE TABLE mediazione_imbarcazione
 (
     id_mediazione    bigint REFERENCES mediazione (id) on UPDATE CASCADE on DELETE CASCADE,
-    imo_imbarcazione varchar(30) REFERENCES imbarcazione (imo) on UPDATE CASCADE on DELETE CASCADE,
-    PRIMARY KEY (id_mediazione, imo_imbarcazione)
+    id_imbarcazione varchar(30) REFERENCES imbarcazione (id) on UPDATE CASCADE on DELETE CASCADE,
+    PRIMARY KEY (id_mediazione, id_imbarcazione)
 );
 
 CREATE TABLE firma
@@ -129,3 +131,5 @@ CREATE TABLE firma
     cod_fiscale_utente varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE, /*utente = broker*/
     PRIMARY KEY (id_mediazione, cod_fiscale_utente)
 );
+
+alter table utente modify data_nascita timestamp null;

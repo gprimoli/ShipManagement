@@ -1,5 +1,6 @@
 package controller.Imbarcazione;
 
+import model.Area.AreaDAO;
 import model.Imbarcazione.Imbarcazione;
 import model.Imbarcazione.ImbarcazioneDAO;
 import model.Mediazione.Mediazione;
@@ -26,18 +27,22 @@ public class VisualizzaImbarcazione extends HttpServlet {
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession s = req.getSession();
         Utente u = (Utente) s.getAttribute("utente");
-        String imo = req.getParameter("imo");
-        if (u == null || imo == null) {
+        if (u == null) {
             resp.sendRedirect("index");
             return;
         }
 
         String forward = "/WEB-INF/imbarcazione.jsp";
         try {
-            Imbarcazione im = ImbarcazioneDAO.doRetriveById(imo);
+            int id = Integer.parseInt(req.getParameter("id"));
+
+
+            Imbarcazione im = ImbarcazioneDAO.doRetriveById(id);
 
             if (u.isBroker() || im.getCodFiscaleUtente().compareTo(u.getCodFiscale()) == 0) {
                 req.setAttribute("imbarcazione", im);
+                req.setAttribute("aree", AreaDAO.doRetriveAll());
+                req.setAttribute("mediazioni", MediazioneDAO.doRetriveOKBy(u));
             } else {
                 LinkedList<Mediazione> propMediazini = MediazioneDAO.doRetriveBy(u);
                 boolean tmp = false;
