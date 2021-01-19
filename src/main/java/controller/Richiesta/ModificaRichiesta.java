@@ -1,15 +1,11 @@
 package controller.Richiesta;
 
 import lombok.Cleanup;
-import model.CompagniaBroker.CompagniaBrokerDAO;
-import model.Imbarcazione.Imbarcazione;
-import model.Imbarcazione.ImbarcazioneDAO;
 import model.Notifica.Notifica;
 import model.Notifica.NotificaDAO;
 import model.Richiesta.Richiesta;
 import model.Richiesta.RichiestaDAO;
 import model.Utente.Utente;
-import model.Utente.UtenteDAO;
 import model.Util.DuplicateException;
 import model.Util.InvalidParameterException;
 
@@ -24,7 +20,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 
-@WebServlet(urlPatterns = "/")
+@WebServlet(urlPatterns = "/modifica-richiesta")
 @MultipartConfig
 public class ModificaRichiesta extends HttpServlet {
 
@@ -92,7 +88,7 @@ public class ModificaRichiesta extends HttpServlet {
 
                     RichiestaDAO.doUpdate(r);
 
-                    Notifica n = Notifica.builder().oggetto("Richiesta " + r.getId() + " modificata").corpo("La richiesta " + r.getId() + " &egrave; stata modficata dall'armatore " + r.getCodFiscaleUtente()).build();
+                    Notifica n = Notifica.builder().oggetto("Richiesta " + r.getId() + " modificata").corpo("La richiesta " + r.getId() + " &egrave; stata modficata dal cliente " + r.getCodFiscaleUtente()).build();
 
                     int idNotifica = NotificaDAO.doSave(n);
                     NotificaDAO.doSendToBroker(r, idNotifica);
