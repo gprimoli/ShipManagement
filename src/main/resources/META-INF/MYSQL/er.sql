@@ -8,7 +8,7 @@ CREATE TABLE utente
     password      BINARY(20)                             not null,
     nome          varchar(50)                            NOT NULL,
     cognome       varchar(50)                            NOT NULL,
-    data_nascita  timestamp,
+    data_nascita  DATE ,
     luogo_nascita varchar(50)                            NOT NULL,
     email         varchar(255) unique,
     telefono      varchar(15) unique,
@@ -91,8 +91,8 @@ CREATE TABLE richiesta
     cod_fiscale_utente varchar(16) REFERENCES utente (cod_fiscale) on UPDATE CASCADE on DELETE CASCADE,
     tipo_carico        enum('Container','Carico alla Rinfusa','Prodotti Chimici Solidi','Prodotti Chimici Liquidi','Prodotti Chimici Gassosi','Autoveicoli'),
     quantita           float       NOT NULL,
-    data_partenza      timestamp   NOT NULL,
-    data_arrivo        timestamp   NOT NULL default NOW(),
+    data_partenza      DATE    NOT NULL,
+    data_arrivo        DATE    NOT NULL default NOW(),
     porto_partenza     varchar(6) REFERENCES porto (localcode) on UPDATE CASCADE on DELETE CASCADE,
     porto_arrivo       varchar(6) REFERENCES porto (localcode) on UPDATE CASCADE on DELETE CASCADE,
     stato              enum ('Disponibile', 'In Lavorazione', 'Terminata') default 'Disponibile',
@@ -132,7 +132,3 @@ CREATE TABLE decisione_utente
     firma boolean,
     PRIMARY KEY (id_mediazione, cod_fiscale_utente)
 );
-
-alter table utente alter column data_nascita drop default;
-alter table richiesta alter column data_partenza drop default;
-alter table richiesta alter column data_arrivo drop default;

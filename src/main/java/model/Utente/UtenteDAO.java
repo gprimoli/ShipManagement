@@ -140,7 +140,6 @@ public class UtenteDAO {
         return utenti;
     }
 
-
     //fine base
 
     public static void doChangePassword(Utente u, String newPassword) {
@@ -248,5 +247,6 @@ public class UtenteDAO {
         }
         return utenti;
     }
+
 
 }

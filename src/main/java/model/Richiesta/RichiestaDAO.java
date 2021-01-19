@@ -13,6 +13,7 @@ import java.sql.*;
 import java.util.LinkedList;
 
 public class RichiestaDAO {
+
     public static int doSave(Richiesta r) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();

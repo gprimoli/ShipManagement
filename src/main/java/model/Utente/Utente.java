@@ -3,6 +3,7 @@ package model.Utente;
 import java.sql.Date;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Objects;
 
 import lombok.*;
 import lombok.experimental.NonFinal;
@@ -42,7 +43,7 @@ public class Utente {
                 throw new InvalidParameterException();
             this.codFiscale = codFiscale;
             return this;
-    }
+        }
 
         public UtenteBuilder nome(String nome) throws InvalidParameterException {
             if (!(nome.length() < 50 && nome.length() > 2 && nome.matches("^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$")))
@@ -58,7 +59,7 @@ public class Utente {
             return this;
         }
 
-            public UtenteBuilder dataNascita(Date dataNascita) throws InvalidParameterException {
+        public UtenteBuilder dataNascita(Date dataNascita) throws InvalidParameterException {
             Calendar compareDate = Calendar.getInstance();
             compareDate.add(Calendar.YEAR, -18);
             Calendar cal = Calendar.getInstance();
