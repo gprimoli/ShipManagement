@@ -32,7 +32,7 @@
                                 <div class="form-group col-md-6">
                                     <label class="small mb-1" for="tipoCarico">Tipo di Carico</label>
                                     <select name="tipoCarico" id="tipoCarico" class="custom-select"
-                                            <c:if test="${requestScope.imbarcazione.codFiscaleUtente.compareTo(sessionScope.utente.codFiscale) != 0}"> disabled </c:if>
+                                            <c:if test="${requestScope.richiesta.codFiscaleUtente.compareTo(sessionScope.utente.codFiscale) != 0}"> disabled </c:if>
                                             required>
                                         <c:forEach
                                                 items="Container,Carico alla Rinfusa,Prodotti Chimici Solidi,Prodotti Chimici Liquidi,Prodotti Chimici Gassosi,Autoveicoli"
