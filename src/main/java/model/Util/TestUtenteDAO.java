@@ -23,17 +23,20 @@ public class TestUtenteDAO extends TestCase {
     }
 
     public void testLogin() throws NoEntryException {
-        String cod="AAANDR80A05F912V";
+        String cod="SLCNDR80A05F912A";
         Utente x=UtenteDAO.doRetriveByEmailPassword(email,password);
         assertEquals(x.getCodFiscale(),cod);
     }
 
     public void testLoginException() throws NoEntryException {
 
-            String cod = "AASNDR80A05F912V";
+        try {
+            String cod = "SLCADR80A05F912A";
             Utente x = UtenteDAO.doRetriveByEmailPassword(email, password);
-           assertEquals(x.getCodFiscale(),cod);
-                fail("failed login");
+            //se non da ecc da fail , se ti aspetti eccez ma non viene lanciata
+            assertFalse(x.getCodFiscale().equals(cod));
+           // fail("failed login");
+        }catch (NoEntryException ex){}
 
     }
 

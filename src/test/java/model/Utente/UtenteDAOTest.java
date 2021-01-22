@@ -19,15 +19,15 @@ class UtenteDAOTest {
         Utente u = null;
         try {
             u = Utente.builder()
-                    .codFiscale("RMLGNR99R27F839Q")
-                    .nome("Gennaro Pio")
-                    .cognome("Rimoli")
-                    .dataNascita(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1999-10-27").getTime()))
-                    .luogoNascita("Napoli")
-                    .email("g.rimoli@studenti.unisa.it")
-                    .telefono("3337800499")
+                    .codFiscale("SLCNDR80A05F912A")
+                    .nome("Albe")
+                    .cognome("Rosso")
+                    .dataNascita(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1996-01-17").getTime()))
+                    .luogoNascita("Pozzuoli")
+                    .email("albertoRossi@gmail.com")
+                    .telefono("33316590328")
                     .attivato(false)
-                    .ruolo("cliente")
+                    .ruolo("armatore")
                     .build();
         } catch (InvalidParameterException | ParseException e) {
             e.printStackTrace();
@@ -39,15 +39,15 @@ class UtenteDAOTest {
         Utente u = null;
         try {
             u = Utente.builder()
-                    .codFiscale("RMLGNR99R27F839Q")
-                    .nome("Gennaro Piu")
-                    .cognome("Rimolu")
-                    .dataNascita(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1999-10-27").getTime()))
-                    .luogoNascita("Napola")
-                    .email("a.rml@studenti.unisa.it")
-                    .telefono("3337800455")
+                    .codFiscale("SLCNDR80A05F912A")
+                    .nome("Albe")
+                    .cognome("Rosso")
+                    .dataNascita(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1996-01-17").getTime()))
+                    .luogoNascita("Pozzuoli")
+                    .email("albertoRossi@gmail.com")
+                    .telefono("33316590328")
                     .attivato(false)
-                    .ruolo("cliente")
+                    .ruolo("armatore")
                     .build();
         } catch (InvalidParameterException | ParseException e) {
             e.printStackTrace();
@@ -59,15 +59,15 @@ class UtenteDAOTest {
         Utente u = null;
         try {
             u = Utente.builder()
-                    .codFiscale("RMLGNR99R27F839R")
-                    .nome("Gennaro Piu")
-                    .cognome("Rimolu")
-                    .dataNascita(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1999-10-27").getTime()))
-                    .luogoNascita("Napola")
-                    .email("a.rml@studenti.unisa.it")
-                    .telefono("3337800455")
+                    .codFiscale("SLCNDR80A05F912A")
+                    .nome("Albe")
+                    .cognome("Rosso")
+                    .dataNascita(new Date(new SimpleDateFormat("yyyy-MM-dd").parse("1996-01-17").getTime()))
+                    .luogoNascita("Pozzuoli")
+                    .email("albertoRossi@gmail.com")
+                    .telefono("33316590328")
                     .attivato(false)
-                    .ruolo("cliente")
+                    .ruolo("armatore")
                     .build();
         } catch (InvalidParameterException | ParseException e) {
             e.printStackTrace();
@@ -77,24 +77,24 @@ class UtenteDAOTest {
 
     @Test
     void doSave() throws DuplicateException, NoEntryException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
-        Utente u1 = UtenteDAO.doRetriveByCodFiscale("RMLGNR99R27F839Q");
+        UtenteDAO.doSave(getUtente(), "Armatore1!");
+        Utente u1 = UtenteDAO.doRetriveByCodFiscale("SLCNDR80A05F912A");
         assertEquals(getUtente(), u1);
         deleteAll();
     }
 
     @Test
     void doUpdate() throws DuplicateException, NoEntryException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
+        UtenteDAO.doSave(getUtente(), "Armatore1!");
         UtenteDAO.doUpdate(getUtente1());
-        Utente u1 = UtenteDAO.doRetriveByCodFiscale("RMLGNR99R27F839Q");
+        Utente u1 = UtenteDAO.doRetriveByCodFiscale("SLCNDR80A05F912A");
         assertEquals(getUtente1(), u1);
         deleteAll();
     }
 
     @Test
     void doDelete() throws DuplicateException, MediazioniInCorsoException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
+        UtenteDAO.doSave(getUtente(), "Armatore1!");
         UtenteDAO.doDelete(getUtente());
 
         assertFalse(getUtente1().isAttivato());
@@ -104,8 +104,8 @@ class UtenteDAOTest {
 
     @Test
     void doRetriveAll() throws DuplicateException, NoEntryException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
-        UtenteDAO.doSave(getUtente2(), "@Gennaro1");
+        UtenteDAO.doSave(getUtente(), "Armatore1!");
+        UtenteDAO.doSave(getUtente2(), "Armatore1!");
         LinkedList<Utente> list = UtenteDAO.doRetriveAll();
         LinkedList<Utente> list1 = new LinkedList();
         list1.add(getUtente());
@@ -116,10 +116,10 @@ class UtenteDAOTest {
 
     @Test
     void doChangePassword() throws DuplicateException, NoEntryException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
-        UtenteDAO.doChangePassword(getUtente(), "@Gennaro2");
+        UtenteDAO.doSave(getUtente(), "Username1!");
+        UtenteDAO.doChangePassword(getUtente(), "Armatore1!");
 
-        Utente u = UtenteDAO.doRetriveByEmailPassword(getUtente().getEmail(), "@Gennaro2");
+        Utente u = UtenteDAO.doRetriveByEmailPassword(getUtente().getEmail(), "Armatore1!");
 
         assertEquals(u, getUtente());
         deleteAll();
@@ -127,7 +127,7 @@ class UtenteDAOTest {
 
     @Test
     void doRecuperaPassword() throws DuplicateException, NoEntryException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
+        UtenteDAO.doSave(getUtente(), "Armatore1!");
         String newPass = UtenteDAO.doRecuperaPassword(getUtente().getEmail());
         Utente u = UtenteDAO.doRetriveByEmailPassword(getUtente().getEmail(), newPass);
         assertEquals(u, getUtente());
@@ -136,7 +136,7 @@ class UtenteDAOTest {
 
     @Test
     void doActivate() throws DuplicateException, NoEntryException {
-        String activationCode = UtenteDAO.doSave(getUtente(), "@Gennaro1");
+        String activationCode = UtenteDAO.doSave(getUtente(), "Armatore1!");
         UtenteDAO.doActivate(getUtente().getEmail(), activationCode);
         Utente u = UtenteDAO.doRetriveByEmailPassword(getUtente().getEmail(), "@Gennaro1");
 
@@ -146,10 +146,10 @@ class UtenteDAOTest {
 
     @Test
     void doRetriveSearch() throws NoEntryException, DuplicateException {
-        UtenteDAO.doSave(getUtente(), "@Gennaro1");
-        UtenteDAO.doSave(getUtente2(), "@Gennaro1");
+        UtenteDAO.doSave(getUtente(), "Armatore1!");
+        UtenteDAO.doSave(getUtente2(), "Armatore1!");
 
-        LinkedList<Utente> list = UtenteDAO.doRetriveSearch("Gennaro", "");
+        LinkedList<Utente> list = UtenteDAO.doRetriveSearch("Albe", "Rosso");
         LinkedList<Utente> list1 = new LinkedList();
         list1.add(getUtente());
         list1.add(getUtente2());

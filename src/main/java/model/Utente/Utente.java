@@ -38,7 +38,7 @@ public class Utente {
 
     public static class UtenteBuilder {
         //Controlli costruttore
-        public UtenteBuilder codFiscale(String codFiscale) throws InvalidParameterException {
+ /*       public UtenteBuilder codFiscale(String codFiscale) throws InvalidParameterException {
             if (codFiscale.length() != 16 || (!codFiscale.matches("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$")))
                 throw new InvalidParameterException();
             this.codFiscale = codFiscale;
@@ -98,7 +98,7 @@ public class Utente {
                 throw new InvalidParameterException();
             this.ruolo = ruolo;
             return this;
-        }
+        }*/
 
         public Utente build() throws InvalidParameterException {
             if (this.codFiscale == null
