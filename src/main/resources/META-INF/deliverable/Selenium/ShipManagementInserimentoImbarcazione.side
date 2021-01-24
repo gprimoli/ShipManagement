@@ -1,0 +1,1433 @@
+{
+  "id": "28f2fbcd-6051-4eec-9357-e65a02210be9",
+  "version": "2.0",
+  "name": "ShipManagementInserimentoImbarcazione",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "e92d6bc1-599d-487a-9aa9-876d2aefd1fc",
+    "name": "Untitled",
+    "commands": []
+  }, {
+    "id": "e7595cfc-a4c7-4ac5-9900-9793cf98593f",
+    "name": "TC – 2.1.1",
+    "commands": [{
+      "id": "b2a99f32-7078-4a37-9265-b960c960db6c",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b8e64cc9-bd6b-44e3-a218-4828ae4033cb",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8e0a3e1b-33c4-49c3-96c6-5c1284cedd85",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "39e3fe90-5136-4120-9bd4-7c08c2f45f56",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ffc367a5-96f2-4b2a-bd03-8316a74aadda",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3ER"
+    }, {
+      "id": "233ad9de-9250-48cf-9115-c48f8066439d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7cbfddeb-a23f-433e-8076-cab158786a7e",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "d753c5e9-fcac-48b2-ae9c-1656fde49c82",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/index"
+    }]
+  }, {
+    "id": "816c95e8-f621-4a38-a75c-b6ff0e9ad804",
+    "name": "TC – 2.1.2",
+    "commands": [{
+      "id": "384e6645-717e-46ea-a046-0c803a57e72c",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8415a0e6-3158-4d35-973b-9d96460eb6e6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "cc0dc325-094c-4cbd-ba5c-ca36a2a88a30",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3b279c8b-5d07-4cfe-982a-382d501a6f1d",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e66f163f-12bd-49a3-98dc-da03acb533bf",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "759d19ef-a6bc-440f-a5cd-0c49e81cf364",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "bf2803f8-5a53-4f78-a650-d9cd1d1221fa",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Ni"
+    }, {
+      "id": "a8df22a3-0616-410b-89df-7724acd37726",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "1fa3d4dd-5222-434d-b6c9-ada270db3fae",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "cff7cb49-2ffe-4484-bba2-ecad26ed4a81",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/index"
+    }]
+  }, {
+    "id": "71ce03cc-9763-4d5a-8a04-9713f8bfbf9e",
+    "name": "TC – 2.1.5",
+    "commands": [{
+      "id": "519b7eb1-0d7c-4dab-ba2b-89d037a662d3",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "6982eb15-033f-4a68-addd-3810189593d6",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "45e87899-5315-4998-8c42-0a81720b10bb",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6f1efcaa-b8ba-41af-910a-cbf2a3e4cc08",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2368a0e1-fbaf-49a2-8a01-34cffbb6c1e5",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "f4174bfe-f183-4f8e-b1c0-27246c8b2436",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "07de70fc-7998-43e5-821d-345ac44b74eb",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .form-group:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .form-group:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "a970d676-bcf2-468f-84c4-67e0b612bc85",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Nina"
+    }, {
+      "id": "fa56bd9b-10a9-488c-9451-d385816f3dca",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAnnoCostruzione",
+      "targets": [
+        ["id=inputAnnoCostruzione", "id"],
+        ["name=anno", "name"],
+        ["css=#inputAnnoCostruzione", "css:finder"],
+        ["xpath=//input[@id='inputAnnoCostruzione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2023"
+    }, {
+      "id": "0794eec0-58a0-42f5-b1cc-b3952f005ba7",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fd4f346e-c86d-4160-a767-c9c28fe72e4b",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "c93c20dd-3386-487c-9636-80ae82f926cb",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/index"
+    }]
+  }, {
+    "id": "7f83f447-5b57-44a6-a94a-230208679d10",
+    "name": "TC – 2.1.8",
+    "commands": [{
+      "id": "8f9884ae-c963-42c5-8a6a-b0966ed9e5ac",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eb7796a4-ce68-4333-9de5-7b83eb9bf84b",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f4484f3e-f51f-4ff3-a3ff-a1c6c32828f3",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "9f359d9f-db9b-4584-a572-e7de47702596",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ae80279c-d30d-480e-aa1a-26ba26abb271",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "997185ed-ad24-4cf9-92b9-41bcfb84f57d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f01a846d-1943-47ed-92a5-57fe131ede7c",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .form-group:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .form-group:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "788fc1a6-7d36-47ce-a642-fd5de86afd35",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Nina"
+    }, {
+      "id": "93439b09-9c1d-48d2-8679-40b04fb612df",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAnnoCostruzione",
+      "targets": [
+        ["id=inputAnnoCostruzione", "id"],
+        ["name=anno", "name"],
+        ["css=#inputAnnoCostruzione", "css:finder"],
+        ["xpath=//input[@id='inputAnnoCostruzione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2005"
+    }, {
+      "id": "4b1a7689-196e-432d-b94c-3b3cff3c4ddb",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2055b493-d631-4cea-9f1d-40bfd611dc1c",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "974dd50c-d4c9-4505-b34b-7faca3408d52",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3ef83e36-2e60-4055-90db-c70d8ac74390",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "410de02a-c236-4447-b3fb-dc5f112823b4",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/index"
+    }]
+  }, {
+    "id": "864b7db7-5487-4e7f-bfaa-a2046b1956e4",
+    "name": "TC – 2.1.10",
+    "commands": [{
+      "id": "31f216cf-423b-41ea-921b-4f76d56b6b0d",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "10be68ab-5d38-44fa-9acf-f743ebcf5661",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "899a3149-a360-49b4-8a2d-313785d88131",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "06ee38de-da5e-427f-9828-9c14807d7ff4",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "410e1e1c-dee4-42d6-9030-db4d65aac3fa",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "42140423-597f-409f-9e69-7204d49add3f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6b1a8d80-a517-481e-8111-4cd275456b01",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .form-group:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .form-group:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "2b7efa32-da1d-43d7-b6f4-e0955cbffde8",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Nina"
+    }, {
+      "id": "0ced391a-95fd-4951-b22a-04276dd5e6e3",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAnnoCostruzione",
+      "targets": [
+        ["id=inputAnnoCostruzione", "id"],
+        ["name=anno", "name"],
+        ["css=#inputAnnoCostruzione", "css:finder"],
+        ["xpath=//input[@id='inputAnnoCostruzione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2005"
+    }, {
+      "id": "02ea2bc1-44f6-495a-ac4f-4435166dcd3b",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "f1f0228c-a277-46f2-b609-7e6bb5896681",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2000"
+    }, {
+      "id": "f6666ce3-b21d-4082-93cd-ce62efd7ce77",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0658f120-8709-48e1-90a2-cc5ffb3d0df3",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "910c8b9e-540b-4c79-a486-7a2b2e4b60a8",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c9b54aa3-149e-43d4-9332-6a733f13caef",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "347c9dbd-bc2f-4b68-a109-c37c241712e5",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/index"
+    }]
+  }, {
+    "id": "335b41cb-8274-423c-be42-bfa91c8fb018",
+    "name": "TC – 2.1.12",
+    "commands": [{
+      "id": "2cc6cb33-3f8f-4a92-b830-6394891156c6",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c07136f1-212a-41b1-99c0-d5f5075eaa6f",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b4cd70b5-fd8e-42d3-968a-3e897c5f64f3",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e351f667-2fae-4282-a98b-882e65548bad",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "46ad708f-42e4-40d5-b8fd-9bcb6839018f",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "eb3b804d-c100-46d7-8527-211cf9c6b01a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ca98c181-4f94-4565-83a0-04ceac49a0c0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .form-group:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .form-group:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "66a165c1-9425-481c-a883-35d249fd6ba4",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Nina"
+    }, {
+      "id": "c2b28eaf-8e33-4799-b955-84a6135e2309",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAnnoCostruzione",
+      "targets": [
+        ["id=inputAnnoCostruzione", "id"],
+        ["name=anno", "name"],
+        ["css=#inputAnnoCostruzione", "css:finder"],
+        ["xpath=//input[@id='inputAnnoCostruzione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2005"
+    }, {
+      "id": "24f1d5e8-cee4-4bc3-926f-e88d66e3b5ac",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "d069fd9d-65e2-4fb8-a90c-f944af3bfebf",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2000"
+    }, {
+      "id": "3e2fe11a-8ebb-40e1-bdbb-4e5fa0cf08c1",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "68564289-b5c7-4f1f-9417-99ff467044a5",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "125"
+    }, {
+      "id": "ad8fe812-65d0-4aba-9905-44c9b3c0feae",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cd4031e3-1517-4e80-ba42-6d7ad70980ed",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "1e063053-e5a9-4edd-b77e-b02cedaf42bd",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "579e06c0-5c79-4638-bb1e-66fdb144335a",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "19008946-51c4-488d-85c5-bd8cf341dab9",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "dd23cfe7-eace-444d-b36e-7bb5cf7ce3ab",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/index"
+    }]
+  }, {
+    "id": "01e01cf2-7197-42cd-9f5c-4c57ab96e4cc",
+    "name": "TC – 2.1.14",
+    "commands": [{
+      "id": "2ca3b1c9-f21b-4407-a0fd-2d2463c364b1",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "143037d6-411e-4428-8288-6e852d6c6bf2",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "d8130652-55e7-4a23-b0c9-66a7dc80bee4",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0e6e7ca7-da18-4b74-b45d-33e579fa707c",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "34912f6a-6e9d-48ec-8f28-ab2cf6f8e00e",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "10bd4ace-35d9-4b84-9af1-ad00543d96ca",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ba71b91c-c5c8-4bea-82ea-3ef22af1014f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .form-group:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .form-group:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cbb7d5eb-d664-4ea6-af85-26194b5c4c93",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Nina"
+    }, {
+      "id": "0a467b40-47d3-4019-bc70-e3cfd8188714",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAnnoCostruzione",
+      "targets": [
+        ["id=inputAnnoCostruzione", "id"],
+        ["name=anno", "name"],
+        ["css=#inputAnnoCostruzione", "css:finder"],
+        ["xpath=//input[@id='inputAnnoCostruzione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2005"
+    }, {
+      "id": "2edb75ad-716d-4959-8ff2-5eebf3c84cd5",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "64eb213d-85f5-42f0-aae4-5a39c5b275cb",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2000"
+    }, {
+      "id": "e010abb7-6359-49a9-b930-c889605c04db",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5f773157-d604-4ccd-8649-eaf099425296",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "125"
+    }, {
+      "id": "31311d33-c5db-4674-b893-268fa6ca4fff",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c3be4d0b-3977-468a-9660-a7c6c625cd44",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": "78"
+    }, {
+      "id": "796cb5a4-942e-410f-8370-241324084944",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4be4c811-095c-4085-b29c-87e38fdef620",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAltezza",
+      "targets": [
+        ["id=inputAltezza", "id"],
+        ["name=altezza", "name"],
+        ["css=#inputAltezza", "css:finder"],
+        ["xpath=//input[@id='inputAltezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "0"
+    }, {
+      "id": "45d351a1-6589-43be-a9b8-4b19235304c1",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "8013b3e0-8b94-4f4d-91fa-13cf31291660",
+      "comment": "",
+      "command": "assertElementPresent",
+      "target": "id=layoutError_content",
+      "targets": [],
+      "value": ""
+    }]
+  }, {
+    "id": "5f4eee93-aa4f-45fb-90b8-f323ee010a57",
+    "name": "TC – 2.1.17",
+    "commands": [{
+      "id": "2a0077a1-3e34-4df0-bb8c-96b9f3d346f2",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e0e6357a-5b88-4d08-9e8d-c6fa10080a09",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "23a05c9b-9005-4249-bb1b-2aec04bb7ca1",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=//button[@type='button']", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//button", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0ed76dc6-202b-4a60-a49f-c9a5ae1f1df0",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "212d42ba-cd25-4531-a42b-c7afa9cc7ba6",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputImo",
+      "targets": [
+        ["id=inputImo", "id"],
+        ["name=imo", "name"],
+        ["css=#inputImo", "css:finder"],
+        ["xpath=//input[@id='inputImo']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/input", "xpath:position"]
+      ],
+      "value": "78IR3TR"
+    }, {
+      "id": "c3cbddeb-40b2-4f78-8378-9051dcfd030b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [
+        ["css=.btn:nth-child(2)", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div[2]/button[2]", "xpath:idRelative"],
+        ["xpath=//button[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fc3dba04-9c4c-46d8-a8a3-c74dbbef44c0",
+      "comment": "",
+      "command": "click",
+      "target": "css=.form-row:nth-child(3) > .form-group:nth-child(2)",
+      "targets": [
+        ["css=.form-row:nth-child(3) > .form-group:nth-child(2)", "css:finder"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]", "xpath:idRelative"],
+        ["xpath=//form/div/div[3]/div[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "576d8ce2-bf6e-473d-aea0-c91e3e86706f",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNomeImbarcazione",
+      "targets": [
+        ["id=inputNomeImbarcazione", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNomeImbarcazione", "css:finder"],
+        ["xpath=//input[@id='inputNomeImbarcazione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/input", "xpath:position"]
+      ],
+      "value": "Nina"
+    }, {
+      "id": "046defcf-0977-4ed8-85f4-a673b3e3413a",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAnnoCostruzione",
+      "targets": [
+        ["id=inputAnnoCostruzione", "id"],
+        ["name=anno", "name"],
+        ["css=#inputAnnoCostruzione", "css:finder"],
+        ["xpath=//input[@id='inputAnnoCostruzione']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[3]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2005"
+    }, {
+      "id": "82102935-34f9-459d-bf14-51646e6ac046",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "3d7582dc-1295-4220-bacb-cf6c72064739",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputQuantitaMAX",
+      "targets": [
+        ["id=inputQuantitaMAX", "id"],
+        ["name=quantita", "name"],
+        ["css=#inputQuantitaMAX", "css:finder"],
+        ["xpath=//input[@id='inputQuantitaMAX']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[2]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[2]/div[2]/input", "xpath:position"]
+      ],
+      "value": "2000"
+    }, {
+      "id": "3de00975-4bd6-435a-9f62-34a906a1c007",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "eb0d43c1-cfd4-424b-8166-3dc77cc91e95",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputlunghezza",
+      "targets": [
+        ["id=inputlunghezza", "id"],
+        ["name=lunghezza", "name"],
+        ["css=#inputlunghezza", "css:finder"],
+        ["xpath=//input[@id='inputlunghezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div/input", "xpath:position"]
+      ],
+      "value": "125"
+    }, {
+      "id": "49287720-e735-4079-a070-d58b6aa5f119",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "cbd687fd-85e4-4bb2-a837-4c7c41da3009",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": "78"
+    }, {
+      "id": "89f8c6f0-a038-4a27-8a43-5da883e43411",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputAmpiezza",
+      "targets": [
+        ["id=inputAmpiezza", "id"],
+        ["name=ampiezza", "name"],
+        ["css=#inputAmpiezza", "css:finder"],
+        ["xpath=//input[@id='inputAmpiezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[2]/input", "xpath:idRelative"],
+        ["xpath=//div[4]/div[2]/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "014398f1-8e20-441b-af30-92d4e517f243",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputAltezza",
+      "targets": [
+        ["id=inputAltezza", "id"],
+        ["name=altezza", "name"],
+        ["css=#inputAltezza", "css:finder"],
+        ["xpath=//input[@id='inputAltezza']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiImbarcazione']/div/div/form/div/div[4]/div[3]/input", "xpath:idRelative"],
+        ["xpath=//div[3]/input", "xpath:position"]
+      ],
+      "value": "100"
+    }, {
+      "id": "a6f998bc-414e-47a6-a74d-b82b4732c0a4",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputDocumentoImbarcazione",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "450e9df1-da77-418b-8855-e1708ca48e7b",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputDocumentoImbarcazione",
+      "targets": [],
+      "value": "C:\\fakepath\\Documento.pdf"
+    }, {
+      "id": "2faebaf5-daf1-4703-acc8-a0c06537d721",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "32d888b1-3b1e-4e89-96f9-a16de26c7d30",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "90b0d1e5-529e-41dd-83c6-4b0ed1683c6f",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/visualizza-imbarcazione?id=6"
+    }]
+  }],
+  "suites": [{
+    "id": "2e43445e-ff0d-474f-97c1-c8704b4e4af1",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["e92d6bc1-599d-487a-9aa9-876d2aefd1fc"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}

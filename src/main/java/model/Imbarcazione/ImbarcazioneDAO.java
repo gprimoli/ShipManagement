@@ -190,7 +190,7 @@ public class ImbarcazioneDAO {
         LinkedList<Imbarcazione> imbarcazioni = new LinkedList<>();
         try {
             @Cleanup Connection c = DB.getConnection();
-            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where cod_fiscale_utente = ? && trasferito = false;");
+            @Cleanup PreparedStatement p = c.prepareStatement("Select *, documento IS NOT NULL as caricato from imbarcazione where cod_fiscale_utente = ? AND trasferito = false;");
             p.setString(1, u.getCodFiscale());
             @Cleanup ResultSet r = p.executeQuery();
             while (r.next()) {

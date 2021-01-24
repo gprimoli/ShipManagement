@@ -1,0 +1,181 @@
+{
+  "id": "d1a86c64-1df8-439a-a0c6-10782d8a9da6",
+  "version": "2.0",
+  "name": "ShipManagementCreaMediazione",
+  "url": "http://localhost:8080",
+  "tests": [{
+    "id": "b0cdc9cf-6af7-4181-8b81-5d46314f9fa8",
+    "name": "Untitled",
+    "commands": []
+  }, {
+    "id": "e50875d2-5c19-4786-a70f-a8a02bd07141",
+    "name": "TC – 4.1.1",
+    "commands": [{
+      "id": "bfd020fe-f8b9-40e5-9638-d2badccdfacc",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7e7e6c29-9b09-438c-a62c-b6e7760f918c",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "22d49774-d537-4a06-bb51-16bd060cb68e",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//p/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi Mediazione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "7cf7ce6f-1240-42f6-af52-2b65972f1d3b",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputNome",
+      "targets": [
+        ["id=inputNome", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNome", "css:finder"],
+        ["xpath=//input[@id='inputNome']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiMediazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "ce63fc24-320d-4d1f-869a-9aa8578d4831",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNome",
+      "targets": [
+        ["id=inputNome", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNome", "css:finder"],
+        ["xpath=//input[@id='inputNome']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiMediazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": "Mediazione3"
+    }, {
+      "id": "5096445e-083a-4150-8a6a-24fb44abd98f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "86940c8d-bb04-4b72-91ff-fce5f05656ce",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "b5f64100-1d82-4d55-a821-f93e0e6ecef6",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/visualizza-mediazione?id=5"
+    }]
+  }, {
+    "id": "75c0b504-070b-4d56-a2ba-d3881c460f08",
+    "name": "TC – 4.1",
+    "commands": [{
+      "id": "dc6e6efb-de56-41f2-9538-14c47d9c39ba",
+      "comment": "",
+      "command": "open",
+      "target": "/ShipManagment_war/index",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "47ac06c4-c231-4cdf-9de6-a75a8996347d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1050x708",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9976c13e-59a4-4668-8f0b-5e17c992a054",
+      "comment": "",
+      "command": "click",
+      "target": "css=p > .btn",
+      "targets": [
+        ["css=p > .btn", "css:finder"],
+        ["xpath=(//button[@type='button'])[2]", "xpath:attributes"],
+        ["xpath=//div[@id='layoutSidenav_content mt-0']/main/div/div/div/p/button", "xpath:idRelative"],
+        ["xpath=//p/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Aggiungi Mediazione')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "04712e88-7050-4adf-b943-21a519179d0c",
+      "comment": "",
+      "command": "click",
+      "target": "id=inputNome",
+      "targets": [
+        ["id=inputNome", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNome", "css:finder"],
+        ["xpath=//input[@id='inputNome']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiMediazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "55a780a5-186d-4ad7-abbc-4e3bf45c52a7",
+      "comment": "",
+      "command": "type",
+      "target": "id=inputNome",
+      "targets": [
+        ["id=inputNome", "id"],
+        ["name=nome", "name"],
+        ["css=#inputNome", "css:finder"],
+        ["xpath=//input[@id='inputNome']", "xpath:attributes"],
+        ["xpath=//div[@id='aggiungiMediazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
+        ["xpath=//div/div/input", "xpath:position"]
+      ],
+      "value": "A"
+    }, {
+      "id": "645872e7-a17e-4f8b-b954-1b4c216d35db",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(2)",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f2e71512-5203-451a-8bdc-fc903178d4fb",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "pageurl"
+    }, {
+      "id": "d69e7162-13d5-40cc-aeaf-a9299a36f3c5",
+      "comment": "",
+      "command": "assert",
+      "target": "pageurl",
+      "targets": [],
+      "value": "http://localhost:8080/ShipManagment_war/aggiungi-mediazione"
+    }]
+  }],
+  "suites": [{
+    "id": "7dbb4a83-47ee-4dfc-b033-6bb7cd2c431c",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["b0cdc9cf-6af7-4181-8b81-5d46314f9fa8"]
+  }],
+  "urls": ["http://localhost:8080/"],
+  "plugins": []
+}

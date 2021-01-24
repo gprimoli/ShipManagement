@@ -49,48 +49,53 @@ public class Richiesta implements DocumentoLoader {
             this.id = id;
             return this;
         }
-//
-//        public RichiestaBuilder codFiscaleUtente(String codFiscaleUtente) throws InvalidParameterException {
-//            if (codFiscaleUtente.length() != 16 || (!codFiscaleUtente.matches("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$")))
-//                throw new InvalidParameterException();
-//            this.codFiscaleUtente = codFiscaleUtente;
-//            return this;
-//        }
-//
-//
-//        public RichiestaBuilder tipoCarico(String tipoCarico) throws InvalidParameterException {
-//            String[] ar = new String[]{"Container", "Carico alla Rinfusa", "Prodotti Chimici Solidi", "Prodotti Chimici Liquidi", "Prodotti Chimici Gassosi", "Autoveicoli"};
-//            if (Arrays.stream(ar).noneMatch(t -> t.compareTo(tipoCarico) == 0))
-//                throw new InvalidParameterException();
-//            this.tipoCarico = tipoCarico;
-//            return this;
-//        }
-//
-//        public RichiestaBuilder quantita(float quantita) throws InvalidParameterException {
-//            if (quantita < 1)
-//                throw new InvalidParameterException();
-//            this.quantita = quantita;
-//            return this;
-//        }
-//
-//        public RichiestaBuilder dataPartenza(Date dataPartenza) throws InvalidParameterException {
-//            Calendar compareDate = Calendar.getInstance();
-//            if (dataArrivo.compareTo(compareDate.getTime()) > 0)
-//                throw new InvalidParameterException();
-//            this.dataPartenza = dataPartenza;
-//            return this;
-//        }
-//
-//        public RichiestaBuilder dataArrivo(Date dataArrivo) throws InvalidParameterException {
-//            Calendar compareDate = Calendar.getInstance();
-        //Data oggi controllo
-//            if (dataArrivo.compareTo(compareDate.getTime()) < 0)
-//                throw new InvalidParameterException();
-//            this.dataArrivo = dataArrivo;
-//            return this;
-//        }
-//
-//
+
+        public RichiestaBuilder codFiscaleUtente(String codFiscaleUtente) throws InvalidParameterException {
+            if (codFiscaleUtente.length() != 16 || (!codFiscaleUtente.matches("^[A-Z]{6}[A-Z0-9]{2}[A-Z][A-Z0-9]{2}[A-Z][A-Z0-9]{3}[A-Z]$")))
+                throw new InvalidParameterException();
+            this.codFiscaleUtente = codFiscaleUtente;
+            return this;
+        }
+
+
+        public RichiestaBuilder tipoCarico(String tipoCarico) throws InvalidParameterException {
+            String[] ar = new String[]{"Container", "Carico alla Rinfusa", "Prodotti Chimici Solidi", "Prodotti Chimici Liquidi", "Prodotti Chimici Gassosi", "Autoveicoli"};
+            if (Arrays.stream(ar).noneMatch(t -> t.compareTo(tipoCarico) == 0))
+                throw new InvalidParameterException();
+            this.tipoCarico = tipoCarico;
+            return this;
+        }
+
+        public RichiestaBuilder quantita(float quantita) throws InvalidParameterException {
+            if (quantita < 1)
+                throw new InvalidParameterException();
+            this.quantita = quantita;
+            return this;
+        }
+
+        public RichiestaBuilder dataPartenza(Date dataPartenza) throws InvalidParameterException {
+            Calendar compareDate = Calendar.getInstance();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataPartenza);
+            if (cal.after(compareDate.getTime()))
+                throw new InvalidParameterException();
+            this.dataPartenza = dataPartenza;
+            return this;
+        }
+
+        public RichiestaBuilder dataArrivo(Date dataArrivo) throws InvalidParameterException {
+            Calendar compareDate = Calendar.getInstance();
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataArrivo);
+            Calendar cal2 = Calendar.getInstance();
+            cal2.setTime(dataPartenza);
+            if (cal.before(compareDate.getTime()) || cal.before(cal2))
+                throw new InvalidParameterException();
+            this.dataArrivo = dataArrivo;
+            return this;
+        }
+
+
         public RichiestaBuilder portoPartenza(String portoPartenza) throws InvalidParameterException {
             if (PortoDAO.doCheckPorto(portoPartenza))
                 throw new InvalidParameterException();
@@ -104,14 +109,14 @@ public class Richiesta implements DocumentoLoader {
             this.portoArrivo = portoArrivo;
             return this;
         }
-//
-//        public RichiestaBuilder stato(String stato) throws InvalidParameterException {
-//            String[] ar = new String[]{"Disponibile", "In lavorazione", "Terminata"};
-//            if (Arrays.stream(ar).noneMatch(s -> s.compareTo(stato) == 0))
-//                throw new InvalidParameterException();
-//            this.stato = stato;
-//            return this;
-//        }
+
+        public RichiestaBuilder stato(String stato) throws InvalidParameterException {
+            String[] ar = new String[]{"Disponibile", "In lavorazione", "Terminata"};
+            if (Arrays.stream(ar).noneMatch(s -> s.compareTo(stato) == 0))
+                throw new InvalidParameterException();
+            this.stato = stato;
+            return this;
+        }
 
         public Richiesta build() throws InvalidParameterException{
             if (this.codFiscaleUtente == null

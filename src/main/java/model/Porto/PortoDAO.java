@@ -13,13 +13,13 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 
 public class PortoDAO {
-    public static void doSave(Porto porto, int id_area) throws DuplicateException {
+    public static void doSave(Porto porto) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("INSERT INTO porto(localcode, nome, id_area) VALUES (?,?,?);");
             p.setString(1, porto.getLocalcode());
             p.setString(2, porto.getNome());
-            p.setInt(3, id_area);
+            p.setInt(3, porto.getIdArea());
             p.execute();
         } catch (SQLException e) {
             if (e.getSQLState().compareTo("23000") == 0)
@@ -28,12 +28,12 @@ public class PortoDAO {
         }
     }
 
-    public static void doUpdate(Porto porto, int id_area) throws DuplicateException {
+    public static void doUpdate(Porto porto) throws DuplicateException {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("UPDATE porto SET nome = ?, id_area = ? WHERE localcode = ?");
             p.setString(1, porto.getNome());
-            p.setInt(2, id_area);
+            p.setInt(2, porto.getIdArea());
             p.setString(3, porto.getLocalcode());
             p.execute();
         } catch (SQLException e) {
@@ -79,11 +79,11 @@ public class PortoDAO {
         return porto;
     }
 
-    public static boolean doCheckPorto(String localCode) {
+    public static boolean doCheckPorto(String nome) {
         try {
             @Cleanup Connection c = DB.getConnection();
             @Cleanup PreparedStatement p = c.prepareStatement("Select * from porto where nome = ?;");
-            p.setString(1, localCode);
+            p.setString(1, nome);
             @Cleanup ResultSet r = p.executeQuery();
            return r.next();
         } catch (SQLException e) {
