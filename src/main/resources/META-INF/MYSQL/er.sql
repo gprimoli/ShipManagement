@@ -92,7 +92,7 @@ CREATE TABLE richiesta
     tipo_carico        enum('Container','Carico alla Rinfusa','Prodotti Chimici Solidi','Prodotti Chimici Liquidi','Prodotti Chimici Gassosi','Autoveicoli'),
     quantita           float       NOT NULL,
     data_partenza      DATE    NOT NULL,
-    data_arrivo        DATE    NOT NULL default NOW(),
+    data_arrivo        DATE    NOT NULL,
     porto_partenza     varchar(6) REFERENCES porto (localcode) on UPDATE CASCADE on DELETE CASCADE,
     porto_arrivo       varchar(6) REFERENCES porto (localcode) on UPDATE CASCADE on DELETE CASCADE,
     stato              enum ('Disponibile', 'In Lavorazione', 'Terminata') default 'Disponibile',

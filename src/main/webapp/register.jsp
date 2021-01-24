@@ -82,7 +82,7 @@
                                             <input name="luogoDiNascita" class="form-control py-4"
                                                    id="inputLuogoNascita" type="text"
                                                    placeholder="Inserisci Lugoo di Nascita" minlength="2"
-                                                   maxlength="50" pattern="^[A-Za-z]*$"
+                                                   maxlength="50" pattern="^[A-Za-z\s]*$"
                                                    title="Il campo non pu&oacute; contenere numeri"
                                                    value="Pozzuoli"
                                                    required/>
