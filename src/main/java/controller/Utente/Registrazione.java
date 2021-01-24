@@ -80,7 +80,7 @@ public class Registrazione extends HttpServlet {
             String path = getServletContext().getContextPath();
             String link = "Link attivazione account: <a href='http://localhost:8080" + path + "/attiva?codice=" + tmp + "&email=" + u.getEmail() + "'>Attiva account</a>";
             System.out.println(link);
-//            m.sendMail(u.getEmail(), "Benvenuto in ShipManagment " + u.getNome(), link);
+            m.sendMail(u.getEmail(), "Benvenuto in ShipManagment " + u.getNome(), link);
 
             req.setAttribute("notifica", "Registrazione avvenuta con successo");
             req.setAttribute("tipoNotifica", "success");

@@ -21,7 +21,7 @@ public class RecuperoPassword extends HttpServlet {
         System.out.println(newPassword);
 
         Mail m = new Mail();
-//        m.sendMail(mail, "Recupero Password ShipManagment", "Nuova password: " + newPassword);
+        m.sendMail(mail, "Recupero Password ShipManagment", "Nuova password: " + newPassword);
 
         req.setAttribute("notifica", "Controlla la mail :)");
         req.setAttribute("tipoNotifica", "success");
