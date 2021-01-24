@@ -11,13 +11,14 @@ import lombok.*;
 import lombok.experimental.NonFinal;
 import model.CompagniaBroker.CompagniaBroker;
 import model.Porto.PortoDAO;
+import model.Util.DocumentoLoader;
 import model.Util.InvalidParameterException;
 
 @Value
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NonFinal
-public class Richiesta {
+public class Richiesta implements DocumentoLoader {
     int id;
     String codFiscaleUtente;
     String tipoCarico;
@@ -34,8 +35,8 @@ public class Richiesta {
 
     public InputStream getDocumento() {
         if (caricato && documento == null) {
-            caricato = true;
             documento = RichiestaDAO.doRetriveDocumento(id);
+            caricato = true;
         }
         return documento;
     }

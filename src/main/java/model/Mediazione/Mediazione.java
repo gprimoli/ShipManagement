@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 import lombok.*;
 import lombok.experimental.NonFinal;
+import model.Util.DocumentoLoader;
 import model.Util.InvalidParameterException;
 
 
@@ -13,7 +14,7 @@ import model.Util.InvalidParameterException;
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NonFinal
-public class Mediazione {
+public class Mediazione implements DocumentoLoader {
     int id;
     String nome;
     String stato;
@@ -25,8 +26,8 @@ public class Mediazione {
 
     public InputStream getDocumento() {
         if (caricato && contratto == null) {
-            caricato = true;
             contratto = MediazioneDAO.doRetriveDocumento(id);
+            caricato = true;
         }
         return contratto;
     }
