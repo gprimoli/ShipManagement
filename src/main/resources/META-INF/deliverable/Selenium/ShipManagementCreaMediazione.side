@@ -64,7 +64,7 @@
         ["xpath=//div[@id='aggiungiMediazione']/div/div/form/div/div/div/input", "xpath:idRelative"],
         ["xpath=//div/div/input", "xpath:position"]
       ],
-      "value": "Mediazione1"
+      "value": "Mediazione3"
     }, {
       "id": "5096445e-083a-4150-8a6a-24fb44abd98f",
       "comment": "",
@@ -85,7 +85,7 @@
       "command": "assert",
       "target": "pageurl",
       "targets": [],
-      "value": "http://localhost:8080/ShipManagment_war/visualizza-mediazione?id=3"
+      "value": "http://localhost:8080/ShipManagment_war/visualizza-mediazione?id=5"
     }]
   }, {
     "id": "75c0b504-070b-4d56-a2ba-d3881c460f08",
@@ -165,7 +165,7 @@
       "command": "assert",
       "target": "pageurl",
       "targets": [],
-      "value": "http://localhost:8080/ShipManagment_war/index"
+      "value": "http://localhost:8080/ShipManagment_war/aggiungi-mediazione"
     }]
   }],
   "suites": [{
